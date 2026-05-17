@@ -48,8 +48,6 @@ VAR_GLOBAL RETAIN
     P42_AptMode_03       : UINT := 0;     (* P42 *)
     P43_AptMode_04       : UINT := 0;     (* P43 *)
     P44_AptMode_05       : UINT := 0;     (* P44 *)
-    P45_VacancyThreshold : UINT := 14;    (* P45  días *)
-    P46_AptSwitchHour    : UINT := 3;     (* P46  hora 0-23 *)
 
     (* ── P50-P53  Climatización (L1) ────────────────────── *)
     P50_HeatingSetPoint  : REAL := 45.0;  (* P50  °C *)

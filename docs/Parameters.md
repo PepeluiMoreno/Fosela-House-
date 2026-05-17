@@ -74,8 +74,6 @@ El software los usa en tiempo real para calcular los rangos admisibles de los pa
 | Código | Nombre programa | Función | Si demasiado alto | Si demasiado bajo |
 |---|---|---|---|---|
 | **P40–P44** | `P40_AptMode_01..05` | Modo de la válvula de cada apartamento: 0=precalentada (normal) / 1=AFS (mantenimiento o vacancia). En modo AFS el calentador del apartamento trabaja desde agua fría de red. | — | — |
-| **P45** | `P45_VacancyThreshold` | Días de no-uso de un apartamento tras los cuales la válvula conmuta automáticamente a AFS para evitar agua estancada en el ramal de precalentada a temperatura de riesgo Legionella. | Un apartamento vacío mantiene agua tibia estancada demasiado tiempo en el ramal → riesgo microbiológico. | El sistema conmuta a AFS muy pronto → se pierde el ahorro energético del preheating en apartamentos con rotación frecuente. |
-| **P46** | `P46_AptSwitchHour` | Hora nocturna en la que se ejecutan las conmutaciones programadas de válvulas de apartamento. Evita cambios bruscos de temperatura en el grifo durante el uso. | Conmutación en horario de uso → usuario nota cambio de temperatura en el grifo. | Misma consecuencia si se elige hora con posible uso nocturno. Rango recomendado: 2–5 h. |
 
 ---
 
@@ -172,14 +170,14 @@ Ajustar durante puesta en marcha comparando con termómetro de referencia calibr
 | P10–P19 | Solar | L1 | 10 |
 | P20–P21 | Solar PI | CFG | 2 |
 | P30–P35 | ACS | L1 | 6 |
-| P40–P46 | ACS apartamentos | L1 | 7 |
+| P40–P44 | ACS apartamentos | L1 | 5 |
 | P50–P53 | Climatización | L1 | 4 |
 | P60–P64 | Piscina | L1 | 5 |
 | P70–P77 | Higienización | L1/CFG | 8 |
 | P80 | Prioridades BDC | CFG | 1 |
 | P90–P97 | Sistema/Modbus/HMI | CFG | 8 |
 | OS00–OS13 | Offsets sondas | CFG | 14 |
-| **Total** | | | **72** |
+| **Total** | | | **70** |
 
 ---
 
