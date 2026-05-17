@@ -64,7 +64,7 @@ MB_OUT_PERS_CLOSED:= UINT#0;
 IF DO_PERS_SOL THEN MB_OUT_PERS_CLOSED := UINT#1; END_IF
 MB_OUT_P2_RUNNING := UINT#0;
 IF DO_P2 THEN MB_OUT_P2_RUNNING := UINT#1; END_IF
-MB_OUT_ALM_CODE   := alarma_solar_code;
+MB_OUT_ALM_CODE   := solar_alarm_code;
 MB_OUT_DT_SOLAR   := REAL_TO_INT(DT_solar * MB_TEMP_SCALE);
 
 (* ----------------------------------------------------------------
@@ -76,14 +76,14 @@ sp_tt3_real   := UINT_TO_REAL(MB_IN_SP_TT3_POOL) / MB_TEMP_SCALE;
 
 (* Actualizar GVL con valores recibidos *)
 IF sp_dt_real >= 3.0 AND sp_dt_real <= 20.0 THEN
-    SP_DT_solar := sp_dt_real;
+    P10_SolarDeltaTTarget := sp_dt_real;
 END_IF
 IF sp_tt3_real >= 50.0 AND sp_tt3_real <= 90.0 THEN
-    SP_TT3_piscina := sp_tt3_real;
+    P16_MinTempForPoolSolarHeating := sp_tt3_real;
 END_IF
 
-modo_solar        := INT_TO_E_Solar_Mode(UINT_TO_INT(MB_IN_MODO_SOLAR));
-orden_persianas   := (MB_IN_ORD_PERS = UINT#1);
+P19_SolarMode        := INT_TO_E_Solar_Mode(UINT_TO_INT(MB_IN_MODO_SOLAR));
+P17_SolarOverheatShutterClose   := (MB_IN_ORD_PERS = UINT#1);
 pool_demand_ext   := (MB_IN_POOL_DEMAND = UINT#1);
 
 END_PROGRAM

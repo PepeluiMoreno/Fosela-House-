@@ -1,6 +1,6 @@
 # Parámetros de equipo — Estructura de límites y dependencias
 
-## Fusela House · Jerez de la Frontera
+## Fosela House · Jerez de la Frontera
 
 Documento que identifica qué parámetros físicos de cada equipo
 son relevantes para la operación del sistema, y qué setpoints
@@ -245,4 +245,4 @@ el código de la lógica de control ni las páginas HMI.
 
 ---
 
-*Fusela House · Instalación térmica integrada · Jerez de la Frontera*
+*Fosela House · Instalación térmica integrada · Jerez de la Frontera*

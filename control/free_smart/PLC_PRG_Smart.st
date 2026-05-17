@@ -32,8 +32,8 @@ END_VAR
 
 (* ============================================================
    1. ACTUALIZAR SETPOINTS DESDE MODBUS
-      (MB_Slave_Map escribe en GVL_Smart: SP_DT_solar,
-       SP_TT3_piscina, modo_solar, orden_persianas)
+      (MB_Slave_Map escribe en GVL_Smart: P10_SolarDeltaTTarget,
+       P16_MinTempForPoolSolarHeating, P19_SolarMode, P17_SolarOverheatShutterClose)
    ============================================================ *)
 MB_Slave_Map();
 
@@ -43,8 +43,8 @@ MB_Slave_Map();
 solar_pump(
     TT1     := TT1,
     TT2     := TT2,
-    SP_DT   := SP_DT_solar,
-    mode    := modo_solar,
+    SP_DT   := P10_SolarDeltaTTarget,
+    mode    := P19_SolarMode,
     fault   := ALM_TT1_HIGH
 );
 
@@ -62,10 +62,10 @@ DT_solar        := solar_pump.DT_measured;
 solar_valves(
     TT2             := TT2,
     TT3             := TT3,
-    SP_TT3_pool     := SP_TT3_piscina,
+    SP_TT3_pool     := P16_MinTempForPoolSolarHeating,
     pool_demand     := pool_demand_ext,
-    mode            := modo_solar,
-    force_shutters  := orden_persianas,
+    mode            := P19_SolarMode,
+    force_shutters  := P17_SolarOverheatShutterClose,
     pump_running    := solar_pump.pump_run,
     fault           := ALM_TT1_HIGH
 );
@@ -80,9 +80,9 @@ DO_P2       := solar_valves.cmd_P2_run;
 
 (* Alarma TT1 alta — sobretemperatura colector *)
 alm_TT1_high(
-    condition   := (TT1 > C_ALM_TT1_MAX),
+    condition   := (TT1 > P04_CollectorMaxOperTemp),
     reset_cmd   := FALSE,      (* Rearme automático cuando T baja *)
-    filter_time := C_ALM_FILTER_TIME,
+    filter_time := K_ALM_FILTER,
     latch       := FALSE,
     enabled     := TRUE
 );
@@ -90,22 +90,22 @@ ALM_TT1_HIGH := alm_TT1_high.active;
 
 (* Alarma TT2 alta — sobretemperatura D1 *)
 alm_TT2_high(
-    condition   := (TT2 > C_ALM_TT2_MAX),
+    condition   := (TT2 > (P00_AccumulatorMaxTemp - 7.0)),
     reset_cmd   := FALSE,
-    filter_time := C_ALM_FILTER_TIME,
+    filter_time := K_ALM_FILTER,
     latch       := FALSE,
     enabled     := TRUE
 );
 ALM_TT2_HIGH := alm_TT2_high.active;
 
 (* Código de alarma compuesto *)
-alarma_solar_code := UINT#0;
+solar_alarm_code := UINT#0;
 IF ALM_TT1_HIGH AND NOT ALM_TT2_HIGH THEN
-    alarma_solar_code := UINT#1;
+    solar_alarm_code := UINT#1;
 ELSIF NOT ALM_TT1_HIGH AND ALM_TT2_HIGH THEN
-    alarma_solar_code := UINT#2;
+    solar_alarm_code := UINT#2;
 ELSIF ALM_TT1_HIGH AND ALM_TT2_HIGH THEN
-    alarma_solar_code := UINT#3;
+    solar_alarm_code := UINT#3;
 END_IF
 
 (* Relé de alarma local *)

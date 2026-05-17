@@ -82,7 +82,7 @@ END_IF
    2. PROTECCIÓN PIN
    ============================================================ *)
 pin_test(
-    pin_stored      := HMI_pin_test,
+    pin_stored      := P94_PIN_L1,
     pin_entered     := pin_entered_val,
     confirm         := hmi.key_enter AND HMI_current_page = UINT#8,
     cancel          := hmi.key_esc,
@@ -92,7 +92,7 @@ pin_test(
 );
 
 pin_cfg(
-    pin_stored      := HMI_pin_cfg,
+    pin_stored      := P95_PIN_CFG,
     pin_entered     := pin_entered_val,
     confirm         := hmi.key_enter AND HMI_current_page = UINT#9,
     cancel          := hmi.key_esc,
@@ -156,9 +156,9 @@ pg_main(
    "P  1" | SM.vel_P1 (→ % /10) | READ_ONLY   |      |       |
    "VLV." | SM.pos_V3V_SOL       | READ_ONLY   | ACS/PISC     |
    "PRS." | SM.persianas_cerr.   | READ_ONLY   | ABR/CER      |
-   "SP.T" | HMI_SP_DT_solar      | EDITABLE    | 3.0  | 15.0  | 0.5
-   "SP.P" | HMI_SP_TT3_pool      | EDITABLE    | 60.0 | 90.0  | 1.0
-   "MOD." | HMI_modo_solar       | EDITABLE    | AUTO/ACS/PISC/OFF
+   "SP.T" | P10_SolarDeltaTTarget      | EDITABLE    | 3.0  | 15.0  | 0.5
+   "SP.P" | P16_MinTempForPoolSolarHeating      | EDITABLE    | 60.0 | 90.0  | 1.0
+   "MOD." | P19_SolarMode       | EDITABLE    | AUTO/ACS/PISC/OFF
 *)
 pg_sol(
     title           := 'SOL.',
@@ -167,11 +167,11 @@ pg_sol(
     item_03_label   := 'TT 3', item_03_var := ADR(SM.TT3),           item_03_type := HMI_READ_ONLY,
     item_04_label   := 'd  T', item_04_var := ADR(SM.DT_solar),      item_04_type := HMI_READ_ONLY,
     item_05_label   := 'P  1', item_05_var := ADR(SM.vel_P1),        item_05_type := HMI_READ_ONLY,
-    item_06_label   := 'SP.T', item_06_var := ADR(HMI_SP_DT_solar),  item_06_type := HMI_EDITABLE,
+    item_06_label   := 'SP.T', item_06_var := ADR(P10_SolarDeltaTTarget),  item_06_type := HMI_EDITABLE,
         item_06_min := 3.0,   item_06_max := 15.0,  item_06_step := 0.5,
-    item_07_label   := 'SP.P', item_07_var := ADR(HMI_SP_TT3_pool),  item_07_type := HMI_EDITABLE,
+    item_07_label   := 'SP.P', item_07_var := ADR(P16_MinTempForPoolSolarHeating),  item_07_type := HMI_EDITABLE,
         item_07_min := 60.0,  item_07_max := 90.0,  item_07_step := 1.0,
-    item_08_label   := 'MOD.', item_08_var := ADR(HMI_modo_solar),   item_08_type := HMI_EDITABLE,
+    item_08_label   := 'MOD.', item_08_var := ADR(P19_SolarMode),   item_08_type := HMI_EDITABLE,
         item_08_min := 0,     item_08_max := 3,     item_08_step := 1
 );
 
@@ -179,9 +179,9 @@ pg_sol(
 (*
    "TT 4" | TT4               | READ_ONLY
    "TT 5" | TT5               | READ_ONLY
-   "SP.5" | HMI_SP_TT5        | EDITABLE  50-80  paso 0.5
-   "HS.5" | HMI_HS_TT5        | EDITABLE  1.0-5.0 paso 0.5
-   "SP.4" | HMI_SP_TT4_start  | EDITABLE  40-60  paso 0.5
+   "SP.5" | P30_ACSStorageSetPoint        | EDITABLE  50-80  paso 0.5
+   "HS.5" | P31_ACSStorageHysteresis        | EDITABLE  1.0-5.0 paso 0.5
+   "SP.4" | P32_ACSBDCStartTemp  | EDITABLE  40-60  paso 0.5
    "V3.1" | DO_V3V1           | READ_ONLY (ACS/nAC)
    "V3.2" | DO_V3V2           | READ_ONLY (D3/HX)
    "V3.3" | DO_V3V3           | READ_ONLY (ACS/HX)
@@ -190,11 +190,11 @@ pg_acs(
     title           := 'ACS.',
     item_01_label   := 'TT 4', item_01_var := ADR(TT4),              item_01_type := HMI_READ_ONLY,
     item_02_label   := 'TT 5', item_02_var := ADR(TT5),              item_02_type := HMI_READ_ONLY,
-    item_03_label   := 'SP.5', item_03_var := ADR(HMI_SP_TT5),       item_03_type := HMI_EDITABLE,
+    item_03_label   := 'SP.5', item_03_var := ADR(P30_ACSStorageSetPoint),       item_03_type := HMI_EDITABLE,
         item_03_min := 50.0,  item_03_max := 80.0,  item_03_step := 0.5,
-    item_04_label   := 'HS.5', item_04_var := ADR(HMI_HS_TT5),       item_04_type := HMI_EDITABLE,
+    item_04_label   := 'HS.5', item_04_var := ADR(P31_ACSStorageHysteresis),       item_04_type := HMI_EDITABLE,
         item_04_min := 1.0,   item_04_max := 5.0,   item_04_step := 0.5,
-    item_05_label   := 'SP.4', item_05_var := ADR(HMI_SP_TT4_start), item_05_type := HMI_EDITABLE,
+    item_05_label   := 'SP.4', item_05_var := ADR(P32_ACSBDCStartTemp), item_05_type := HMI_EDITABLE,
         item_05_min := 40.0,  item_05_max := 60.0,  item_05_step := 0.5,
     item_06_label   := 'V3.1', item_06_var := ADR(DO_V3V1),          item_06_type := HMI_READ_ONLY,
     item_07_label   := 'V3.2', item_07_var := ADR(DO_V3V2),          item_07_type := HMI_READ_ONLY,
@@ -206,13 +206,13 @@ pg_clim(
     title           := 'CLIM',
     item_01_label   := 'TT 6', item_01_var := ADR(TT6),         item_01_type := HMI_READ_ONLY,
     item_02_label   := 'TT 7', item_02_var := ADR(TT7),         item_02_type := HMI_READ_ONLY,
-    item_03_label   := 'SP.H', item_03_var := ADR(HMI_SP_heat), item_03_type := HMI_EDITABLE,
+    item_03_label   := 'SP.H', item_03_var := ADR(P50_HeatingSetPoint), item_03_type := HMI_EDITABLE,
         item_03_min := 35.0,  item_03_max := 60.0, item_03_step := 0.5,
-    item_04_label   := 'SP.C', item_04_var := ADR(HMI_SP_cool), item_04_type := HMI_EDITABLE,
+    item_04_label   := 'SP.C', item_04_var := ADR(P52_CoolingSetPoint), item_04_type := HMI_EDITABLE,
         item_04_min := 5.0,   item_04_max := 15.0, item_04_step := 0.5,
-    item_05_label   := 'HS.H', item_05_var := ADR(HMI_HS_heat), item_05_type := HMI_EDITABLE,
+    item_05_label   := 'HS.H', item_05_var := ADR(P51_HeatingHysteresis), item_05_type := HMI_EDITABLE,
         item_05_min := 1.0,   item_05_max := 5.0,  item_05_step := 0.5,
-    item_06_label   := 'HS.C', item_06_var := ADR(HMI_HS_cool), item_06_type := HMI_EDITABLE,
+    item_06_label   := 'HS.C', item_06_var := ADR(P53_CoolingHysteresis), item_06_type := HMI_EDITABLE,
         item_06_min := 0.5,   item_06_max := 3.0,  item_06_step := 0.5,
     item_07_label   := 'P  3', item_07_var := ADR(DO_P3),       item_07_type := HMI_READ_ONLY
 );
@@ -222,9 +222,9 @@ pg_pisc(
     title           := 'PISC',
     item_01_label   := 'TT11', item_01_var := ADR(TT11),          item_01_type := HMI_READ_ONLY,
     item_02_label   := 'TT14', item_02_var := ADR(TT14),          item_02_type := HMI_READ_ONLY,
-    item_03_label   := 'SP.P', item_03_var := ADR(HMI_SP_pool),   item_03_type := HMI_EDITABLE,
+    item_03_label   := 'SP.P', item_03_var := ADR(P60_PoolSetPoint),   item_03_type := HMI_EDITABLE,
         item_03_min := 20.0,  item_03_max := 35.0, item_03_step := 0.5,
-    item_04_label   := 'HS.P', item_04_var := ADR(HMI_HS_pool),   item_04_type := HMI_EDITABLE,
+    item_04_label   := 'HS.P', item_04_var := ADR(P61_PoolHysteresis),   item_04_type := HMI_EDITABLE,
         item_04_min := 0.5,   item_04_max := 3.0,  item_04_step := 0.5,
     item_05_label   := 'VP.1', item_05_var := ADR(DO_VP_HX1),     item_05_type := HMI_READ_ONLY,
     item_06_label   := 'VP.B', item_06_var := ADR(DO_VP_HX_BDC),  item_06_type := HMI_READ_ONLY,
@@ -236,31 +236,31 @@ pg_pisc(
 (*  Cada ítem: label "A 01"  valor: 0=PREC 1=AFS  *)
 pg_apt(
     title           := 'APT.',
-    item_01_label   := 'A 01', item_01_var := ADR(HMI_apt_mode_01), item_01_type := HMI_EDITABLE,
+    item_01_label   := 'A 01', item_01_var := ADR(P40_AptMode_01), item_01_type := HMI_EDITABLE,
         item_01_min := 0, item_01_max := 1, item_01_step := 1,
-    item_02_label   := 'A 02', item_02_var := ADR(HMI_apt_mode_02), item_02_type := HMI_EDITABLE,
+    item_02_label   := 'A 02', item_02_var := ADR(P41_AptMode_02), item_02_type := HMI_EDITABLE,
         item_02_min := 0, item_02_max := 1, item_02_step := 1,
-    item_03_label   := 'A 03', item_03_var := ADR(HMI_apt_mode_03), item_03_type := HMI_EDITABLE,
+    item_03_label   := 'A 03', item_03_var := ADR(P42_AptMode_03), item_03_type := HMI_EDITABLE,
         item_03_min := 0, item_03_max := 1, item_03_step := 1,
-    item_04_label   := 'A 04', item_04_var := ADR(HMI_apt_mode_04), item_04_type := HMI_EDITABLE,
+    item_04_label   := 'A 04', item_04_var := ADR(P43_AptMode_04), item_04_type := HMI_EDITABLE,
         item_04_min := 0, item_04_max := 1, item_04_step := 1,
-    item_05_label   := 'A 05', item_05_var := ADR(HMI_apt_mode_05), item_05_type := HMI_EDITABLE,
+    item_05_label   := 'A 05', item_05_var := ADR(P44_AptMode_05), item_05_type := HMI_EDITABLE,
         item_05_min := 0, item_05_max := 1, item_05_step := 1
 );
 
 (* ---- PÁGINA PASTEURIZACIÓN ------------------------------ *)
 pg_past(
     title           := 'PAST',
-    item_01_label   := 'STA.', item_01_var := ADR(past_phase),        item_01_type := HMI_READ_ONLY,
+    item_01_label   := 'STA.', item_01_var := ADR(hyg_phase),        item_01_type := HMI_READ_ONLY,
     item_02_label   := 'TT 5', item_02_var := ADR(TT5),               item_02_type := HMI_READ_ONLY,
-    item_03_label   := 'APT.', item_03_var := ADR(past_apt_idx),      item_03_type := HMI_READ_ONLY,
-    item_04_label   := 'SP.T', item_04_var := ADR(HMI_SP_past_target),item_04_type := HMI_EDITABLE,
+    item_03_label   := 'APT.', item_03_var := ADR(hyg_apt_idx),      item_03_type := HMI_READ_ONLY,
+    item_04_label   := 'SP.T', item_04_var := ADR(P70_HygienizationTarget),item_04_type := HMI_EDITABLE,
         item_04_min := 65.0,  item_04_max := 75.0, item_04_step := 0.5,
-    item_05_label   := 'T.Ho', item_05_var := ADR(HMI_past_hold_min), item_05_type := HMI_EDITABLE,
+    item_05_label   := 'T.Ho', item_05_var := ADR(P72_HygienizationHoldTime), item_05_type := HMI_EDITABLE,
         item_05_min := 30,    item_05_max := 120,  item_05_step := 5,
-    item_06_label   := 'T.Fl', item_06_var := ADR(HMI_past_flush_min),item_06_type := HMI_EDITABLE,
+    item_06_label   := 'T.Fl', item_06_var := ADR(P73_HygienizationFlushTime),item_06_type := HMI_EDITABLE,
         item_06_min := 15,    item_06_max := 60,   item_06_step := 5,
-    item_07_label   := 'RUN.', item_07_var := ADR(HMI_req_past_manual),item_07_type := HMI_ACTION
+    item_07_label   := 'RUN.', item_07_var := ADR(hyg_request),item_07_type := HMI_ACTION
 );
 
 (* ---- PÁGINA ALARMAS ------------------------------------- *)
@@ -329,15 +329,15 @@ pg_test(
 pg_cfg(
     title           := 'CFG.',
     locked          := NOT HMI_cfg_active,
-    item_01_label   := 'PRI.', item_01_var := ADR(HMI_bdc_priority),   item_01_type := HMI_EDITABLE,
+    item_01_label   := 'PRI.', item_01_var := ADR(P80_BDCPriority),   item_01_type := HMI_EDITABLE,
         item_01_min := 0, item_01_max := 1, item_01_step := 1,
-    item_02_label   := 'BDA.', item_02_var := ADR(HMI_mb_slave_addr),  item_02_type := HMI_EDITABLE,
+    item_02_label   := 'BDA.', item_02_var := ADR(P90_ModbusSlaveAddr),  item_02_type := HMI_EDITABLE,
         item_02_min := 1, item_02_max := 247, item_02_step := 1,
-    item_03_label   := 'BDB.', item_03_var := ADR(HMI_mb_baudrate),    item_03_type := HMI_EDITABLE,
+    item_03_label   := 'BDB.', item_03_var := ADR(P91_ModbusBaudrate),    item_03_type := HMI_EDITABLE,
         item_03_min := 0, item_03_max := 2, item_03_step := 1,
-    item_04_label   := 'PIN.', item_04_var := ADR(HMI_pin_test),       item_04_type := HMI_EDITABLE,
+    item_04_label   := 'PIN.', item_04_var := ADR(P94_PIN_L1),       item_04_type := HMI_EDITABLE,
         item_04_min := 0, item_04_max := 9999, item_04_step := 1,
-    item_05_label   := 'PIC.', item_05_var := ADR(HMI_pin_cfg),        item_05_type := HMI_EDITABLE,
+    item_05_label   := 'PIC.', item_05_var := ADR(P95_PIN_CFG),        item_05_type := HMI_EDITABLE,
         item_05_min := 0, item_05_max := 9999, item_05_step := 1,
     item_06_label   := 'RST.', item_06_var := ADR(HMI_req_factory_rst),item_06_type := HMI_ACTION
 );
@@ -368,8 +368,8 @@ panel_activity   := hmi.any_key_pressed;
    ============================================================ *)
 
 (* Actualizar Modbus hacia controlador solar con los setpoints editados *)
-MB_TO_SMART_SP_DT       := REAL_TO_UINT(HMI_SP_DT_solar * MB_TEMP_SCALE);
-MB_TO_SMART_MODO        := HMI_modo_solar;
-MB_TO_SMART_SP_TT3_POOL := REAL_TO_UINT(HMI_SP_TT3_pool * MB_TEMP_SCALE);
+P10_SolarDeltaTTarget       := REAL_TO_UINT(P10_SolarDeltaTTarget * MB_TEMP_SCALE);
+P19_SolarMode        := P19_SolarMode;
+P16_MinTempForPoolSolarHeating := REAL_TO_UINT(P16_MinTempForPoolSolarHeating * MB_TEMP_SCALE);
 
 END_PROGRAM

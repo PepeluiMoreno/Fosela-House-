@@ -39,11 +39,11 @@ DT_measured := DT_current;
 CASE mode OF
 
     SOLAR_AUTO:
-        (* Arranque diferencial: DT > C_SOLAR_DT_START *)
-        (* Parada diferencial:   DT < C_SOLAR_DT_STOP  *)
+        (* Arranque diferencial: DT > P11_SolarDeltaTStart *)
+        (* Parada diferencial:   DT < P12_SolarDeltaTStop  *)
         (* (la histéresis la gestiona FB_Pump via min_on/min_off) *)
-        pump_run := (DT_current > C_SOLAR_DT_START) OR
-                    (pump.running AND DT_current > C_SOLAR_DT_STOP);
+        pump_run := (DT_current > P11_SolarDeltaTStart) OR
+                    (pump.running AND DT_current > P12_SolarDeltaTStop);
         pi_enabled := pump_run;
         state_desc := 'AUTO';
 
@@ -88,8 +88,8 @@ pi(
 pump(
     cmd_run      := pump_run,
     fault        := fault,
-    min_on_time  := C_SOLAR_MIN_ON_TIME,
-    min_off_time := C_SOLAR_MIN_OFF_TIME
+    min_on_time  := P14_SolarPumpMinOnTime,
+    min_off_time := P15_SolarPumpMinOffTime
 );
 
 (* Velocidad: si la bomba no corre → 0; si corre → salida PI *)

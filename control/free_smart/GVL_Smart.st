@@ -1,7 +1,7 @@
 (* ============================================================
    GVL_Smart.st
    Variables globales del controlador solar (controlador esclavo Modbus).
-   Subsistema solar — Fusela House
+   Subsistema solar — Fosela House
    ============================================================ *)
 
 VAR_GLOBAL
@@ -25,14 +25,14 @@ VAR_GLOBAL
     vel_P1_permil   : UINT;     (* Velocidad P1 en ‰ (0-1000) *)
 
     (* ---- Setpoints recibidos del FRE via Modbus (registros 200-203) ---- *)
-    SP_DT_solar     : REAL := 8.0;          (* ΔT objetivo P1 [K] *)
-    modo_solar      : E_Solar_Mode := SOLAR_AUTO;
-    orden_persianas : BOOL := FALSE;        (* FALSE=auto, TRUE=forzar cierre *)
-    SP_TT3_piscina  : REAL := 75.0;         (* TT3 mínimo para desvío a piscina [°C] *)
+    P10_SolarDeltaTTarget     : REAL := 8.0;          (* ΔT objetivo P1 [K] *)
+    P19_SolarMode      : E_Solar_Mode := SOLAR_AUTO;
+    P17_SolarOverheatShutterClose : BOOL := FALSE;        (* FALSE=auto, TRUE=forzar cierre *)
+    P16_MinTempForPoolSolarHeating  : REAL := 75.0;         (* TT3 mínimo para desvío a piscina [°C] *)
 
     (* ---- Alarmas ---- *)
     ALM_TT1_HIGH    : BOOL;
     ALM_TT2_HIGH    : BOOL;
-    alarma_solar_code : UINT;   (* 0=OK, 1=TT1 alta, 2=TT2 alta, 3=ambas *)
+    solar_alarm_code : UINT;   (* 0=OK, 1=TT1 alta, 2=TT2 alta, 3=ambas *)
 
 END_VAR

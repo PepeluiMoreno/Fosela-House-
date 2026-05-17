@@ -1,7 +1,7 @@
 (* ============================================================
    GVL_Evolution.st
    Variables globales del controlador principal (maestro Modbus).
-   Sistema principal — Fusela House
+   Sistema principal — Fosela House
    ============================================================ *)
 
 VAR_GLOBAL
@@ -49,18 +49,18 @@ VAR_GLOBAL
     bdc_priority    : E_BDC_Priority := PRIO_ACS_CLIMATE_POOL;
 
     (* ---- Ciclo de pasteurización ---- *)
-    past_phase      : E_Pasteurization_Phase := PAST_IDLE;
-    past_request    : BOOL := FALSE;    (* Solicitud manual o automática *)
-    past_apt_idx    : UINT := 1;        (* Apartamento actual en purgado *)
+    hyg_phase      : E_Hygienization_Phase := HYG_IDLE;
+    hyg_request    : BOOL := FALSE;    (* Solicitud manual o automática *)
+    hyg_apt_idx    : UINT := 1;        (* Apartamento actual en purgado *)
 
     (* ---- Alarmas ---- *)
     alarms          : ST_SystemAlarms;
 
     (* ---- Setpoints enviados al controlador solar vía Modbus ---- *)
-    MB_TO_SMART_SP_DT       : UINT := 80;   (* 8.0K ×10 *)
-    MB_TO_SMART_MODO        : UINT := 0;
-    MB_TO_SMART_PERS        : UINT := 0;
-    MB_TO_SMART_SP_TT3_POOL : UINT := 750;  (* 75.0°C ×10 *)
-    MB_TO_SMART_POOL_DEMAND : UINT := 0;
+    P10_SolarDeltaTTarget       : UINT := 80;   (* 8.0K ×10 *)
+    P19_SolarMode        : UINT := 0;
+    P17_SolarOverheatShutterClose        : UINT := 0;
+    P16_MinTempForPoolSolarHeating : UINT := 750;  (* 75.0°C ×10 *)
+    pool_demand_ext : UINT := 0;
 
 END_VAR

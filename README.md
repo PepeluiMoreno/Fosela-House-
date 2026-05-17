@@ -15,7 +15,7 @@ Repositorio técnico del proyecto de instalación térmica integrada para vivien
 ## Estructura del repositorio
 
 ```
-Fusela-House/
+Fosela-House/
 ├── docs/
 │   └── memoria/
 │       ├── memoria_instalacion_termica_jerez.md   ← Fuente Markdown

@@ -7,7 +7,7 @@
    - Desvío a piscina (pos. B) si:
        * modo = SOLAR_FORCE_POOL, O
        * modo = SOLAR_AUTO AND TT3 >= SP_TT3_pool AND pool_demand=TRUE
-   - Persianas: cierran si TT2 >= C_SOLAR_TT2_DISS o forzado externo
+   - Persianas: cierran si TT2 >= P17_SolarOverheatShutterClose o forzado externo
    - P2 (mini bucle): marcha si V3V_SOL está en posición B (piscina)
    ============================================================ *)
 
@@ -58,7 +58,7 @@ END_IF
 valve_sol(
     cmd_pos_B   := want_pool,
     enabled     := NOT fault,
-    travel_time := C_VALVE_TRAVEL_TIME
+    travel_time := K_VALVE_TRAVEL
 );
 cmd_V3V_SOL_pool := valve_sol.DO_valve;
 
@@ -69,7 +69,7 @@ cmd_P2_run := valve_sol.DO_valve AND
               NOT fault;
 
 (* --- Persianas: cierre por disipación o forzado externo --- *)
-want_dissipate := (TT2 >= C_SOLAR_TT2_DISS);
+want_dissipate := (TT2 >= P17_SolarOverheatShutterClose);
 dissipation_active := want_dissipate;
 
 cmd_shutters_close := want_dissipate OR force_shutters OR fault;

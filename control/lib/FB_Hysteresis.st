@@ -6,8 +6,8 @@
    Ejemplo de uso:
      ctrl_TT5(
        measured    := TT5,
-       setpoint    := C_ACS_TT5_TARGET,
-       hysteresis  := C_ACS_TT5_HYST,
+       setpoint    := P30_ACSStorageSetPoint,
+       hysteresis  := P31_ACSStorageHysteresis,
        mode_heat   := TRUE   (* TRUE=calor: ON si T<SP; FALSE=frío: ON si T>SP *)
      );
      output_device := ctrl_TT5.output;
