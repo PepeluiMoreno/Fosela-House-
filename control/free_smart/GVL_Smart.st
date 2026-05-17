@@ -1,6 +1,6 @@
 (* ============================================================
    GVL_Smart.st
-   Variables globales del FREE Smart SMD4500C.
+   Variables globales del controlador solar (controlador esclavo Modbus).
    Subsistema solar — Fusela House
    ============================================================ *)
 
@@ -12,7 +12,7 @@ VAR_GLOBAL
     TT3             : REAL;     (* AI3 — D1 cabeza [°C] *)
 
     (* ---- Salidas analógicas ---- *)
-    AO_P1_speed     : REAL;     (* AO 0-10V → convertidor PWM → TEU-III [0.0-10.0 V] *)
+    AO_P1_speed     : REAL;     (* AO 0-10V → convertidor PWM → bomba solar modulante [V] *)
 
     (* ---- Salidas digitales (relés) ---- *)
     DO_V3V_SOL      : BOOL;     (* Relé 1: FALSE=serp.inf D1 (ACS), TRUE=serp.sup D1 (piscina) *)

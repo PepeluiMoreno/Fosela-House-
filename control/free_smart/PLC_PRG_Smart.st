@@ -1,6 +1,6 @@
 (* ============================================================
    PLC_PRG_Smart.st
-   Programa principal del FREE Smart SMD4500C.
+   Programa principal del controlador solar (controlador esclavo Modbus).
    Task cíclica: 1000 ms (térmica, no requiere ciclos cortos).
 
    MAPEO HARDWARE (configurar en Device → I/O en FREE Studio):
@@ -48,7 +48,7 @@ solar_pump(
     fault   := ALM_TT1_HIGH
 );
 
-(* Mapear velocidad % → 0-10V para AO → convertidor 0-10V→PWM → TEU-III *)
+(* Mapear velocidad % → 0-10V para AO → convertidor 0-10V→PWM → bomba solar modulante *)
 speed_volt      := solar_pump.speed_pct / 10.0;   (* 0-100% → 0.0-10.0 V *)
 AO_P1_speed     := speed_volt;
 

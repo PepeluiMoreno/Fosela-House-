@@ -1,6 +1,6 @@
 (* ============================================================
    GVL_Evolution.st
-   Variables globales del FREE Evolution.
+   Variables globales del controlador principal (maestro Modbus).
    Sistema principal — Fusela House
    ============================================================ *)
 
@@ -40,7 +40,7 @@ VAR_GLOBAL
     DO_P3           : BOOL;     (* Bomba fancoils arranque *)
     DO_P4           : BOOL;     (* Bomba HTR arranque *)
 
-    (* ---- Datos recibidos del FREE Smart por Modbus ---- *)
+    (* ---- Datos recibidos del controlador solar por Modbus ---- *)
     SM              : ST_SolarData;  (* Ver Types_Common.st *)
 
     (* ---- Modos y estados del sistema ---- *)
@@ -56,7 +56,7 @@ VAR_GLOBAL
     (* ---- Alarmas ---- *)
     alarms          : ST_SystemAlarms;
 
-    (* ---- Setpoints enviados al FREE Smart vía Modbus ---- *)
+    (* ---- Setpoints enviados al controlador solar vía Modbus ---- *)
     MB_TO_SMART_SP_DT       : UINT := 80;   (* 8.0K ×10 *)
     MB_TO_SMART_MODO        : UINT := 0;
     MB_TO_SMART_PERS        : UINT := 0;

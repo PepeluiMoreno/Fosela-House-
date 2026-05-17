@@ -1,7 +1,7 @@
 (* ============================================================
    Types_Common.st
    Tipos, enumeraciones y constantes compartidos entre
-   FREE Smart (solar) y FREE Evolution (sistema principal).
+   controlador solar (esclavo Modbus) y controlador principal (maestro Modbus).
    Proyecto: Fusela House — Jerez de la Frontera
    ============================================================ *)
 
@@ -76,7 +76,7 @@ END_TYPE
    ESTRUCTURAS
    ------------------------------------------------------------ *)
 
-(* Datos del subsistema solar publicados por FREE Smart *)
+(* Datos del subsistema solar publicados por el controlador solar *)
 TYPE ST_SolarData :
 STRUCT
     TT1             : REAL;     (* Temperatura colector [°C] *)
@@ -98,7 +98,7 @@ STRUCT
     (* Solar *)
     ALM_TT1_HIGH        : BOOL;  (* TT1 > ALM_TT1_MAX *)
     ALM_TT2_HIGH        : BOOL;  (* TT2 > ALM_TT2_MAX *)
-    ALM_COMM_SMART      : BOOL;  (* Pérdida comunicación FREE Smart *)
+    ALM_COMM_SMART      : BOOL;  (* Pérdida comunicación controlador solar *)
     (* ACS *)
     ALM_TT5_LOW         : BOOL;  (* D2 cabeza por debajo de mínimo *)
     ALM_TT5_HIGH        : BOOL;  (* D2 sobretemperatura *)
@@ -176,11 +176,11 @@ END_VAR
 
 (* ------------------------------------------------------------
    CONSTANTES — MODBUS REGISTROS
-   (FREE Smart esclavo dirección 1)
+   (controlador solar, esclavo Modbus dirección 1)
    ------------------------------------------------------------ *)
 VAR_GLOBAL CONSTANT
 
-    (* Registros de lectura (FREE Smart → FREE Evolution) *)
+    (* Registros de lectura (controlador solar → controlador principal) *)
     MB_REG_TT1          : UINT := 100;
     MB_REG_TT2          : UINT := 101;
     MB_REG_TT3          : UINT := 102;
@@ -191,7 +191,7 @@ VAR_GLOBAL CONSTANT
     MB_REG_ALM_SOLAR    : UINT := 107;
     MB_REG_DT_SOLAR     : UINT := 108;
 
-    (* Registros de escritura (FREE Evolution → FREE Smart) *)
+    (* Registros de escritura (controlador principal → controlador solar) *)
     MB_REG_SP_DT        : UINT := 200;
     MB_REG_MODO_SOLAR   : UINT := 201;
     MB_REG_ORD_PERS     : UINT := 202;
@@ -200,7 +200,7 @@ VAR_GLOBAL CONSTANT
     (* Escala para valores de temperatura en Modbus (×10) *)
     MB_TEMP_SCALE       : REAL := 10.0;
 
-    (* Dirección esclavo FREE Smart *)
+    (* Dirección esclavo controlador solar *)
     MB_SMART_SLAVE_ADDR : UINT := 1;
 
 END_VAR

@@ -1,6 +1,6 @@
 (* ============================================================
    FB_SolarPump.st
-   Control de la bomba solar P1 (TEU-III via convertidor PWM).
+   Control de la bomba solar P1 (modulante via convertidor 0-10V→PWM).
    - Lazo PI discreto de ΔT constante
    - Tiempos mínimos anti-ciclado
    - Modos: AUTO, OFF, FORZADO

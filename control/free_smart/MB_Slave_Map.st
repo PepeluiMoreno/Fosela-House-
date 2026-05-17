@@ -1,6 +1,6 @@
 (* ============================================================
    MB_Slave_Map.st
-   Mapa de registros Modbus del FREE Smart (esclavo dir. 1).
+   Mapa de registros Modbus del controlador solar (esclavo Modbus dir. 1).
 
    CONFIGURACIÓN EN FREE STUDIO PLUS:
    En Device → Modbus RTU Slave → Memory Mapping, mapear:

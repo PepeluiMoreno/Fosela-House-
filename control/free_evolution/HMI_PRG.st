@@ -1,10 +1,10 @@
 (* ============================================================
    HMI_PRG.st
-   Programa HMI del FREE Evolution.
+   Programa HMI del controlador principal.
    Display 4 dígitos 7-segmentos + teclas ▲▼ ENTER ESC F1 F2.
 
    ARQUITECTURA:
-   - Usa library_SmartHMI de Eliwell (disponible en FREE Studio Plus)
+   - Usa library_SmartHMI (disponible en FREE Studio Plus)
    - Si SmartHMI no está disponible: sustituir FB_HMI_Page y
      FB_HMI_Item por los equivalentes del driver de display disponible.
 
@@ -367,7 +367,7 @@ panel_activity   := hmi.any_key_pressed;
    No es necesario copiar valores — DRY: una sola variable.
    ============================================================ *)
 
-(* Actualizar Modbus hacia FREE Smart con los setpoints editados *)
+(* Actualizar Modbus hacia controlador solar con los setpoints editados *)
 MB_TO_SMART_SP_DT       := REAL_TO_UINT(HMI_SP_DT_solar * MB_TEMP_SCALE);
 MB_TO_SMART_MODO        := HMI_modo_solar;
 MB_TO_SMART_SP_TT3_POOL := REAL_TO_UINT(HMI_SP_TT3_pool * MB_TEMP_SCALE);
