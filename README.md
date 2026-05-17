@@ -1,6 +1,6 @@
 # Fusela House — Instalación térmica integrada
 
-Repositorio técnico del proyecto de instalación térmica integrada para vivienda principal con 4 apartamentos turísticos y piscina privativa en Jerez de la Frontera.
+Repositorio técnico del proyecto de instalación térmica integrada para vivienda principal con 3 apartamentos turísticos y piscina privativa en Jerez de la Frontera.
 
 ## Descripción del sistema
 
@@ -45,4 +45,4 @@ RITE · CTE HE-4 · CTE HS-4 · RD 865/2003 · EN 1717 · EN 378 · IEC 61131-3
 
 ---
 
-*Proyecto Fusela House · Jerez de la Frontera · zona climática B4 · zona solar V*
+*Proyecto Fosela House · Jerez de la Frontera · zona climática B4 · zona solar V*
