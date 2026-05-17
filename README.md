@@ -1,4 +1,4 @@
-# Fusela House — Instalación térmica integrada
+# Fosela House — Instalación térmica integrada
 
 Repositorio técnico del proyecto de instalación térmica integrada para vivienda principal con 3 apartamentos turísticos y piscina privativa en Jerez de la Frontera.
 
