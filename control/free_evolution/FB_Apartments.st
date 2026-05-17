@@ -33,7 +33,7 @@ ELSIF maintenance_mode THEN
     cmd_APT_04 := TRUE;
     cmd_APT_05 := TRUE;
 ELSE
-    (* Modo individual según ip_AptMode_XX *)
+    (* Modo individual según P40_AptMode_XX..P44_AptMode_05 *)
     cmd_APT_01 := (P40_AptMode_01 = UINT#1);
     cmd_APT_02 := (P41_AptMode_02 = UINT#1);
     cmd_APT_03 := (P42_AptMode_03 = UINT#1);
