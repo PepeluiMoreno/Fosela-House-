@@ -20,7 +20,8 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 | Unión con tuerca loca PVC DN50 | Cepex o equiv. | 8 | ~8 € | ~64 € |
 | Llave de esfera PVC DN40 (VP y bypass) | Cepex o equiv. | 8 | ~9 € | ~72 € |
 | Unión con tuerca loca PVC DN40 | Cepex o equiv. | 8 | ~6 € | ~48 € |
-| **Subtotal K01** | | | | **~2.096 €** |
+| Circuladora P4 circuito piscina secundario | Wilo Yonos PICO 25/1-4 | 1 | ~180 € | ~180 € |
+| **Subtotal K01** | | | | **~2.276 €** |
 
 ---
 
@@ -92,12 +93,12 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
 | Acumulador buffer D3 150 L | inox o acero pintado | 1 | ~300 € | ~300 € |
-| Bomba circuladora P3 fancoils alta eficiencia | Grundfos Alpha o equiv. | 1 | ~180 € | ~180 € |
+| Circuladora P3 circuito fancoils D3→fancoils | Wilo Yonos PICO 25/1-6 | 1 | ~210 € | ~210 € |
 | Válvula de seguridad 3 bar D3 | — | 1 | ~15 € | ~15 € |
 | Llave de esfera DN25 | — | 6 | ~9 € | ~54 € |
 | Unión con tuerca loca DN25 | — | 4 | ~6 € | ~24 € |
 | Purgador automático DN15 | — | 2 | ~8 € | ~16 € |
-| **Subtotal K06** | | | | **~589 €** |
+| **Subtotal K06** | | | | **~619 €** |
 
 ---
 
@@ -170,8 +171,9 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
 | Bomba de calor monobloc 14 kW R290, 80°C, A+++ | Haier AW142MXGHA o equiv. | 1 | ~6.500 € | ~6.500 € |
+| Circuladora P2 circuito BDC→D2 | Wilo Yonos PICO 25/1-4 | 1 | ~180 € | ~180 € |
 | Kit hidráulico, accesorios y cableado de campo | — | 1 | ~500 € | ~500 € |
-| **Subtotal K12** | | | | **~7.000 €** |
+| **Subtotal K12** | | | | **~7.180 €** |
 
 
 ---
@@ -180,19 +182,19 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 | Kit | Descripción | Total estimado |
 |---|---|---|
-| K01 | Climatización de piscina | ~2.096 € |
+| K01 | Climatización de piscina | ~2.276 € |
 | K02 | Cadena de seguridad solar + persianas | ~285 € |
 | K03 | Instrumentación de temperatura | ~328 € |
 | K04 | Acumuladores Tusol (refurbished) + ACS | ~2.451 € |
 | K05 | Circuito solar primario | ~752 € |
-| K06 | Circuito climatización fancoils | ~589 € |
+| K06 | Circuito climatización fancoils | ~619 € |
 | K07 | Control y automatización | ~1.722 € |
 | K08 | Apartamentos ACS | ~295 € |
 | K09 | Depuración piscina | ~1.260 € |
 | K10 | Colectores solares + estructura | ~2.200 € |
 | K11 | Sistema terminal climatización | ~8.210 € |
-| K12 | Bomba de calor aerotérmica 14 kW | ~7.000 € |
-| **TOTAL** | | **~27.188 €** |
+| K12 | Bomba de calor aerotérmica 14 kW | ~7.180 € |
+| **TOTAL** | | **~27.578 €** |
 
 > Precios orientativos IVA incluido salvo indicación.
 > No incluye mano de obra, aislamiento térmico de tuberías, obra civil
