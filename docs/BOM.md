@@ -58,7 +58,7 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Acumulador solar Tusol DB2 450 vitrificado SMALGLASS | ref. existente | 2 | — | ya adquirido |
+| Acumulador solar Tusol DB2 450 vitrificado SMALGLASS (refurbished) | ref. existente | 2 | 1.000 € | 2.000 € |
 | Válvula de seguridad sanitaria 8 bar DN20 | VS_D1, VS_D2 | 2 | ~20 € | ~40 € |
 | Vaso expansión sanitario 30–35 L membrana EPDM | Reflex Refix DD o equiv. | 1 | ~80 € | ~80 € |
 | Válvula mezcladora termostática VMT1 DN20 | Caleffi 521 o equiv. | 1 | ~60 € | ~60 € |
@@ -66,7 +66,7 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 | Llave de esfera latón DN20 — ramales ACS | — | 10 | ~8 € | ~80 € |
 | Filtro Y latón DN20 | — | 2 | ~12 € | ~24 € |
 | Purgador automático de aire DN15 | — | 4 | ~8 € | ~32 € |
-| **Subtotal K04** | | | | **~451 €** |
+| **Subtotal K04** | | | | **~2.451 €** |
 
 ---
 
@@ -130,6 +130,20 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 ---
 
+## K09 · Depuración piscina
+
+| Descripción | Modelo | Cant. | Precio ud | Total |
+|---|---|---|---|---|
+| Bomba filtración 1CV autoaspirante silenciosa | AstralPool Victoria Plus Silent 1CV monofásica | 1 | ~220 € | ~220 € |
+| Filtro arena Ø550mm con válvula selectora 6 vías | AstralPool Aster 550 lateral | 1 | ~350 € | ~350 € |
+| Arena sílex granulometría 0,4–0,8mm | 8 sacos × 25kg (200 kg total) | 8 | ~11 € | ~90 € |
+| Clorador salino 15 g/h hasta 50 m³ | AstralPool E-Next 50 | 1 | ~450 € | ~450 € |
+| Dosificador pH peristáltico automático | AstralPool E-Series pH | 1 | ~150 € | ~150 € |
+| **Subtotal K09** | | | | **~1.260 €** |
+
+
+---
+
 ## Resumen general
 
 | Kit | Descripción | Total estimado |
@@ -137,17 +151,15 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 | K01 | Climatización de piscina | ~2.096 € |
 | K02 | Cadena de seguridad solar + persianas | ~285 € |
 | K03 | Instrumentación de temperatura | ~328 € |
-| K04 | Acumuladores y circuito ACS | ~451 € |
+| K04 | Acumuladores Tusol (refurbished) + ACS | ~2.451 € |
 | K05 | Circuito solar primario | ~752 € |
 | K06 | Circuito climatización fancoils | ~589 € |
 | K07 | Control y automatización | ~1.722 € |
 | K08 | Apartamentos ACS | ~295 € |
-| **TOTAL** | | **~6.518 €** |
+| K09 | Depuración piscina | ~1.260 € |
+| **TOTAL** | | **~9.778 €** |
 
 > Precios orientativos IVA incluido. No incluye mano de obra, aislamiento térmico
-> de tuberías, obra civil ni equipos ya adquiridos (acumuladores Tusol, CE).
+> de tuberías, obra civil, bomba de calor, fancoils, calentadores eléctricos
+> ni colectores solares.
 > Verificar precios actuales antes de comprar.
-
----
-
-*Fosela House · Instalación térmica integrada · Jerez de la Frontera*
