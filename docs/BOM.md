@@ -178,13 +178,30 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 ---
 
+## K13 · Tubería, racorería y aislamiento
+
+| Descripción | Referencia | Cant. | Precio ud | Total |
+|---|---|---|---|---|
+| Tubería multicapa 32mm | rollo 25 m, AENOR | 25 m | ~3,50 €/m | ~88 € |
+| Tubería multicapa 25mm | rollo 50 m, AENOR | 50 m | ~2,50 €/m | ~125 € |
+| Tubería multicapa 22mm | rollo 75 m, AENOR | 75 m | ~2,00 €/m | ~150 € |
+| Racorería multicapa (codos, tes, reducciones, manguitos) | surtido según circuitos | 1 | ~145 € | ~145 € |
+| Coquilla elastomérica 32mm Ø int, 25mm esp. | según RITE IT 1.2.4.2 | 25 m | ~3,50 €/m | ~88 € |
+| Coquilla elastomérica 25mm Ø int, 25mm esp. | según RITE IT 1.2.4.2 | 50 m | ~2,80 €/m | ~140 € |
+| Coquilla elastomérica 22mm Ø int, 25mm esp. | según RITE IT 1.2.4.2 | 75 m | ~2,50 €/m | ~188 € |
+| Codos y piezas especiales aislamiento | — | 1 | ~60 € | ~60 € |
+| **Subtotal K13** | | | | **~984 €** |
+
+
+---
+
 ## Resumen general
 
 | Kit | Descripción | Total estimado |
 |---|---|---|
 | K01 | Climatización de piscina | ~2.276 € |
 | K02 | Cadena de seguridad solar + persianas | ~285 € |
-| K03 | Instrumentación de temperatura | ~328 € |
+| K03 | Instrumentación de temperatura | ~308 € |
 | K04 | Acumuladores Tusol (refurbished) + ACS | ~2.451 € |
 | K05 | Circuito solar primario | ~752 € |
 | K06 | Circuito climatización fancoils | ~619 € |
@@ -192,11 +209,11 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 | K08 | Apartamentos ACS | ~295 € |
 | K09 | Depuración piscina | ~1.260 € |
 | K10 | Colectores solares + estructura | ~2.200 € |
-| K11 | Sistema terminal climatización | ~8.210 € |
+| K11 | Distribución por fancoils | ~8.210 € |
 | K12 | Bomba de calor aerotérmica 14 kW | ~7.180 € |
-| **TOTAL** | | **~27.578 €** |
+| K13 | Tubería, racorería y aislamiento | ~984 € |
+| **TOTAL versión estándar** | | **~28.562 €** |
 
 > Precios orientativos IVA incluido salvo indicación.
-> No incluye mano de obra, aislamiento térmico de tuberías, obra civil
-> ni calentadores eléctricos de apartamentos.
+> No incluye mano de obra, obra civil ni calentadores eléctricos de apartamentos.
 > Verificar precios actuales antes de comprar.
