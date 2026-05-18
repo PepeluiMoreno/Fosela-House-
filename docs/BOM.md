@@ -10,7 +10,7 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Intercambiador titanio 5 kW — HX1 y HX_HTR | AstralPool Waterheat EVO TIT-20 ref.71607 | 2 | ~450 € | ~900 € |
+| ~~Intercambiadores titanio 5 kW HX1 y HX_HTR~~ | eliminados — HX único TIT-60 cubre solar y BDC | — | — | — |
 | Intercambiador titanio 15 kW — HX_HP | AstralPool Waterheat EVO TIT-60 ref.71609 | 1 | ~700 € | ~700 € |
 | Colector distribución PVC DN50 5 salidas | Jardiboutique JB-00500 | 2 | 13,17 € | 26,34 € |
 | Interruptor de flujo paleta PVC DN50 | Pentair ST11 | 1 | ~55 € | ~55 € |
@@ -21,7 +21,7 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 | Llave de esfera PVC DN40 (VP y bypass) | Cepex o equiv. | 8 | ~9 € | ~72 € |
 | Unión con tuerca loca PVC DN40 | Cepex o equiv. | 8 | ~6 € | ~48 € |
 | Circuladora P4 circuito piscina secundario | Wilo Yonos PICO 25/1-4 | 1 | ~180 € | ~180 € |
-| **Subtotal K01** | | | | **~2.276 €** |
+| **Subtotal K01** | | | | **~1.376 €** |
 
 ---
 
@@ -29,14 +29,14 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Persianas motorizadas colectores solares | Todo-nada 230VAC, tamaño según campo | 1 | ~150 € | ~150 € |
+| ~~Persianas motorizadas colectores solares~~ | eliminadas — lógica de control conservada en PLC | — | — | — |
 | Termostato de contacto TK1 ~88°C rearme manual | Calorstat contacto NC, rearme manual | 1 | ~25 € | ~25 € |
 | Termostato seguridad Z1 ~90°C D1, rearme manual | Calorstat contacto NC, rearme manual | 1 | ~25 € | ~25 € |
 | Termostato seguridad Z2 ~90°C D2, rearme manual | Calorstat contacto NC, rearme manual | 1 | ~25 € | ~25 € |
 | Avisador acústico AV1 230VAC IP55 | Sirena industrial | 1 | ~20 € | ~20 € |
 | Temporizador TMP1 carril DIN on-delay | 0–60 s, 230VAC | 1 | ~25 € | ~25 € |
 | Relé auxiliar R2 230VAC 10A + zócalo | Schneider RXM o equiv. | 1 | ~15 € | ~15 € |
-| **Subtotal K02** | | | | **~285 €** |
+| **Subtotal K02** | | | | **~135 €** |
 
 ---
 
@@ -49,7 +49,7 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 | Pozo inmersión inox 8×200mm G1/2" PN40 | Amazon B0BL7K4HYJ | 4 | 9,29 € | 37,16 € |
 | Sonda NTC 10K Beta 3977K cable silicona 2m — AI01 colector | iOVEO 036HS05202 | 1 | ~13 € | ~13 € |
 | Sonda NTC 10K Beta 3977K cable PVC 2m — AI02–AI14 | iOVEO 035HP05202 | 12 | ~10 € | ~120 € |
-| Sonda NTC 10K Beta 3977K exterior IP65 — AI12 | iOVEO 001AF05200 | 1 | ~10 € | ~10 € |
+| ~~Sonda NTC 10K Beta 3977K exterior IP65 — AI12~~ | eliminada en versión económica | — | — | — |
 | Termómetro de esfera bimetálico DN50 — D1, D2, D3 | 0–120°C, vaina inox | 3 | ~20 € | ~60 € |
 | **Subtotal K03** | | | | **~328 €** |
 
@@ -106,8 +106,8 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Controlador principal con display LCD | Eliwell FREE Evolution EVD7500 | 2 | ~470 € | ~940 € |
-| Controlador solar esclavo Modbus | Eliwell FREE Smart SMD4500C | 1 | ~280 € | ~280 € |
+| Controlador principal con display LCD (segunda mano) | Eliwell FREE Evolution EVD7500 | 2 | 200 € | 400 € |
+| ~~Controlador solar esclavo Modbus~~ | ~~Eliwell FREE Smart SMD4500C~~ — eliminado, lógica solar en EVD7500 #1 | — | — | — |
 | Cable RS485 apantallado 2 pares | por metro | 20 | ~1,5 € | ~30 € |
 | Resistencias terminación RS485 120Ω | — | 2 | ~1 € | ~2 € |
 | Fuente alimentación 24Vac 50VA carril DIN | — | 2 | ~35 € | ~70 € |
@@ -123,24 +123,17 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Válvula motorizada 3 vías 230VAC V3V_APT | DN20, PVC | 5 | ~35 € | ~175 € |
+| Válvula motorizada 3 vías 230VAC V3V_APT | DN20, PVC | 4 | ~35 € | ~140 € |
 | Calentador eléctrico CE 50–80 L | según demanda por apto. | 5 | — | ya adquirido |
 | Válvula de esfera DN20 por ramal | — | 10 | ~8 € | ~80 € |
 | Válvula antiretorno DN20 | — | 5 | ~8 € | ~40 € |
-| **Subtotal K08** | | | | **~295 €** |
+| **Subtotal K08** | | | | **~260 €** |
 
 ---
 
 ## K09 · Depuración piscina
 
-| Descripción | Modelo | Cant. | Precio ud | Total |
-|---|---|---|---|---|
-| Bomba filtración 1CV autoaspirante silenciosa | AstralPool Victoria Plus Silent 1CV monofásica | 1 | ~220 € | ~220 € |
-| Filtro arena Ø550mm con válvula selectora 6 vías | AstralPool Aster 550 lateral | 1 | ~350 € | ~350 € |
-| Arena sílex granulometría 0,4–0,8mm | 8 sacos × 25kg (200 kg total) | 8 | ~11 € | ~90 € |
-| Clorador salino 15 g/h hasta 50 m³ | AstralPool E-Next 50 | 1 | ~450 € | ~450 € |
-| Dosificador pH peristáltico automático | AstralPool E-Series pH | 1 | ~150 € | ~150 € |
-| **Subtotal K09** | | | | **~1.260 €** |
+> **ELIMINADO en versión económica** — presupuestado y ejecutado de forma independiente.
 
 
 ---
@@ -195,27 +188,28 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 ---
 
-## Resumen general
+## Resumen general — Versión económica
 
 | Kit | Descripción | Total estimado |
 |---|---|---|
-| K01 | Climatización de piscina | ~2.276 € |
-| K02 | Cadena de seguridad solar + persianas | ~285 € |
-| K03 | Instrumentación de temperatura | ~308 € |
+| K01 | Climatización de piscina (HX único TIT-60) | ~1.376 € |
+| K02 | Cadena de seguridad solar (sin persianas motorizadas) | ~135 € |
+| K03 | Instrumentación de temperatura (sin AI12 exterior) | ~298 € |
 | K04 | Acumuladores Tusol (refurbished) + ACS | ~2.451 € |
 | K05 | Circuito solar primario | ~752 € |
 | K06 | Circuito climatización fancoils | ~619 € |
-| K07 | Control y automatización | ~1.722 € |
-| K08 | Apartamentos ACS | ~295 € |
-| K09 | Depuración piscina | ~1.260 € |
+| K07 | Control y automatización (EVD7500 2ª mano, sin FREE Smart) | ~902 € |
+| K08 | Apartamentos ACS (4 apartamentos) | ~260 € |
+| K09 | Depuración piscina | — (excluido) |
 | K10 | Colectores solares + estructura | ~2.200 € |
 | K11 | Distribución por fancoils | ~9.510 € |
 | K12 | Bomba de calor aerotérmica 14 kW Haier AW142MXGHA | ~5.180 € |
 | K13 | Tubería, racorería y aislamiento | ~984 € |
-| **TOTAL versión estándar** | | **~27.842 €** |
+| **TOTAL versión económica** | | **~24.667 €** |
 
-> Precios orientativos IVA incluido salvo indicación.
-> Haier AW142MXGHA: precio real verificado ~4.500 € IVA incluido.
-> Fancoils Daitsu FDLA EC FLEX: precio estimado ~400 € ud sin instalación.
-> No incluye mano de obra, obra civil ni calentadores eléctricos de apartamentos.
-> Verificar precios actuales antes de comprar.
+> Precios IVA incluido salvo indicación.
+> Diferencia respecto a versión estándar: **~3.175 € de ahorro**.
+> No incluye mano de obra, obra civil ni calentadores eléctricos.
+> K09 depuración piscina se presupuesta y ejecuta de forma independiente.
+> Persianas motorizadas: lógica de control conservada en EVD7500 para instalación futura.
+> AI12 temperatura exterior: entrada disponible en EVD7500 para instalación futura.
