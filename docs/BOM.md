@@ -162,7 +162,7 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 | Fancoil 2 tubos motor EC con salida 0-10V velocidad | cassette o conductos según estancia | 13 | ~300 € | ~3.900 € |
 | Termostato fancoil doble salida 0-10V (ventilador + PICV), 2 tubos | Siemens RDG160T o equiv. | 11 | ~120 € | ~1.320 € |
 | PICV DN15 + actuador proporcional 0-10V | Danfoss AB-QM, Belimo o equiv. | 13 | ~230 € | ~2.990 € |
-| **Subtotal K11** | | | | **~8.210 €** |
+| **Subtotal K11** | | | | **~9.510 €** |
 
 ---
 
@@ -170,10 +170,10 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Bomba de calor monobloc 14 kW R290, 80°C, A+++ | Haier AW142MXGHA o equiv. | 1 | ~6.500 € | ~6.500 € |
+| Bomba de calor monobloc 14 kW R290, 80°C, A+++ | Haier AW142MXGHA | 1 | ~4.500 € | ~4.500 € |
 | Circuladora P2 circuito BDC→D2 | Wilo Yonos PICO 25/1-4 | 1 | ~180 € | ~180 € |
 | Kit hidráulico, accesorios y cableado de campo | — | 1 | ~500 € | ~500 € |
-| **Subtotal K12** | | | | **~7.180 €** |
+| **Subtotal K12** | | | | **~5.180 €** |
 
 
 ---
@@ -209,11 +209,13 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 | K08 | Apartamentos ACS | ~295 € |
 | K09 | Depuración piscina | ~1.260 € |
 | K10 | Colectores solares + estructura | ~2.200 € |
-| K11 | Distribución por fancoils | ~8.210 € |
-| K12 | Bomba de calor aerotérmica 14 kW | ~7.180 € |
+| K11 | Distribución por fancoils | ~9.510 € |
+| K12 | Bomba de calor aerotérmica 14 kW Haier AW142MXGHA | ~5.180 € |
 | K13 | Tubería, racorería y aislamiento | ~984 € |
-| **TOTAL versión estándar** | | **~28.562 €** |
+| **TOTAL versión estándar** | | **~27.842 €** |
 
 > Precios orientativos IVA incluido salvo indicación.
+> Haier AW142MXGHA: precio real verificado ~4.500 € IVA incluido.
+> Fancoils Daitsu FDLA EC FLEX: precio estimado ~400 € ud sin instalación.
 > No incluye mano de obra, obra civil ni calentadores eléctricos de apartamentos.
 > Verificar precios actuales antes de comprar.
