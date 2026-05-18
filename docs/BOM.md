@@ -144,6 +144,39 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 ---
 
+## K10 · Colectores solares
+
+| Descripción | Referencia | Cant. | Precio ud | Total |
+|---|---|---|---|---|
+| Colector solar plano 2 m² Solar Keymark, absorbedor cobre selectivo, vidrio templado bajo hierro | marca a confirmar con distribuidor | 6 | ~300 € | ~1.800 € |
+| Estructura soporte cubierta para 6 colectores | acero galvanizado, según inclinación | 1 | ~400 € | ~400 € |
+| **Subtotal K10** | | | | **~2.200 €** |
+
+---
+
+## K11 · Sistema terminal climatización
+
+| Descripción | Referencia | Cant. | Precio ud | Total |
+|---|---|---|---|---|
+| Fancoil 4 tubos motor EC con salida 0-10V para control de velocidad | cassette o conductos según estancia | 13 | ~550 € | ~7.150 € |
+| Termostato fancoil doble salida 0-10V (ventilador + PICV) | Siemens RDG260T o equiv. | 11 | ~200 € | ~2.200 € |
+| PICV DN15 + actuador proporcional 0-10V | Danfoss AB-QM, Belimo o equiv. | 13 | ~230 € | ~2.990 € |
+| **Subtotal K11** | | | | **~12.340 €** |
+
+---
+
+## K12 · Bomba de calor aerotérmica con HTR
+
+| Descripción | Referencia | Cant. | Precio ud | Total |
+|---|---|---|---|---|
+| Unidad exterior bomba de calor 6–24 kW R290 con recuperador HTR | Ecoforest ecoAIR+ 6-24 PRO HTR | 1 | ~10.000 € | ~10.000 € |
+| Módulo interior hidráulico | CM o HK-Compact según config. | 1 | ~2.000 € | ~2.000 € |
+| Kit hidráulico, accesorios y cableado de campo | — | 1 | ~500 € | ~500 € |
+| **Subtotal K12** | | | | **~12.500 €** |
+
+
+---
+
 ## Resumen general
 
 | Kit | Descripción | Total estimado |
@@ -157,9 +190,14 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 | K07 | Control y automatización | ~1.722 € |
 | K08 | Apartamentos ACS | ~295 € |
 | K09 | Depuración piscina | ~1.260 € |
-| **TOTAL** | | **~9.778 €** |
+| K10 | Colectores solares + estructura | ~2.200 € |
+| K11 | Sistema terminal climatización | ~12.340 € |
+| K12 | Bomba de calor aerotérmica con HTR | ~12.500 € |
+| **TOTAL** | | **~36.818 €** |
 
-> Precios orientativos IVA incluido. No incluye mano de obra, aislamiento térmico
-> de tuberías, obra civil, bomba de calor, fancoils, calentadores eléctricos
-> ni colectores solares.
-> Verificar precios actuales antes de comprar.
+> Precios orientativos IVA incluido salvo indicación.
+> No incluye mano de obra, aislamiento térmico de tuberías, obra civil
+> ni calentadores eléctricos de apartamentos.
+> El precio de la bomba de calor es una estimación — Ecoforest solo
+> vende a través de distribuidores. Solicitar presupuesto oficial.
+> Verificar todos los precios antes de comprar.
