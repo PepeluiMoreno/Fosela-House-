@@ -246,9 +246,11 @@ Las tres ramas convergen en un colector después del HX y antes del retorno a pi
 | D1 | Acumulador solar vitrificado **Tusol DB2 450** (406 L), 2 serpentines: inf 2,2 m²/solar, sup 1,0 m²/intermedio piscina | 1 |
 | D2 | Acumulador aerotermia vitrificado **Tusol DB2 450** (406 L), 2 serpentines: inf 2,2 m²/BDC, sup 1,0 m²/HTR | 1 |
 | D3 | Buffer climatización cerrado 150 L | 1 |
-| **HX1** | Intercambiador placas titanio 5 kW | 1 |
-| **HX_BDC** | Intercambiador placas titanio 12 kW | 1 |
-| **HX_HTR** | Intercambiador placas titanio 3 kW | 1 |
+| **HX1** | AstralPool Waterheat EVO **TIT-20** (ref. 71607) — cuerpo y serpentín titanio, 5 kW a 45°C, 10 kW a 60°C, PS primario 10 bar, PS secundario 3 bar | 1 |
+| **HX_HP** | AstralPool Waterheat EVO **TIT-60** (ref. 71609) — titanio, 15 kW a 45°C, 30 kW a 60°C, PS primario 10 bar, PS secundario 3 bar | 1 |
+| **HX_HTR** | AstralPool Waterheat EVO **TIT-20** (ref. 71607) — titanio, 5 kW a 45°C / ~20 kW a 75°C, PS primario 10 bar, PS secundario 3 bar | 1 |
+| **COL_ENT** | Colector distribución PVC presión DN50, 5 salidas encolables, ref. JB-00500 (Jardiboutique) — entrada desde filtro, 3 ramas HX + 1 EV_BYPASS | 1 |
+| **COL_RET** | Colector retorno PVC presión DN50, 5 salidas encolables, ref. JB-00500 — retorno de 3 HX + EV_BYPASS hacia piscina | 1 |
 | VMT1 | Válvula mezcladora termostática DN20, 55 °C | 1 |
 | V3V1, V3V2 | Válvulas 3 vías motorizadas DN25 230 VAC | 2 |
 | V3V3, V3V_SOL | Válvulas 3 vías motorizadas DN20 230 VAC | 2 |
@@ -481,9 +483,14 @@ FREE Smart SMD4500C          FREE Evolution EVD/EVC
 - FREE Evolution: maestro, polling cada **5 s**.
 - En caso de fallo de comunicación (timeout): FRE activa alarma y el FREE Smart mantiene el último modo conocido.
 
-### 7.6 Dimensionamiento de intercambiadores y circuladoras
+### 7.6 Intercambiadores de calor lado piscina
 
-Coeficiente de transferencia global U adoptado para PHE titanio agua–agua en condiciones de piscina: **U ≈ 3.500 W/m²·K** (valor conservador; típico catálogo Bowman/Pahlén/Onda 3.000–5.000). Factor de margen de seguridad sobre área calculada: **1,5**.
+Los tres intercambiadores son del modelo **AstralPool Waterheat EVO** — cuerpo y serpentín en aleación de titanio, compatibles con agua de piscina clorada o salina. Se instalan en el circuito de filtración existente mediante dos colectores de distribución en PVC presión DN50 (ref. JB-00500, Jardiboutique) con 5 salidas encolables: 3 ramas para los HX + 1 rama para EV_BYPASS.
+
+| Modelo | Ref. | Potencia 45°C | Potencia 60°C | Potencia 90°C | Caudal primario |
+|---|---|---|---|---|---|
+| TIT-20 | 71607 | 5 kW | 10 kW | 20 kW | 1,6 m³/h |
+| TIT-60 | 71609 | 15 kW | 30 kW | 60 kW | 3,1 m³/h |
 
 #### 7.6.1 HX1 — solar (mini bucle intermedio) → piscina
 
@@ -497,10 +504,10 @@ Coeficiente de transferencia global U adoptado para PHE titanio agua–agua en c
 - Potencia nominal: **5 kW**.
 - LMTD ≈ ((42−30) − (35−26)) / ln(12/9) ≈ **10,4 K**.
 - Área necesaria: 5.000 / (3.500 × 10,4) ≈ 0,14 m². Con margen 1,5×: **0,21 m²**.
-- Configuración: PHE brazed titanio, **~15 placas**, conexiones **DN20 (3/4")**, modelo de referencia Bowman 3.4, Pahlén Hi-Flow 13 o equivalente.
+- Configuración: PHE brazed titanio, **~15 placas**, conexiones **DN20 (3/4")**, Modelo seleccionado: **AstralPool Waterheat EVO TIT-20** (ref. 71607) — 5 kW a 45°C, adecuado para 5 kW nominal del circuito solar.
 - Pérdida de carga estimada: 3–5 kPa primario, 5–10 kPa secundario.
 
-#### 7.6.2 HX_BDC — primario BDC → piscina
+#### 7.6.2 HX_HP — primario bomba de calor → piscina
 
 **Condiciones nominales de operación:**
 
@@ -512,7 +519,7 @@ Coeficiente de transferencia global U adoptado para PHE titanio agua–agua en c
 - Potencia nominal: **12 kW**.
 - LMTD ≈ **10,4 K** (mismas T que HX1, mayor caudal).
 - Área necesaria: 12.000 / (3.500 × 10,4) ≈ 0,33 m². Con margen 1,5×: **0,50 m²**.
-- Configuración: PHE brazed titanio, **~30 placas**, conexiones **DN25 (1")**, modelo de referencia Bowman 5.5, Pahlén Hi-Flow 25 o equivalente.
+- Configuración: PHE brazed titanio, **~30 placas**, conexiones **DN25 (1")**, Modelo seleccionado: **AstralPool Waterheat EVO TIT-60** (ref. 71609) — 15 kW a 45°C, cubre con margen los 12 kW nominales del primario de la bomba de calor.
 - Pérdida de carga estimada: 8–15 kPa primario, 10–20 kPa secundario.
 
 #### 7.6.3 HX_HTR — HTR → piscina
@@ -527,7 +534,7 @@ Coeficiente de transferencia global U adoptado para PHE titanio agua–agua en c
 - Potencia nominal: **3 kW** (continua mientras la BDC está activa).
 - LMTD ≈ ((75−28) − (65−26)) / ln(47/39) ≈ **43 K** (gran salto térmico por agua del HTR a 70–80 °C).
 - Área necesaria: 3.000 / (3.500 × 43) ≈ 0,02 m². Con margen amplio: **0,10 m²**.
-- Configuración: PHE brazed titanio, **~10 placas** (mínimo comercial habitual), conexiones **DN20 (3/4")**, modelo de referencia Bowman 0.8, Pahlén Aqua-Mex F11 o equivalente.
+- Configuración: PHE brazed titanio, **~10 placas** (mínimo comercial habitual), conexiones **DN20 (3/4")**, Modelo seleccionado: **AstralPool Waterheat EVO TIT-20** (ref. 71607) — mismo modelo que HX1; a 75°C del HTR entrega ~20 kW, muy superior a los 3 kW necesarios, pero es el modelo más pequeño disponible de la gama.
 - Pérdida de carga estimada: 2–4 kPa primario, 5–10 kPa secundario.
 
 #### 7.6.4 Circuladoras dedicadas
