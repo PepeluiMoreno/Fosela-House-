@@ -84,7 +84,7 @@ APARTAMENTOS:  ACS precalentada ──► V3V por apartamento ──► termo el
 
 ### Principio de funcionamiento del reservorio
 
-El retorno frío de los consumos entra por el fondo de D1 (depósito solar), se precalienta mediante el serpentín solar, pasa por la cabeza de D1 al fondo de D2 (depósito aerotérmico) donde la BC lo remata, y sale caliente por la cabeza de D2 hacia los consumos.
+El retorno frío de los consumos entra por el fondo de D1 (depósito solar), se precalienta mediante el serpentín solar, pasa por la tapa de D1 al fondo de D2 (depósito aerotérmico) donde la BC lo remata, y sale caliente por la tapa de D2 hacia los consumos.
 
 Los serpentines de ambos depósitos quedan libres y dedicados exclusivamente a sus productores. En cada depósito los dos serpentines (superior e inferior) se conectan en serie, duplicando la superficie de intercambio (~3,2 m² por depósito).
 
@@ -122,7 +122,7 @@ No almacenan agua potable. El cuerpo de cada depósito contiene agua técnica en
 
 El productor entra por el serpentín superior y sale por el inferior: zona caliente arriba, fluido devuelto lo más frío posible → mejor rendimiento del captador y mejor COP de la BC.
 
-**Tomas para el lazo de agua técnica**: bocas del ánodo (parte alta) y la resistencia (lateral) de cada depósito para el circuito de extracción, las de mayor diámetro del cuerpo. Las bocas AFS (fondo) y ACS (cabeza) quedan para el enlace serie entre depósitos: fondo de D2 → cabeza de D1.
+**Tomas para el lazo de agua técnica**: bocas del ánodo (parte alta) y la resistencia (lateral) de cada depósito para el circuito de extracción, las de mayor diámetro del cuerpo. Las bocas AFS (fondo) y ACS (tapa) quedan para el enlace serie entre depósitos: fondo de D2 → tapa de D1.
 
 ### 7.1 Conexión de los circuitos de extracción — criterio de estratificación
 
@@ -132,10 +132,10 @@ El tándem D1+D2 se comporta como un único depósito de inercia estratificado d
 
 | Consumidor | Toma (impulsión) | Grado requerido | Retorno |
 |---|---|---|---|
-| DHW (PWM1) | Punto más alto — cabeza de D2 (ánodo) | El más alto (~65°C) | Fondo del tándem (D1) |
+| DHW (PWM1) | Punto más alto — tapa de D2 (ánodo) | El más alto (~65°C) | Fondo del tándem (D1) |
 | Fancoils (P3) | Zona alta, por debajo de la toma DHW | Medio (~45°C) | Fondo del tándem (D1) |
 
-El DHW (circuladora PWM1 de la estación de producción) toma del punto absolutamente más alto porque es el consumidor de mayor grado. Los fancoils (circuladora P3), que trabajan a temperatura más baja, toman **por debajo** de la toma del DHW: así no degradan la cabeza ni le roban el agua más caliente al DHW. Ambos retornos van lo más abajo posible (fondo de D1), donde el agua fría favorece tanto el rendimiento del captador solar como el COP de la BC durante la carga.
+El DHW (circuladora PWM1 de la estación de producción) toma del punto absolutamente más alto porque es el consumidor de mayor grado. Los fancoils (circuladora P3), que trabajan a temperatura más baja, toman **por debajo** de la toma del DHW: así no degradan la zona alta ni le roban el agua más caliente al DHW. Ambos retornos van lo más abajo posible (fondo de D1), donde el agua fría favorece tanto el rendimiento del captador solar como el COP de la BC durante la carga.
 
 > La asignación exacta de cada boca (ánodo, resistencia, AFS, ACS) a su función definitiva requiere cotejar el plano dimensional del DB2 450 para confirmar la altura real de cada toma.
 
@@ -178,7 +178,7 @@ La estación comprende los siguientes elementos:
 ```
 Red potable ──► [Caudalímetro Hall] ──► [Secundario placa AISI 316L] ──► [VMT1 55°C] ──► [Corte térmico] ──► ACS distribución
 
-Reservorio D2 (cabeza, ~65°C) ──► [Circuladora PWM1] ──► [Primario placa] ──► D1 (fondo, retorno frío)
+Reservorio D2 (tapa, ~65°C) ──► [Circuladora PWM1] ──► [Primario placa] ──► D1 (fondo, retorno frío)
 ```
 
 **Control de la estación**:
@@ -305,12 +305,12 @@ T_res_min = 60 + 5 = 65 °C
 ```
 
 **Implicación en la lógica del PLC:**
-- Setpoint mínimo de carga del reservorio (TT5 en cabeza D2): **65 °C**
+- Setpoint mínimo de carga del reservorio (TT5 en tapa D2): **65 °C**
 - Por debajo de 65 °C en TT5, la estación entrega ACS a temperatura reducida (la VMT1 no puede compensar). El PLC debe generar alarma de «reservorio frío» y priorizar la carga aerotérmica hacia D2.
 - El setpoint nominal de operación es **70 °C** en TT5, que garantiza el margen para el caso desfavorable.
 - Por encima de **80 °C** en TT5 se activa la protección por sobretemperatura y se suspende la carga.
 
-| TT5 (D2 cabeza) | Estado | Acción PLC |
+| TT5 (D2 tapa) | Estado | Acción PLC |
 |---|---|---|
 | < 60 °C | Reservorio frío | Alarma + prioridad BC→reservorio |
 | 60–65 °C | Reservorio marginal | ACS puede ser < 55 °C en grifo |
