@@ -174,6 +174,136 @@ Reservorio D2 (cabeza, ~65°C) ──► [Circuladora PWM1] ──► [Primario 
 
 **Dimensionado pendiente**: verificar la placa seleccionada a 40-50 kW con la temperatura mínima de reservorio prevista en condiciones de demanda máxima, y confirmar el rango del caudalímetro hasta 20 L/min.
 
+### 8.3 Cálculos justificativos del intercambiador de placas
+
+#### 8.3.1 Temperatura del agua de red
+
+No existe dato publicado específico de temperatura del agua de red para Jerez de la Frontera. Aguas de Jerez (Aqualia) publica análisis de calidad pero no de temperatura. El abastecimiento procede del embalse de Guadalcacín y del manantial de Tempul — este último históricamente valorado por su temperatura constante en todas las estaciones.
+
+El referente normativo aplicable es la tabla de temperaturas medias mensuales del agua de red del **CTE DB-HE Anejo B**, que para la provincia de **Cádiz** (zona climática HE4: V) establece:
+
+| Ene | Feb | Mar | Abr | May | Jun | Jul | Ago | Sep | Oct | Nov | Dic |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 10 °C | 10 °C | 11 °C | 13 °C | 15 °C | 17 °C | 19 °C | 20 °C | 19 °C | 17 °C | 14 °C | 11 °C |
+
+El escenario de cálculo punta es **enero/febrero con T_red = 10 °C**, que constituye el caso más desfavorable del año tanto para la potencia del intercambiador como para el rendimiento de producción solar.
+
+#### 8.3.2 Parámetros de diseño del intercambiador
+
+| Parámetro | Valor | Observaciones |
+|---|---|---|
+| T_red (agua fría entrada secundario) | **10 °C** | Enero/febrero, CTE HE4 Cádiz |
+| T_placa (salida secundario antes de VMT1) | **60 °C** | VMT1 mezcla a 55 °C |
+| T_res (entrada primario, nominal) | **70 °C** | Temperatura nominal reservorio |
+| T_res (entrada primario, mínima) | **65 °C** | Mínima de operación garantizada |
+| Caudal secundario diseño | **15 L/min** | Demanda sostenida (varias duchas) |
+| Caudal secundario pico | 20 L/min | Demanda punta momentánea |
+| Caudal primario estimado (PWM1) | 0,40 kg/s (24 L/min) | Bomba tipo caldera, perfil calefacción |
+
+#### 8.3.3 Cálculo de potencia térmica
+
+**Caso diseño — 15 L/min sostenidos:**
+
+```
+Q = ṁ_s × Cp × ΔT_s
+Q = (15/60) kg/s × 4,18 kJ/kg·K × (60 − 10) K
+Q = 0,250 × 4,18 × 50 = 52,2 kW
+```
+
+**Caso pico — 20 L/min momentáneos:**
+
+```
+Q_pico = (20/60) × 4,18 × 50 = 69,7 kW
+```
+
+El pico de 20 L/min es momentáneo y la masa térmica del circuito primario y del reservorio lo absorbe. El dimensionado del intercambiador se realiza sobre los **52 kW sostenidos**.
+
+**Análisis VMT1 a caudal punta:**
+
+La válvula mezcladora termostática VMT1 mezcla agua de placa con agua de red para entregar 55 °C al usuario. A 20 L/min en grifo:
+
+```
+Balance mezcla: F_placa × (60 − 55) = F_fría × (55 − 10)
+F_placa + F_fría = 20 L/min
+→  F_placa = 18 L/min   F_fría = 2 L/min
+```
+
+La placa solo procesa **18 de los 20 L/min** del caudal punta; la VMT1 añade los 2 L/min restantes de agua fría de red directa.
+
+#### 8.3.4 Dimensionado del intercambiador — método LMTD
+
+El intercambiador trabaja en contracorriente. Las temperaturas en cada extremo:
+
+**Caso nominal (reservorio a 70 °C):**
+
+| Extremo | Primario (caliente) | Secundario (frío) | ΔT |
+|---|---|---|---|
+| Entrada HX | 70 °C (T_h,in) | 60 °C (T_c,out) | **ΔT₁ = 10 °C** |
+| Salida HX | 38,8 °C (T_h,out) | 10 °C (T_c,in) | **ΔT₂ = 28,8 °C** |
+
+```
+T_h,out = 70 − 52.200 / (0,40 × 4.180) = 70 − 31,2 = 38,8 °C
+
+LMTD = (ΔT₁ − ΔT₂) / ln(ΔT₁/ΔT₂)
+LMTD = (10 − 28,8) / ln(10/28,8) = −18,8 / −1,058 = 17,8 °C
+```
+
+**Caso desfavorable (reservorio a 65 °C, mínima operación):**
+
+| Extremo | Primario | Secundario | ΔT |
+|---|---|---|---|
+| Entrada HX | 65 °C | 60 °C | **ΔT₁ = 5 °C** |
+| Salida HX | 33,8 °C | 10 °C | **ΔT₂ = 23,8 °C** |
+
+```
+LMTD = (5 − 23,8) / ln(5/23,8) = −18,8 / −1,558 = 12,1 °C
+```
+
+**Área de intercambio necesaria:**
+
+Para intercambiadores de placas de acero inoxidable con fluidos agua-agua, el coeficiente global de transferencia U oscila entre 4.000 y 7.000 W/m²·K. Se adopta **U = 5.000 W/m²·K** como valor conservador.
+
+| Escenario | LMTD | A necesaria |
+|---|---|---|
+| Nominal (res. 70 °C) | 17,8 °C | **0,59 m²** |
+| Desfavorable (res. 65 °C) | 12,1 °C | **0,86 m²** |
+
+```
+A = Q / (U × LMTD)
+A_desfavorable = 52.200 W / (5.000 W/m²·K × 12,1 K) = 0,86 m²
+```
+
+**Criterio de selección:** se elige un intercambiador con **A ≥ 1,0 m²** para incorporar un margen de seguridad del 15 % sobre el caso desfavorable y cubrir el ensuciamiento progresivo (fouling) característico del agua dura de Cádiz. Una placa de 20-30 canales en formato B25/B35 de los fabricantes habituales (SWEP, Alfa Laval, GEA) cubre esta superficie con holgura.
+
+#### 8.3.5 Temperatura mínima del reservorio — implicación para el control
+
+La temperatura de salida del intercambiador está acotada por la temperatura de entrada del primario menos la diferencia de aproximación (approach temperature), que en placas es típicamente 3-5 °C:
+
+```
+T_placa_max = T_res − ΔT_approach ≈ T_res − 5 °C
+```
+
+Para que la placa entregue 60 °C (y la VMT1 pueda mezclar a 55 °C):
+
+```
+T_res_min = 60 + 5 = 65 °C
+```
+
+**Implicación en la lógica del PLC:**
+- Setpoint mínimo de carga del reservorio (TT5 en cabeza D2): **65 °C**
+- Por debajo de 65 °C en TT5, la estación entrega ACS a temperatura reducida (la VMT1 no puede compensar). El PLC debe generar alarma de «reservorio frío» y priorizar la carga aerotérmica hacia D2.
+- El setpoint nominal de operación es **70 °C** en TT5, que garantiza el margen para el caso desfavorable.
+- Por encima de **80 °C** en TT5 se activa la protección por sobretemperatura y se suspende la carga.
+
+| TT5 (D2 cabeza) | Estado | Acción PLC |
+|---|---|---|
+| < 60 °C | Reservorio frío | Alarma + prioridad BC→reservorio |
+| 60–65 °C | Reservorio marginal | ACS puede ser < 55 °C en grifo |
+| 65–70 °C | Operación normal | ACS garantizada ≥ 55 °C |
+| 70–80 °C | Reservorio caliente | BC puede cargar piscina/fancoils |
+| > 80 °C | Sobretemperatura | Suspender carga, alarma |
+
+
 ---
 
 ## 9. REPARTO DE LA PRODUCCIÓN AEROTÉRMICA
