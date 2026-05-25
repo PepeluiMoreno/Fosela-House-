@@ -133,9 +133,9 @@ El tándem D1+D2 se comporta como un único depósito de inercia estratificado d
 | Consumidor | Toma (impulsión) | Grado requerido | Retorno |
 |---|---|---|---|
 | DHW (PWM1) | Punto más alto — tapa de D2 (ánodo) | El más alto (~65°C) | Fondo del tándem (D1) |
-| Fancoils (P3) | Zona alta, por debajo de la toma DHW | Medio (~45°C) | Fondo del tándem (D1) |
+| Piscina (HX titanio) | Zona alta, por debajo de la toma DHW | Medio | Fondo del tándem (D1) |
 
-El DHW (circuladora PWM1 de la estación de producción) toma del punto absolutamente más alto porque es el consumidor de mayor grado. Los fancoils (circuladora P3), que trabajan a temperatura más baja, toman **por debajo** de la toma del DHW: así no degradan la zona alta ni le roban el agua más caliente al DHW. Ambos retornos van lo más abajo posible (fondo de D1), donde el agua fría favorece tanto el rendimiento del captador solar como el COP de la BC durante la carga.
+El DHW (circuladora PWM1 de la estación de producción) toma del punto absolutamente más alto porque es el consumidor de mayor grado. La piscina (vía HX de titanio), que admite temperatura más baja, toma **por debajo** de la toma del DHW: así no degrada la zona alta ni le roba el agua más caliente al DHW. Los fancoils no aparecen aquí: tienen su propio buffer de 150 L (ver B.4). Ambos retornos van lo más abajo posible (fondo de D1), donde el agua fría favorece tanto el rendimiento del captador solar como el COP de la BC durante la carga.
 
 > La asignación exacta de cada boca (ánodo, resistencia, AFS, ACS) a su función definitiva requiere cotejar el plano dimensional del DB2 450 para confirmar la altura real de cada toma.
 
@@ -548,12 +548,17 @@ Cada circuito cerrado lleva además su **propio purgador en el punto alto** (el 
 - Secuencia: `boca tapa D2 → manguito dieléctrico → llave de bola → circuladora PWM1 → primario placa HX → retorno → fondo de D1`.
 - El resto de la estación (placa, VMT1, caudalímetro, corte térmico, secundario AFS→DHW) está detallado en la sección 8.
 
-### B.4 Extracción climatización — fancoils (P3)
+### B.4 Circuito de climatización — aguja hidráulica de 150 L
 
-- Toma de la **zona alta de D2, por debajo de la toma de ACS** (boca de resistencia lateral): los fancoils trabajan a ~45 °C y no deben robar grado a la cabeza del DHW.
-- **Circuladora P3 en la impulsión**, tras la toma.
-- Secuencia: `boca resistencia D2 → manguito dieléctrico → llave de bola → circuladora P3 → impulsión fancoils → retorno fancoils → fondo de D1`.
-- Vaso de expansión + válvula de seguridad propios del circuito de fancoils.
+Los fancoils **no cuelgan del tándem**: trabajan en los dos modos (calor en invierno, frío en verano), por lo que toman de un depósito de inercia propio de 150 L que actúa como aguja hidráulica de 4 bocas entre la BC (primario) y los fancoils (secundario). La BC carga ese buffer caliente o frío según estación.
+
+**Conexión cruzada primario/secundario:**
+- Primario (BC): entra arriba, sale abajo.
+- Secundario (P3): aspira arriba, retorna abajo.
+
+`boca alta secundaria → manguito dieléctrico → llave de bola → P3 → impulsión fancoils → retorno → boca baja secundaria`
+
+**Justificación del cruce:** la P3 aspira de la boca alta del secundario, contigua a la impulsión del primario, donde la BC acaba de depositar el agua ya tratada. Así toma el agua útil sea cual sea su signo térmico —no hay que reconfigurar nada entre verano e invierno— y la aguja desacopla el caudal de la BC del de los fancoils. Circuito cerrado con vaso de expansión y válvula de seguridad propios.
 
 ### B.5 Extracción piscina — HX de titanio
 
