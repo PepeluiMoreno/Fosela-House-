@@ -135,9 +135,7 @@ El tándem D1+D2 se comporta como un único depósito de inercia estratificado d
 | DHW (PWM1) | Punto más alto — cabeza de D2 (ánodo) | El más alto (~65°C) | Fondo del tándem (D1) |
 | Fancoils (P3) | Zona alta, por debajo de la toma DHW | Medio (~45°C) | Fondo del tándem (D1) |
 
-El DHW toma del punto absolutamente más alto porque es el consumidor de mayor grado. Los fancoils, que trabajan a temperatura más baja, toman **por debajo** de la toma del DHW: así no degradan la cabeza ni le roban el agua más caliente al DHW. Ambos retornos van lo más abajo posible (fondo de D1), donde el agua fría favorece tanto el rendimiento del captador solar como el COP de la BC durante la carga.
-
-**Bomba solar (PWM2):** no es un circuito de extracción sino de carga. El glicol inyecta calor por los serpentines en circuito cerrado, entrando por el serpentín superior y saliendo por el inferior. Su impulsión no se conecta al agua del depósito sino a la boca de entrada del serpentín superior del depósito D1 (depósito frío del tándem), donde cede calor en la zona de menor temperatura para máximo rendimiento del captador.
+El DHW (circuladora PWM1 de la estación de producción) toma del punto absolutamente más alto porque es el consumidor de mayor grado. Los fancoils (circuladora P3), que trabajan a temperatura más baja, toman **por debajo** de la toma del DHW: así no degradan la cabeza ni le roban el agua más caliente al DHW. Ambos retornos van lo más abajo posible (fondo de D1), donde el agua fría favorece tanto el rendimiento del captador solar como el COP de la BC durante la carga.
 
 > La asignación exacta de cada boca (ánodo, resistencia, AFS, ACS) a su función definitiva requiere cotejar el plano dimensional del DB2 450 para confirmar la altura real de cada toma.
 
