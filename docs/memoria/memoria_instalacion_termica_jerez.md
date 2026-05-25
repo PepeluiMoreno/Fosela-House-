@@ -476,3 +476,19 @@ Para el registro completo de cómo se tomaron estas decisiones ver:
 6. **No se instala válvula de llenado automático en el circuito de glicol**: diluiría progresivamente el anticongelante sin aviso. Llenado manual con premezcla verificada con refractómetro.
 
 7. **V3V con retorno por muelle en apartamentos**: ante fallo de tensión la válvula conmuta a agua de red garantizando ACS por el termo eléctrico existente.
+
+---
+
+## APÉNDICE A — Mejoras posibles en la instrumentación
+
+Los dos módulos **TM3AI4** incluidos en el lote de Manresa proporcionan 8 canales de entrada analógica (0-10V / 4-20mA) disponibles para futuras ampliaciones de instrumentación. A continuación se relacionan las mejoras que podrían incorporarse sin modificar el hardware de control ya adquirido.
+
+| # | Instrumento | Señal | Canales | Utilidad |
+|---|---|---|---|---|
+| 1 | Transductor de presión — circuito solar primario | 4-20 mA | 1 | Detección de pérdidas de glicol, necesidad de purga, caída de presión progresiva |
+| 2 | Transductor de presión — lazo agua técnica (D1-D2) | 4-20 mA | 1 | Vigilancia de la integridad del circuito cerrado, alarma por pérdida de presión |
+| 3 | Piranómetro — radiación solar global horizontal | 0-10 V | 1 | Correlación producción real vs. radiación disponible; detección de suciedad en captadores |
+| 4 | Señal analógica BC — potencia o estado | 0-10 V / 4-20 mA | 1 | Calorimetría aerotérmica si el equipo ofrece salida analógica de potencia o COP |
+
+> Ninguna de estas mejoras ha sido objeto de decisión. Se listan como posibilidades que el hardware ya adquirido puede asumir sin coste adicional de control.
+> La disponibilidad de la señal analógica de la BC depende del modelo concreto que se instale — verificar ficha técnica antes de planificar su uso.
