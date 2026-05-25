@@ -25,7 +25,7 @@ VAR
     pool_ctrl       : FB_Pool;
     apt_ctrl        : FB_Apartments;
     bdc_arbiter     : FB_BDC_Arbiter;
-    hyg_ctrl        : FB_Hygienization;
+    pre_ctrl        : FB_Preheating;
     alarms_ctrl     : FB_Alarms;
     test_ctrl       : FB_TestMode;
 
@@ -68,19 +68,19 @@ SM := mb_master.solar;
 (* ============================================================
    3. HIGIENIZACIÓN  (prioridad sobre todo)
    ============================================================ *)
-hyg_ctrl(
+pre_ctrl(
     TT5            := TT5c,
-    manual_request := hyg_request,
+    manual_request := pre_request,
     enabled        := TRUE
 );
-hyg_phase   := hyg_ctrl.phase;
-hyg_apt_idx := hyg_ctrl.apt_idx;
+pre_phase   := pre_ctrl.phase;
+pre_apt_idx := pre_ctrl.apt_idx;
 
 (* ============================================================
    4. ÁRBITRO BC
    ============================================================ *)
 bdc_arbiter(
-    demand_ACS     := acs_ctrl.demand_BDC OR hyg_ctrl.force_BDC_ACS,
+    demand_ACS     := acs_ctrl.demand_BDC OR pre_ctrl.force_BDC_ACS,
     demand_climate := climate_ctrl.demand_BDC,
     demand_pool    := pool_ctrl.demand_BDC,
     enabled        := NOT DI_BDC_FAULT
@@ -97,7 +97,7 @@ acs_ctrl(
     TT4           := TT4c,
     TT5           := TT5c,
     bdc_available := bdc_arbiter.grant_ACS,
-    hyg_active    := hyg_ctrl.active,
+    pre_active    := pre_ctrl.active,
     enabled       := TRUE
 );
 
@@ -128,7 +128,7 @@ pool_ctrl(
    8. APARTAMENTOS
    ============================================================ *)
 apt_ctrl(
-    hyg_active       := hyg_ctrl.active,
+    pre_active       := pre_ctrl.active,
     maintenance_mode := FALSE,
     enabled          := TRUE
 );
@@ -154,7 +154,7 @@ IF test_ctrl.override_active THEN
 ELSE
     (* Salidas normales *)
     (* V3V1: FALSE=reservorio (D2), TRUE=→V3V2 *)
-    DO_V3V1        := NOT acs_ctrl.cmd_V3V1_reservorio AND NOT hyg_ctrl.force_BDC_ACS;
+    DO_V3V1        := NOT acs_ctrl.cmd_V3V1_reservorio AND NOT pre_ctrl.force_BDC_ACS;
     (* V3V2: FALSE=fancoils (D3), TRUE=piscina (HX_BC) *)
     DO_V3V2        := pool_ctrl.cmd_VP_HX_BC AND NOT climate_ctrl.cmd_V3V2_D3;
     DO_VP_HX_SOLAR := pool_ctrl.cmd_VP_HX_SOLAR;

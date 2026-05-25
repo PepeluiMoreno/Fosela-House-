@@ -40,7 +40,7 @@ EQUIPO
 | `SP_TT5` — consigna D2 cabeza | ≤ `EQ_ACUM_T_MAX` − margen |
 | `SP_TT2_diss` — cierre persianas | ≤ `EQ_ACUM_T_MAX` − margen |
 | `SP_TT3_pool` — desvío a piscina | ≤ `EQ_ACUM_T_MAX` − margen |
-| `past_target` — temperatura pasteurización | ≤ `EQ_ACUM_T_MAX` − margen |
+| `past_target` — temperatura precalentamientoón | ≤ `EQ_ACUM_T_MAX` − margen |
 | `Z1 / Z2` — termostatos seguridad hardware | ≤ `EQ_ACUM_T_MAX` |
 | `VS_serp` — tarado válvulas seguridad serpentines | = `EQ_ACUM_PS_SERP` |
 

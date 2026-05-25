@@ -28,10 +28,10 @@ VAR_GLOBAL RETAIN  (* RETAIN: sobreviven a un corte de alimentación *)
     P60_PoolSetPoint         : REAL := 27.0;  (* Setpoint piscina [20.0 – 35.0 °C] paso 0.5 *)
     P61_PoolHysteresis         : REAL := 1.0;   (* Histéresis pisc  [0.5 – 3.0 K]   paso 0.5 *)
 
-    (* ---- PASTEURIZACIÓN --------------------------------- *)
-    P70_HygienizationTarget  : REAL := 70.0;  (* T objetivo past. [65.0 – 75.0 °C] paso 0.5 *)
-    P72_HygienizationHoldTime   : UINT := 60;    (* Tiempo manten.   [30 – 120 min]   paso 5   *)
-    P73_HygienizationFlushTime  : UINT := 30;    (* Tiempo purgado   [15 – 60 min]    paso 5   *)
+    (* ---- PRECALENTAMIENTOÓN --------------------------------- *)
+    P70_PreheatingTarget  : REAL := 70.0;  (* T objetivo past. [65.0 – 75.0 °C] paso 0.5 *)
+    P72_PreheatingHoldTime   : UINT := 60;    (* Tiempo manten.   [30 – 120 min]   paso 5   *)
+    P73_PreheatingFlushTime  : UINT := 30;    (* Tiempo purgado   [15 – 60 min]    paso 5   *)
 
     (* ---- APARTAMENTOS ----------------------------------- *)
     P40_AptMode_01     : UINT := 0;     (* 0=PRECALENTADA 1=AFS *)
@@ -55,7 +55,7 @@ END_VAR
 VAR_GLOBAL
 
     (* Solicitudes de acción desde panel *)
-    hyg_request : BOOL := FALSE; (* Pulso: lanzar pasteurización *)
+    pre_request : BOOL := FALSE; (* Pulso: lanzar precalentamientoón *)
     HMI_req_alm_reset   : BOOL := FALSE; (* Pulso: reset alarmas *)
     HMI_req_factory_rst : BOOL := FALSE; (* Pulso: reset fábrica (CFG) *)
 

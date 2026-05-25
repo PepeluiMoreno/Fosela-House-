@@ -248,19 +248,19 @@ pg_apt(
         item_05_min := 0, item_05_max := 1, item_05_step := 1
 );
 
-(* ---- PÁGINA PASTEURIZACIÓN ------------------------------ *)
+(* ---- PÁGINA PRECALENTAMIENTOÓN ------------------------------ *)
 pg_past(
     title           := 'PAST',
-    item_01_label   := 'STA.', item_01_var := ADR(hyg_phase),        item_01_type := HMI_READ_ONLY,
+    item_01_label   := 'STA.', item_01_var := ADR(pre_phase),        item_01_type := HMI_READ_ONLY,
     item_02_label   := 'TT 5', item_02_var := ADR(TT5),               item_02_type := HMI_READ_ONLY,
-    item_03_label   := 'APT.', item_03_var := ADR(hyg_apt_idx),      item_03_type := HMI_READ_ONLY,
-    item_04_label   := 'SP.T', item_04_var := ADR(P70_HygienizationTarget),item_04_type := HMI_EDITABLE,
+    item_03_label   := 'APT.', item_03_var := ADR(pre_apt_idx),      item_03_type := HMI_READ_ONLY,
+    item_04_label   := 'SP.T', item_04_var := ADR(P70_PreheatingTarget),item_04_type := HMI_EDITABLE,
         item_04_min := 65.0,  item_04_max := 75.0, item_04_step := 0.5,
-    item_05_label   := 'T.Ho', item_05_var := ADR(P72_HygienizationHoldTime), item_05_type := HMI_EDITABLE,
+    item_05_label   := 'T.Ho', item_05_var := ADR(P72_PreheatingHoldTime), item_05_type := HMI_EDITABLE,
         item_05_min := 30,    item_05_max := 120,  item_05_step := 5,
-    item_06_label   := 'T.Fl', item_06_var := ADR(P73_HygienizationFlushTime),item_06_type := HMI_EDITABLE,
+    item_06_label   := 'T.Fl', item_06_var := ADR(P73_PreheatingFlushTime),item_06_type := HMI_EDITABLE,
         item_06_min := 15,    item_06_max := 60,   item_06_step := 5,
-    item_07_label   := 'RUN.', item_07_var := ADR(hyg_request),item_07_type := HMI_ACTION
+    item_07_label   := 'RUN.', item_07_var := ADR(pre_request),item_07_type := HMI_ACTION
 );
 
 (* ---- PÁGINA ALARMAS ------------------------------------- *)

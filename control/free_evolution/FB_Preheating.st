@@ -1,15 +1,15 @@
 (* ============================================================
-   FB_Hygienization.st  –  Ciclo de higienización térmica
+   FB_Preheating.st  –  Ciclo de higienización térmica
    Máquina de estados: IDLE → HEAT_D2 → HOLD_D2 → FLUSH → DONE
    ============================================================ *)
-FUNCTION_BLOCK FB_Hygienization
+FUNCTION_BLOCK FB_Preheating
 VAR_INPUT
     TT5             : REAL;
     manual_request  : BOOL;
     enabled         : BOOL := TRUE;
 END_VAR
 VAR_OUTPUT
-    phase           : E_Hygienization_Phase;
+    phase           : E_Preheating_Phase;
     active          : BOOL;
     apt_idx         : UINT;   (* Apartamento actual en purgado 1-5 *)
     force_BDC_ACS   : BOOL;   (* Forzar BDC a modo ACS *)
@@ -27,61 +27,61 @@ r_manual(CLK := manual_request);
 
 CASE phase OF
 
-HYG_IDLE:
+PRE_IDLE:
     active         := FALSE;
     force_BDC_ACS  := FALSE;
     force_APT_prec := FALSE;
     apt_idx        := 1;
-    timer_hold(IN := FALSE, PT := P72_HygienizationHoldTime);
-    timer_flush(IN := FALSE, PT := P73_HygienizationFlushTime);
+    timer_hold(IN := FALSE, PT := P72_PreheatingHoldTime);
+    timer_flush(IN := FALSE, PT := P73_PreheatingFlushTime);
     IF (r_manual.Q OR scheduled_trigger) AND enabled THEN
-        phase := HYG_HEAT_D2;
+        phase := PRE_HEAT;
     END_IF
 
-HYG_HEAT_D2:
+PRE_HEAT:
     active        := TRUE;
     force_BDC_ACS := TRUE;
     force_APT_prec:= TRUE;
     ctrl_hyg(
         measured   := TT5,
-        setpoint   := P70_HygienizationTarget,
-        hysteresis := P71_HygienizationHysteresis,
+        setpoint   := P70_PreheatingTarget,
+        hysteresis := P71_PreheatingHysteresis,
         mode_heat  := TRUE
     );
     IF NOT ctrl_hyg.output THEN
-        phase := HYG_HOLD_D2;
+        phase := PRE_HOLD;
     END_IF
 
-HYG_HOLD_D2:
+PRE_HOLD:
     active        := TRUE;
     force_BDC_ACS := TRUE;
     force_APT_prec:= TRUE;
-    timer_hold(IN := TRUE, PT := P72_HygienizationHoldTime);
+    timer_hold(IN := TRUE, PT := P72_PreheatingHoldTime);
     IF timer_hold.Q THEN
-        timer_hold(IN := FALSE, PT := P72_HygienizationHoldTime);
-        phase   := HYG_FLUSH;
+        timer_hold(IN := FALSE, PT := P72_PreheatingHoldTime);
+        phase   := PRE_FLUSH;
         apt_idx := 1;
     END_IF
 
-HYG_FLUSH:
+PRE_FLUSH:
     active        := TRUE;
     force_BDC_ACS := TRUE;
     force_APT_prec:= TRUE;
-    timer_flush(IN := TRUE, PT := P73_HygienizationFlushTime);
+    timer_flush(IN := TRUE, PT := P73_PreheatingFlushTime);
     IF timer_flush.Q THEN
-        timer_flush(IN := FALSE, PT := P73_HygienizationFlushTime);
+        timer_flush(IN := FALSE, PT := P73_PreheatingFlushTime);
         IF apt_idx < 5 THEN
             apt_idx := apt_idx + 1;
         ELSE
-            phase := HYG_DONE;
+            phase := PRE_DONE;
         END_IF
     END_IF
 
-HYG_DONE:
+PRE_DONE:
     active        := FALSE;
     force_BDC_ACS := FALSE;
     force_APT_prec:= FALSE;
-    phase         := HYG_IDLE;
+    phase         := PRE_IDLE;
 
 END_CASE
 

@@ -43,8 +43,8 @@ Con cuatro apartamentos distribuidos por la finca, sin retorno de ACS los usuari
 **3. Temperatura de distribución ACS a 45 °C: incumple RD 865/2003.**
 La distribución de ACS debe mantenerse a ≥50 °C hasta los puntos de uso; la limitación a 45 °C va en los mezcladores de los grifos, no en la red. Se corrige.
 
-**4. Ciclo de pasteurización antilegionela: formalizado.**
-El diseño inicial asumía que el HTR «pasivamente» mantenía alta temperatura. Se formaliza un ciclo semanal automático independiente del estado de la BC.
+**4. Ciclo de precalentamientoón antilegionela: formalizado.**
+El diseño inicial asumía que el HTR «pasivamente» mantenía alta temperatura. Se formaliza un ciclo de precalentamiento automático independiente del estado de la BC.
 
 **Decisión clave de la sesión:** se confirma la estrategia de comprar la Ecoforest ecoAIR+ **con HTR** y **mínimo de software propietario** (sin e-manager, sin e-system, sin suscripción cloud), integrando todo el control con PLC propio. Se buscan acumuladores con geometría compatible con módulos PCM futuros («PCM-ready»), de modo que en el futuro solo cambien parámetros del PLC, no la hidráulica.
 
@@ -240,7 +240,7 @@ FREE Evolution (EVD7500) ──── RS-485 Modbus RTU ──── FREE Smart 
 
 | Controlador | Función |
 |---|---|
-| FREE Evolution (maestro) | V3V aerotérmicas, V3V apartamentos, estación agua fresca (anticipación + PID), PWM1, ciclo pasteurización |
+| FREE Evolution (maestro) | V3V aerotérmicas, V3V apartamentos, estación agua fresca (anticipación + PID), PWM1, ciclo precalentamientoón |
 | FREE Smart (esclavo) | Bomba PWM2 (ΔT constante), calorímetro solar, persianas motorizadas, sondas glicol |
 
 Las variables se comparten por Modbus: el maestro lee del esclavo la potencia solar instantánea, la energía acumulada, el estado de persianas y temperaturas; le envía consignas cuando las necesita.

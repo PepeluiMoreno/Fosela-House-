@@ -47,10 +47,10 @@ VAR_GLOBAL
     bdc_priority    : E_BDC_Priority := PRIO_ACS_CLIMATE_POOL;
     bc_mode_heat    : BOOL := TRUE;   (* TRUE=calefacción/ACS, FALSE=refrigeración *)
 
-    (* ---- Ciclo de pasteurización ---- *)
-    hyg_phase      : E_Hygienization_Phase := HYG_IDLE;
-    hyg_request    : BOOL := FALSE;
-    hyg_apt_idx    : UINT := 1;
+    (* ---- Ciclo de precalentamientoón ---- *)
+    pre_phase      : E_Preheating_Phase := PRE_IDLE;
+    pre_request    : BOOL := FALSE;
+    pre_apt_idx    : UINT := 1;
 
     (* ---- Alarmas ---- *)
     alarms          : ST_SystemAlarms;
