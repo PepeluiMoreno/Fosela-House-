@@ -128,29 +128,51 @@ El productor entra por el serpentín superior y sale por el inferior: zona calie
 
 ## 8. PRODUCCIÓN DE ACS INSTANTÁNEA — ESTACIÓN DE AGUA FRESCA
 
-El ACS se produce de forma instantánea, sin acumulación de agua potable, mediante una estación de agua fresca: un intercambiador de placas de acero inoxidable AISI 316L apto para agua potable.
+### 8.1 Justificación de la solución
+
+La producción de ACS al paso mediante estación de agua fresca se adopta por la concurrencia de varios factores que hacen de esta solución la única técnicamente correcta para esta instalación.
+
+**Condicionante material de los acumuladores adquiridos.** Los dos depósitos Tusol DB2 450 ya adquiridos son de acero vitrificado SMALGLASS. Este material está diseñado para circuito cerrado de agua técnica con química estable y baja renovación de oxígeno. Su uso como acumulador de agua potable en circuito abierto — con agua de red, oxígeno disuelto y variaciones de mineralización — compromete la integridad del esmalte a medio plazo. La estación al paso resuelve este conflicto desde la raíz: los depósitos funcionan como reservorio de agua técnica en circuito cerrado, que es exactamente el uso para el que están diseñados, y el agua potable nunca entra en ellos.
+
+**Eliminación del riesgo de legionela en la acumulación.** El RD 865/2003 regula la proliferación de *Legionella pneumophila* en sistemas de acumulación de agua caliente sanitaria, que prolifera preferentemente en agua estancada entre 25-50°C. Al no existir acumulación de agua potable, ese vector desaparece. No se requieren ciclos de pasteurización en los acumuladores, ni tratamientos biocidas, ni auditorías de temperatura en depósitos de potable. El ACS se produce en el instante de la demanda y no reside en ningún volumen caliente.
+
+**Potencia de producción libre.** Con producción por serpentines internos, la superficie del intercambiador interior del depósito limita el pico de potencia transferible. Con una placa exterior dimensionada libremente a 40-50 kW, la estación puede servir 15-20 L/min simultáneamente — caudal suficiente para varias duchas concurrentes — sin cuello de botella. La energía disponible en el reservorio de 800 L a 65°C (~47 kWh almacenados) supera con holgura la demanda diaria estimada de 17,6 kWh.
+
+**Temperatura de reservorio sin restricción sanitaria en el depósito.** Con agua potable acumulada, la temperatura de distribución queda limitada a 60°C en el depósito para evitar riesgos de escaldadura. Con agua técnica, el reservorio puede trabajar a 70-80°C sin restricción, aumentando la densidad energética almacenada y el margen disponible antes de que la temperatura caiga bajo el umbral de confort en ACS.
+
+**Respaldo garantizado sin corte de servicio.** Un eventual fallo de la estación no interrumpe el suministro de ACS. Los cuatro apartamentos conservan sus termos eléctricos existentes, conectados a agua de red mediante válvulas V3V con retorno por muelle. Ante cualquier fallo de tensión o componente, las V3V conmutan automáticamente a agua de red y los termos producen ACS por resistencia eléctrica con total independencia de la estación al paso. La estación es una mejora sobre un sistema que ya funciona de forma autónoma, no un sustituto sin respaldo.
+
+**Separación total entre circuitos conforme a EN 1717.** El agua potable solo toca el intercambiador de placas de AISI 316L — material certificado para agua de consumo humano — y en ningún momento entra en contacto con el agua técnica del reservorio. La barrera es física y permanente.
+
+### 8.2 Construcción de la estación — elementos sueltos
+
+La estación se construye a partir de componentes individuales seleccionados y ensamblados en obra, sin recurrir a una estación comercial prefabricada. Esta decisión responde a criterios de coste, flexibilidad de dimensionado y acceso a repuestos estándar de mercado.
+
+La estación comprende los siguientes elementos:
+
+**Intercambiador de placas AISI 316L** — dimensionado a 40-50 kW con la temperatura de reservorio prevista (~65°C en primario, agua de red ~15°C en secundario, caudal secundario hasta 20 L/min). Fabricantes de referencia: SWEP, Alfa Laval, GEA o equivalente. Las placas deben estar certificadas para agua potable.
+
+**Circuladora modulante PWM1** — del tipo integrado en calderas de condensación, con señal de control PWM y perfil calefacción (se para ante pérdida de señal). Es crítico que sea perfil calefacción y no perfil solar: el perfil solar dispara a velocidad máxima ante pérdida de señal, lo que en una estación de ACS significaría agua del reservorio a 70°C sin control en el grifo. La señal de control proviene de las salidas rápidas TR0/TR1 del M241, a través del módulo buck DC-DC 24V→12V (dentro del rango iPWM3: UiH 4,5-15V).
+
+**Caudalímetro de efecto Hall** — instalado en el secundario (agua potable), rango hasta 20 L/min, salida de pulsos compatible con las entradas digitales rápidas del M241. Su función es detectar la apertura de cualquier grifo y enviar una señal de anticipación al PLC antes de que la temperatura de salida caiga, arrancando la bomba PWM1 con antelación.
+
+**Válvula mezcladora termostática VMT1** — instalada a la salida de la placa, tarada a 55°C. Actúa como seguro mecánico independiente de la electrónica: aunque el PID falle o la bomba entregue agua a temperatura excesiva, la VMT1 limita la temperatura de ACS al consumidor. No sustituye al control electrónico sino que lo respalda.
+
+**Corte térmico independiente** — en la línea de ACS, con rearme manual, calibrado a ~70°C. Actúa por hardware, al margen del PLC, ante cualquier fallo de la bomba o de la señal de control que pudiera producir sobretemperatura en la línea de distribución.
 
 ```
-Reservorio (D2 cabeza) ──► [Primario placa AISI 316L] ──► D1 fondo
-                                      │
-                                      │ (intercambio de calor)
-                                      │
-         AFS entrada ──► [Secundario placa] ──► ACS salida 55°C ──► distribución
+Red potable ──► [Caudalímetro Hall] ──► [Secundario placa AISI 316L] ──► [VMT1 55°C] ──► [Corte térmico] ──► ACS distribución
+
+Reservorio D2 (cabeza, ~65°C) ──► [Circuladora PWM1] ──► [Primario placa] ──► D1 (fondo, retorno frío)
 ```
 
 **Control de la estación**:
-- Circuladora Wilo modulante PWM1 (perfil calefacción — se para ante pérdida de señal; **nunca** perfil solar, que va a máxima velocidad ante pérdida de señal).
-- Caudalímetro de efecto Hall en el secundario: detecta apertura del grifo y sube la bomba antes de que la temperatura caiga (anticipación).
-- Lazo PID sobre sonda rápida de salida.
-- Válvula mezcladora termostática VMT1 final: seguro mecánico independiente de la electrónica.
-- Corte térmico independiente en la línea de ACS (protección adicional ante fallo de bomba o señal).
+- Anticipación por caudal: el caudalímetro detecta apertura del grifo → PLC arranca PWM1 antes de que caiga la temperatura.
+- Lazo PID sobre sonda rápida de salida de placa → modula velocidad de PWM1 para mantener temperatura de consigna.
+- VMT1: seguro mecánico independiente, tarada a 55°C.
+- Corte térmico: seguro hardware independiente, rearme manual, ~70°C.
 
-**Dimensionado pendiente**: placa a 40-50 kW con la temperatura de reservorio prevista + caudalímetro hasta 20 L/min.
-
-**Ventajas frente a acumulación de potable**:
-- Riesgo de legionela prácticamente eliminado: no hay acumulación de agua potable.
-- Potencia libre: placa dimensionada sin cuello de botella.
-- Los depósitos de acero vitrificado se usan correctamente (circuito cerrado técnico).
+**Dimensionado pendiente**: verificar la placa seleccionada a 40-50 kW con la temperatura mínima de reservorio prevista en condiciones de demanda máxima, y confirmar el rango del caudalímetro hasta 20 L/min.
 
 ---
 
