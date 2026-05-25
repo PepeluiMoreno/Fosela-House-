@@ -117,18 +117,20 @@ Placa AISI 316L + circuladora modulante + caudalímetro.
 
 Sistema de control basado en un único PLC Schneider Modicon M241 con módulos de expansión TM3.
 Programación en EcoStruxure Machine Expert (CoDeSys 3). HMI vía web server integrado + tablet.
-Señal PWM para bombas Wilo iPWM3 mediante salidas rápidas del M241 + plaquita divisor 24V→10V.
+Señal PWM para bombas Wilo iPWM3 mediante salidas rápidas TR0/TR1 del M241 (24V) + módulo buck
+LM2596 que genera rail 12V. La Wilo iPWM3 acepta UiH 4,5-15V — los 12V están dentro del rango.
 
-| Descripción | Referencia | Cant. |
-|---|---|---|
-| PLC Modicon M241 — 14DI (8 rápidas) + 10DO relé, Ethernet, 2×RS485 | Schneider TM241CE24R | 1 |
-| Módulo 8 AI temperatura NTC/PTC/termopar | Schneider TM3TI8T | 2 |
-| Módulo 16 DO relé 250VAC | Schneider TM3DQ16R/TM3DO16R | 2 |
-| Módulo 4 AI 0-10V / 4-20mA (transductores presión, piranómetro) | Schneider TM3AI4 | 2 |
-| Plaquita divisor PWM 24V→10V — 2 canales Wilo iPWM3 | FR4 50×30mm + 4R + clip DIN | 1 |
-| Fuente alimentación 24VDC 2,5A carril DIN | Mean Well HDR-60-24 o equiv. | 1 |
-| Caja cuadro eléctrico IP55 | tamaño según diseño | 1 |
-| Magnetotérmicos, diferenciales, bornas | surtido | 1 |
-| Cableado de campo 2×1,5mm² | por metro | 200 |
-| Prensaestopas y canaletas | surtido | 1 |
-| HMI | Tablet existente + web server M241 | — |
+| Descripción | Referencia | Cant. | Precio est. | Total |
+|---|---|---|---|---|
+| PLC Modicon M241 — 14DI (8 rápidas) + 6DO relé + 4DO transistor rápido, ETH, 2×RS485 | Schneider TM241CE24R | 1 | ~200 € | ~200 € |
+| Módulo 8 AI temperatura NTC/PTC/termopar directo | Schneider TM3TI8T | 2 | ~80 € | ~160 € |
+| Módulo 16 DO relé 250VAC | Schneider TM3DQ16R/TM3DO16R | 2 | ~70 € | ~140 € |
+| Módulo 4 AI 0-10V / 4-20mA (transductores presión, piranómetro) | Schneider TM3AI4 | 2 | ~60 € | ~120 € |
+| Módulo buck DC-DC 24V→12V con bornes de tornillo — rail señal PWM bombas Wilo | LM2596 con terminal block, ajustable | 1 | ~3 € | ~3 € |
+| Fuente alimentación 24VDC 2,5A carril DIN | Mean Well HDR-60-24 o equiv. | 1 | ~35 € | ~35 € |
+| Caja cuadro eléctrico IP55 | tamaño según diseño | 1 | ~80 € | ~80 € |
+| Magnetotérmicos, diferenciales, bornas | surtido | 1 | ~120 € | ~120 € |
+| Cableado de campo 2×1,5mm² | por metro | 200 | ~0,8 € | ~160 € |
+| Prensaestopas y canaletas | surtido | 1 | ~40 € | ~40 € |
+| HMI | Tablet existente + web server M241 | — | — | — |
+| **Subtotal K07** | | | | **~1.058 €** |
