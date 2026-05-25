@@ -216,43 +216,39 @@ Señal de control 24 V en cable 2×1 mm², independiente del circuito de fuerza.
 
 | Bomba | Lado | Control | Función |
 |---|---|---|---|
-| PWM2 | Solar | Modulante PWM, ΔT constante | Circuito primario de glicol |
-| PWM1 | Estación ACS | Modulante PWM (perfil calefacción) | Anticipación por caudal + PID sobre T° de salida |
+| PWM2 | Solar | PI sobre ΔT — señal PWM por DO rápida M241 + divisor 24V→10V | Circuito primario de glicol |
+| PWM1 | Estación ACS | PI + anticipación caudal — señal PWM por DO rápida M241 + divisor 24V→10V | Circuito primario placa ACS |
 | Circuladora BC | Aerotérmico | Según equipo | **A verificar suficiencia** (ver sección 6.2) |
 | Fancoils | Climatización | Variable EC / ΔP | Caudal variable según zonas activas |
 | Depuradora | Piscina | Existente | Circulación piscina + disipación nocturna |
 
 ---
 
-## 14. CONTROL — DOS PLC ELIWELL POR MODBUS
+## 14. CONTROL — SCHNEIDER MODICON M241 + MÓDULOS TM3
+
+Un único controlador reemplaza la arquitectura de dos PLC comunicados por Modbus. La separación lógica entre subsistema solar y sistema principal se resuelve con dos tareas de programa de ciclos independientes.
 
 ```
-FREE Evolution (EVD7500)  ──── RS-485 Modbus RTU ────  FREE Smart (SMD5500)
-        maestro                                                esclavo
-  lógica principal + HMI                             subsistema solar completo
+Schneider TM241CE24R
+├── Ethernet (Modbus TCP + web server HMI)
+├── RS-485 × 2 (Modbus RTU hacia BC u otros dispositivos)
+├── 14 DI (8 rápidas — caudalímetros + PWM output)
+├── 10 DO relé 250VAC — V3V, válvulas, bombas
+└── Módulos TM3 en bus local:
+    ├── 2× TM3TI8T → 16 canales NTC 10K (13 sondas + 3 spare)
+    ├── 2× TM3DQ16R/DO16R → 32 DO relé adicionales (mejoras instalación)
+    └── 2× TM3AI4 → 8 AI 0-10V/4-20mA (presión, piranómetro, señal BC)
 ```
 
-### FREE Smart (esclavo, dirección 1) — subsistema solar
+**Programación**: EcoStruxure Machine Expert (CoDeSys 3, IEC 61131-3). Structured Text para lógica de control. Software gratuito sin licencia de pago ni dongle.
 
-- Bomba PWM2 con control de ΔT constante (objetivo 8 K).
-- Calorímetro del aporte solar.
-- Persianas motorizadas.
-- Sondas del circuito de glicol (TT1 ida, TT2 retorno, TT3 D1 cabeza).
+**HMI**: web server integrado en el M241. Tablet existente en red WiFi accede a la visualización por navegador. Sin panel HMI físico adicional.
 
-### FREE Evolution (maestro) — sistema principal
+**Control de bombas Wilo iPWM3**: las salidas digitales rápidas Q0 y Q1 del M241 generan señal PWM a 1000 Hz. Un divisor resistivo (R1=1k5, R2=1k0) en una plaquita de carril DIN reduce el nivel de 24VDC a ~9,6VDC, dentro del rango válido de la entrada iPWM3 de Wilo (4,5–15V). El bloque PI en Structured Text implementa el control de ΔT constante en la bomba solar y anticipación + PID en la bomba de ACS.
 
-- Dos V3V aerotérmicas (V3V-1, V3V-2).
-- Válvulas de tres vías de los apartamentos (4 uds.).
-- Estación de agua fresca: anticipación por caudal + PID.
-- Bomba PWM1.
-- Ciclo de pasteurización antilegionela.
-- HMI local.
+**Caudalímetros**: efecto Hall con salida de pulsos, conectados a entradas digitales rápidas del M241.
 
-**Variables compartidas por Modbus**: el maestro lee del esclavo la potencia solar instantánea, la energía acumulada, el estado de las persianas y las temperaturas del circuito; le envía consignas cuando las necesita.
-
-Programación en Structured Text conforme a IEC 61131-3 mediante FREE Studio.
-
-**Caudalímetros**: efecto Hall con salida de pulsos, compatibles con entradas digitales rápidas de los controladores.
+**Sondas de temperatura**: NTC 10K en pozos de inmersión inox, conexión directa a módulos TM3TI8T sin convertidores de señal.
 
 ---
 
@@ -269,7 +265,7 @@ Programación en Structured Text conforme a IEC 61131-3 mediante FREE Studio.
 | Sobretemperatura general | Termostatos de seguridad Z1 (D1) y Z2 (D2), rearme manual, hardware independiente |
 | Seguridad hidráulica | Válvula de seguridad y vaso de expansión en cada circuito |
 | Fail-safe apartamentos | V3V retorno por muelle → agua de red si falla la tensión |
-| Fail-safe bomba PWM1 | Perfil calefacción (parada ante pérdida de señal, no disparo a máxima velocidad) |
+| Fail-safe bombas PWM | Pérdida de señal PWM → bomba a velocidad máxima (comportamiento nativo Wilo iPWM3 en modo solar). Gestionar por software: M241 fuerza duty cycle 0% antes de cualquier parada programada) |
 
 La producción de ACS al paso elimina la acumulación de agua potable y con ella la mayor parte de la problemática de legionela del RD 865/2003.
 
@@ -301,6 +297,7 @@ La producción de ACS al paso elimina la acumulación de agua potable y con ella
 |---|---|---|
 | 1 | Suficiencia circuladora BC (~150 mbar serpentines serie + distribución) | Circuladora de apoyo / desacople por buffer |
 | 2 | Equilibrado dinámico fancoils | PICV 0-10V / válvulas ΔP / PICV integrada fábrica / bomba ΔP cte |
+| 5b | Programación EcoStruxure Machine Expert | Adaptar código ST del repo (escrito para FREE Studio) a EcoStruxure |
 | 3 | Dimensionado estación ACS | Placa 40-50 kW + circuladora PWM1 + caudalímetro hasta 20 L/min |
 | 4 | Cálculo formal fracción solar | CHEQ4 |
 | 5 | Simulación cargas térmicas | CYPETHERM o equivalente |

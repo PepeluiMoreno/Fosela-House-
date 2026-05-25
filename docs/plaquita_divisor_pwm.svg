@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="800" height="520" font-family="monospace, sans-serif">
+
+  <!-- Background -->
+  <rect width="800" height="520" fill="#1a1a2e"/>
+
+  <!-- Title -->
+  <text x="400" y="35" text-anchor="middle" font-size="16" font-weight="bold" fill="#e0e0e0">PLAQUITA DIVISOR PWM 24V → 10V · Wilo iPWM3</text>
+  <text x="400" y="55" text-anchor="middle" font-size="11" fill="#888">2 canales: Bomba Solar (PWM2) + Bomba ACS (PWM1)</text>
+
+  <!-- DIN RAIL -->
+  <rect x="60" y="420" width="680" height="22" rx="3" fill="#888" stroke="#aaa" stroke-width="1"/>
+  <rect x="60" y="424" width="680" height="4" fill="#666"/>
+  <rect x="60" y="433" width="680" height="4" fill="#aaa"/>
+  <!-- DIN rail holes -->
+  <g fill="#555">
+    <rect x="80" y="426" width="8" height="3" rx="1"/>
+    <rect x="200" y="426" width="8" height="3" rx="1"/>
+    <rect x="380" y="426" width="8" height="3" rx="1"/>
+    <rect x="560" y="426" width="8" height="3" rx="1"/>
+    <rect x="700" y="426" width="8" height="3" rx="1"/>
+  </g>
+  <text x="400" y="458" text-anchor="middle" font-size="10" fill="#666">CARRIL DIN 35mm</text>
+
+  <!-- PCB BOARD -->
+  <rect x="120" y="160" width="560" height="240" rx="6" fill="#1a4a1a" stroke="#2d8a2d" stroke-width="2"/>
+  <!-- PCB grid dots -->
+  <g fill="#1f5c1f">
+    <g id="row">
+      <circle cx="150" cy="185" r="2"/><circle cx="170" cy="185" r="2"/><circle cx="190" cy="185" r="2"/>
+      <circle cx="210" cy="185" r="2"/><circle cx="230" cy="185" r="2"/><circle cx="250" cy="185" r="2"/>
+      <circle cx="270" cy="185" r="2"/><circle cx="290" cy="185" r="2"/><circle cx="310" cy="185" r="2"/>
+      <circle cx="330" cy="185" r="2"/><circle cx="350" cy="185" r="2"/><circle cx="370" cy="185" r="2"/>
+      <circle cx="390" cy="185" r="2"/><circle cx="410" cy="185" r="2"/><circle cx="430" cy="185" r="2"/>
+      <circle cx="450" cy="185" r="2"/><circle cx="470" cy="185" r="2"/><circle cx="490" cy="185" r="2"/>
+      <circle cx="510" cy="185" r="2"/><circle cx="530" cy="185" r="2"/><circle cx="550" cy="185" r="2"/>
+      <circle cx="570" cy="185" r="2"/><circle cx="590" cy="185" r="2"/><circle cx="610" cy="185" r="2"/>
+      <circle cx="630" cy="185" r="2"/><circle cx="650" cy="185" r="2"/>
+    </g>
+  </g>
+  <!-- More grid rows -->
+  <g fill="#1f5c1f" opacity="0.6">
+    <line x1="130" y1="180" x2="670" y2="180" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="130" y1="200" x2="670" y2="200" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="130" y1="220" x2="670" y2="220" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="130" y1="240" x2="670" y2="240" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="130" y1="260" x2="670" y2="260" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="130" y1="280" x2="670" y2="280" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="130" y1="300" x2="670" y2="300" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="130" y1="320" x2="670" y2="320" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="130" y1="340" x2="670" y2="340" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="130" y1="360" x2="670" y2="360" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="150" y1="175" x2="150" y2="390" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="190" y1="175" x2="190" y2="390" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="230" y1="175" x2="230" y2="390" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="270" y1="175" x2="270" y2="390" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="310" y1="175" x2="310" y2="390" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="350" y1="175" x2="350" y2="390" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="390" y1="175" x2="390" y2="390" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="430" y1="175" x2="430" y2="390" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="470" y1="175" x2="470" y2="390" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="510" y1="175" x2="510" y2="390" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="550" y1="175" x2="550" y2="390" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="590" y1="175" x2="590" y2="390" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+    <line x1="630" y1="175" x2="630" y2="390" stroke="#1f5c1f" stroke-width="0.5" stroke-dasharray="4,16"/>
+  </g>
+
+  <!-- DIN CLIP on PCB bottom -->
+  <rect x="260" y="390" width="280" height="30" rx="3" fill="#555" stroke="#777" stroke-width="1.5"/>
+  <rect x="280" y="395" width="20" height="20" rx="2" fill="#444"/>
+  <rect x="500" y="395" width="20" height="20" rx="2" fill="#444"/>
+  <text x="400" y="410" text-anchor="middle" font-size="10" fill="#aaa">CLIP CARRIL DIN</text>
+
+  <!-- ============ CANAL 1 — SOLAR ============ -->
+  <!-- Label canal 1 -->
+  <rect x="140" y="168" width="120" height="16" rx="3" fill="#0d3b0d"/>
+  <text x="200" y="180" text-anchor="middle" font-size="10" font-weight="bold" fill="#4caf50">CH1 · PWM2 SOLAR</text>
+
+  <!-- Connector IN left (3 pins) -->
+  <rect x="140" y="195" width="44" height="80" rx="3" fill="#333" stroke="#4caf50" stroke-width="1.5"/>
+  <text x="162" y="208" text-anchor="middle" font-size="8" fill="#4caf50">IN</text>
+  <!-- Pin 1: PWM 24V -->
+  <rect x="148" y="212" width="28" height="14" rx="2" fill="#555" stroke="#888" stroke-width="1"/>
+  <text x="162" y="222" text-anchor="middle" font-size="7" fill="#ff9800">PWM</text>
+  <!-- Pin 2: GND -->
+  <rect x="148" y="230" width="28" height="14" rx="2" fill="#555" stroke="#888" stroke-width="1"/>
+  <text x="162" y="240" text-anchor="middle" font-size="7" fill="#888">GND</text>
+  <!-- Pin 3: NC -->
+  <rect x="148" y="248" width="28" height="14" rx="2" fill="#333" stroke="#555" stroke-width="1"/>
+  <text x="162" y="258" text-anchor="middle" font-size="7" fill="#555">NC</text>
+
+  <!-- Wire from IN PWM to R1 -->
+  <line x1="184" y1="219" x2="210" y2="219" stroke="#ff9800" stroke-width="2"/>
+
+  <!-- R1 = 1k5 -->
+  <rect x="210" y="210" width="54" height="18" rx="4" fill="#c8a96e" stroke="#a07840" stroke-width="1.5"/>
+  <rect x="213" y="213" width="6" height="12" rx="1" fill="#8B6914"/>
+  <rect x="221" y="213" width="4" height="12" rx="1" fill="#555"/>
+  <rect x="227" y="213" width="4" height="12" rx="1" fill="#3d8b3d"/>
+  <rect x="233" y="213" width="4" height="12" rx="1" fill="#3d8b3d"/>
+  <rect x="239" y="213" width="4" height="12" rx="1" fill="#c8a96e"/>
+  <rect x="245" y="213" width="4" height="12" rx="1" fill="#8B0000"/>
+  <rect x="251" y="213" width="6" height="12" rx="1" fill="#8B6914"/>
+  <text x="237" y="238" text-anchor="middle" font-size="9" fill="#ffd700">R1 = 1k5</text>
+
+  <!-- Wire R1 to node -->
+  <line x1="264" y1="219" x2="296" y2="219" stroke="#ff9800" stroke-width="2"/>
+  <!-- Node dot -->
+  <circle cx="296" cy="219" r="4" fill="#ff9800"/>
+
+  <!-- Wire node to OUT connector -->
+  <line x1="296" y1="219" x2="340" y2="219" stroke="#00bcd4" stroke-width="2"/>
+
+  <!-- R2 = 1k (vertical, node to GND) -->
+  <line x1="296" y1="219" x2="296" y2="248" stroke="#ff9800" stroke-width="2"/>
+  <rect x="278" y="248" width="54" height="18" rx="4" fill="#c8a96e" stroke="#a07840" stroke-width="1.5"/>
+  <rect x="281" y="251" width="6" height="12" rx="1" fill="#8B6914"/>
+  <rect x="289" y="251" width="4" height="12" rx="1" fill="#555"/>
+  <rect x="295" y="251" width="4" height="12" rx="1" fill="#8B0000"/>
+  <rect x="301" y="251" width="4" height="12" rx="1" fill="#555"/>
+  <rect x="307" y="251" width="4" height="12" rx="1" fill="#c8a96e"/>
+  <rect x="313" y="251" width="4" height="12" rx="1" fill="#8B6914"/>
+  <text x="305" y="278" text-anchor="middle" font-size="9" fill="#ffd700">R2 = 1k0</text>
+
+  <!-- Wire R2 bottom to GND rail -->
+  <line x1="305" y1="266" x2="305" y2="295" stroke="#888" stroke-width="2"/>
+  <line x1="160" y1="295" x2="540" y2="295" stroke="#888" stroke-width="2" stroke-dasharray="4,3"/>
+  <text x="200" y="308" font-size="8" fill="#888">──── GND ────────────────────────────────────</text>
+  <!-- GND wire from IN -->
+  <line x1="184" y1="237" x2="200" y2="237" stroke="#888" stroke-width="2"/>
+  <line x1="200" y1="237" x2="200" y2="295" stroke="#888" stroke-width="2"/>
+
+  <!-- Connector OUT right ch1 -->
+  <rect x="340" y="195" width="52" height="80" rx="3" fill="#333" stroke="#00bcd4" stroke-width="1.5"/>
+  <text x="366" y="208" text-anchor="middle" font-size="8" fill="#00bcd4">OUT</text>
+  <!-- Pin 1: PWM ~10V -->
+  <rect x="348" y="212" width="36" height="14" rx="2" fill="#555" stroke="#888" stroke-width="1"/>
+  <text x="366" y="222" text-anchor="middle" font-size="7" fill="#00bcd4">~10V</text>
+  <!-- Pin 2: GND -->
+  <line x1="340" y1="237" x2="348" y2="237" stroke="#888" stroke-width="1.5"/>
+  <rect x="348" y="230" width="36" height="14" rx="2" fill="#555" stroke="#888" stroke-width="1"/>
+  <text x="366" y="240" text-anchor="middle" font-size="7" fill="#888">GND</text>
+  <!-- Pin 3: PWM OUT feedback -->
+  <rect x="348" y="248" width="36" height="14" rx="2" fill="#333" stroke="#555" stroke-width="1"/>
+  <text x="366" y="258" text-anchor="middle" font-size="7" fill="#555">FDBK</text>
+
+  <!-- Label Wilo -->
+  <text x="366" y="290" text-anchor="middle" font-size="8" fill="#4caf50">→ WILO PWM2</text>
+
+  <!-- ============ CANAL 2 — ACS ============ -->
+  <!-- Label canal 2 -->
+  <rect x="430" y="168" width="120" height="16" rx="3" fill="#0d3b0d"/>
+  <text x="490" y="180" text-anchor="middle" font-size="10" font-weight="bold" fill="#4caf50">CH2 · PWM1 ACS</text>
+
+  <!-- Connector IN right (3 pins) -->
+  <rect x="430" y="195" width="44" height="80" rx="3" fill="#333" stroke="#4caf50" stroke-width="1.5"/>
+  <text x="452" y="208" text-anchor="middle" font-size="8" fill="#4caf50">IN</text>
+  <rect x="438" y="212" width="28" height="14" rx="2" fill="#555" stroke="#888" stroke-width="1"/>
+  <text x="452" y="222" text-anchor="middle" font-size="7" fill="#ff9800">PWM</text>
+  <rect x="438" y="230" width="28" height="14" rx="2" fill="#555" stroke="#888" stroke-width="1"/>
+  <text x="452" y="240" text-anchor="middle" font-size="7" fill="#888">GND</text>
+  <rect x="438" y="248" width="28" height="14" rx="2" fill="#333" stroke="#555" stroke-width="1"/>
+  <text x="452" y="258" text-anchor="middle" font-size="7" fill="#555">NC</text>
+
+  <!-- Wire from IN PWM to R1 ch2 -->
+  <line x1="474" y1="219" x2="500" y2="219" stroke="#ff9800" stroke-width="2"/>
+
+  <!-- R1 ch2 -->
+  <rect x="500" y="210" width="54" height="18" rx="4" fill="#c8a96e" stroke="#a07840" stroke-width="1.5"/>
+  <rect x="503" y="213" width="6" height="12" rx="1" fill="#8B6914"/>
+  <rect x="511" y="213" width="4" height="12" rx="1" fill="#555"/>
+  <rect x="517" y="213" width="4" height="12" rx="1" fill="#3d8b3d"/>
+  <rect x="523" y="213" width="4" height="12" rx="1" fill="#3d8b3d"/>
+  <rect x="529" y="213" width="4" height="12" rx="1" fill="#c8a96e"/>
+  <rect x="535" y="213" width="4" height="12" rx="1" fill="#8B0000"/>
+  <rect x="541" y="213" width="6" height="12" rx="1" fill="#8B6914"/>
+  <text x="527" y="238" text-anchor="middle" font-size="9" fill="#ffd700">R1 = 1k5</text>
+
+  <!-- Wire R1 to node ch2 -->
+  <line x1="554" y1="219" x2="586" y2="219" stroke="#ff9800" stroke-width="2"/>
+  <circle cx="586" cy="219" r="4" fill="#ff9800"/>
+
+  <!-- Wire node to OUT ch2 -->
+  <line x1="586" y1="219" x2="620" y2="219" stroke="#00bcd4" stroke-width="2"/>
+
+  <!-- R2 ch2 vertical -->
+  <line x1="586" y1="219" x2="586" y2="248" stroke="#ff9800" stroke-width="2"/>
+  <rect x="568" y="248" width="54" height="18" rx="4" fill="#c8a96e" stroke="#a07840" stroke-width="1.5"/>
+  <rect x="571" y="251" width="6" height="12" rx="1" fill="#8B6914"/>
+  <rect x="579" y="251" width="4" height="12" rx="1" fill="#555"/>
+  <rect x="585" y="251" width="4" height="12" rx="1" fill="#8B0000"/>
+  <rect x="591" y="251" width="4" height="12" rx="1" fill="#555"/>
+  <rect x="597" y="251" width="4" height="12" rx="1" fill="#c8a96e"/>
+  <rect x="603" y="251" width="4" height="12" rx="1" fill="#8B6914"/>
+  <text x="595" y="278" text-anchor="middle" font-size="9" fill="#ffd700">R2 = 1k0</text>
+
+  <!-- GND wire ch2 -->
+  <line x1="595" y1="266" x2="595" y2="295" stroke="#888" stroke-width="2"/>
+  <line x1="474" y1="237" x2="490" y2="237" stroke="#888" stroke-width="2"/>
+  <line x1="490" y1="237" x2="490" y2="295" stroke="#888" stroke-width="2"/>
+
+  <!-- Connector OUT ch2 -->
+  <rect x="620" y="195" width="52" height="80" rx="3" fill="#333" stroke="#00bcd4" stroke-width="1.5"/>
+  <text x="646" y="208" text-anchor="middle" font-size="8" fill="#00bcd4">OUT</text>
+  <rect x="628" y="212" width="36" height="14" rx="2" fill="#555" stroke="#888" stroke-width="1"/>
+  <text x="646" y="222" text-anchor="middle" font-size="7" fill="#00bcd4">~10V</text>
+  <line x1="620" y1="237" x2="628" y2="237" stroke="#888" stroke-width="1.5"/>
+  <rect x="628" y="230" width="36" height="14" rx="2" fill="#555" stroke="#888" stroke-width="1"/>
+  <text x="646" y="240" text-anchor="middle" font-size="7" fill="#888">GND</text>
+  <rect x="628" y="248" width="36" height="14" rx="2" fill="#333" stroke="#555" stroke-width="1"/>
+  <text x="646" y="258" text-anchor="middle" font-size="7" fill="#555">FDBK</text>
+  <text x="646" y="290" text-anchor="middle" font-size="8" fill="#4caf50">→ WILO PWM1</text>
+
+  <!-- PCB label -->
+  <text x="400" y="380" text-anchor="middle" font-size="9" fill="#2d8a2d">Fosela · PWM Divider v1.0 · FR4 · 130×50mm</text>
+
+  <!-- Legend -->
+  <rect x="60" y="75" width="680" height="70" rx="5" fill="#0d1a0d" stroke="#2d5a2d" stroke-width="1"/>
+  <text x="80" y="95" font-size="11" font-weight="bold" fill="#4caf50">Cálculo divisor:</text>
+  <text x="80" y="112" font-size="10" fill="#ccc">  Vout = 24V × R2/(R1+R2) = 24 × 1000/(1500+1000) = </text>
+  <text x="480" y="112" font-size="10" font-weight="bold" fill="#00bcd4">9,6V  ✓  (rango válido Wilo: 4,5–15V)</text>
+  <text x="80" y="130" font-size="10" fill="#ccc">  Frecuencia PWM: 1000 Hz  |  Duty cycle: 0–100% sin distorsión  |  Potencia R1: 24²/2500 = 230mW → usar ¼W mín.</text>
+
+  <!-- Arrows from PCB to DIN rail -->
+  <line x1="310" y1="420" x2="310" y2="410" stroke="#555" stroke-width="1.5" stroke-dasharray="3,2"/>
+  <line x1="490" y1="420" x2="490" y2="410" stroke="#555" stroke-width="1.5" stroke-dasharray="3,2"/>
+
+</svg>

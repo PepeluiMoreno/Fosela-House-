@@ -11,7 +11,7 @@ Repositorio técnico del proyecto de instalación térmica integrada para vivien
 - **Climatización**: 13 fancoils con PICV 0-10V, buffer D3 150 L
 - **Piscina**: ~25 m³, 2 intercambiadores titanio (HX solar + HX aerotérmico)
 - **ACS apartamentos**: agua precalentada del reservorio → V3V por apartamento → termo eléctrico existente
-- **Control**: FREE Smart SMD5500 (solar, esclavo Modbus) + FREE Evolution EVD7500 (sistema principal, maestro)
+- **Control**: Schneider Modicon TM241CE24R + módulos TM3 (EcoStruxure Machine Expert / CoDeSys 3)
 
 ## Ramas
 
@@ -38,7 +38,9 @@ Fosela-House/
 │   ├── lib/                             ← Tipos, bloques genéricos reutilizables
 │   ├── free_smart/                      ← Código FREE Smart (subsistema solar)
 │   └── free_evolution/                  ← Código FREE Evolution (sistema principal)
-└── bitacora/
+├── bitacora/
+└── docs/
+    └── anexo_compras.md          ← Precios reales y fuentes de aprovisionamiento
     └── bitacora_proyecto_fosela.md      ← Registro cronológico de decisiones
 ```
 
@@ -48,8 +50,8 @@ Fosela-House/
 |---|---|
 | Memoria técnica | 🔄 En revisión (actualizar a monobloc) |
 | BOM | 🔄 En revisión |
-| Código FREE Smart | ✅ Completo |
-| Código FREE Evolution | ✅ Completo (arquitectura monobloc) |
+| Código Schneider M241 | 🔲 Pendiente migración desde FREE Studio |
+| Código FREE Evolution | 🔄 Pendiente adaptar a EcoStruxure Machine Expert |
 | Tabla de parámetros | 🔄 En revisión (eliminar P02, P34, P35) |
 | P&ID completo | 🔲 Pendiente |
 | Bitácora decisiones | ✅ Completa |
