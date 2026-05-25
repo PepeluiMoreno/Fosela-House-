@@ -46,7 +46,7 @@ CASE mode OF
     SOLAR_AUTO:
         want_pool := (TT3 >= SP_TT3_pool) AND pool_demand AND pump_running;
 
-    SOLAR_FORCE_ACS, SOLAR_OFF:
+    SOLAR_FORCE_DHW, SOLAR_OFF:
         want_pool := FALSE;
 END_CASE
 

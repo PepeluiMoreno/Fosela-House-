@@ -47,7 +47,7 @@ CASE mode OF
         pi_enabled := pump_run;
         state_desc := 'AUTO';
 
-    SOLAR_FORCE_ACS, SOLAR_FORCE_POOL:
+    SOLAR_FORCE_DHW, SOLAR_FORCE_POOL:
         pump_run   := TRUE;
         pi_enabled := TRUE;
         state_desc := 'FORZADO';

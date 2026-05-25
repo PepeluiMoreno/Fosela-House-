@@ -3,11 +3,11 @@
    NO contiene setpoints ni límites configurables (ver GVL_Params.st)
    ============================================================ *)
 
-TYPE E_Solar_Mode   : ( SOLAR_AUTO:=0, SOLAR_FORCE_ACS:=1, SOLAR_FORCE_POOL:=2, SOLAR_OFF:=3 ); END_TYPE
-TYPE E_BDC_Mode     : ( BDC_OFF:=0, BDC_ACS:=1, BDC_CLIMATE:=2, BDC_POOL:=3 ); END_TYPE
+TYPE E_Solar_Mode   : ( SOLAR_AUTO:=0, SOLAR_FORCE_DHW:=1, SOLAR_FORCE_POOL:=2, SOLAR_OFF:=3 ); END_TYPE
+TYPE E_BDC_Mode     : ( BDC_OFF:=0, BDC_DHW:=1, BDC_CLIMATE:=2, BDC_POOL:=3 ); END_TYPE
 TYPE E_Valve3Way_Pos: ( V3W_POS_A:=0, V3W_POS_B:=1 ); END_TYPE
 TYPE E_Apartment_Mode:( APT_PRECALENTADA:=0, APT_AFS:=1 ); END_TYPE
-TYPE E_BDC_Priority : ( PRIO_ACS_CLIMATE_POOL:=0, PRIO_ACS_POOL_CLIMATE:=1 ); END_TYPE
+TYPE E_BDC_Priority : ( PRIO_DHW_CLIMATE_POOL:=0, PRIO_DHW_POOL_CLIMATE:=1 ); END_TYPE
 
 TYPE E_Preheating_Phase :
 ( PRE_IDLE:=0, PRE_HEAT:=1, PRE_HOLD:=2, PRE_FLUSH:=3, PRE_DONE:=4 );

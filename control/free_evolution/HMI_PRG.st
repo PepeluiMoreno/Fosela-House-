@@ -179,9 +179,9 @@ pg_sol(
 (*
    "TT 4" | TT4               | READ_ONLY
    "TT 5" | TT5               | READ_ONLY
-   "SP.5" | P30_ACSStorageSetPoint        | EDITABLE  50-80  paso 0.5
-   "HS.5" | P31_ACSStorageHysteresis        | EDITABLE  1.0-5.0 paso 0.5
-   "SP.4" | P32_ACSBDCStartTemp  | EDITABLE  40-60  paso 0.5
+   "SP.5" | P30_DHWStorageSetPoint        | EDITABLE  50-80  paso 0.5
+   "HS.5" | P31_DHWStorageHysteresis        | EDITABLE  1.0-5.0 paso 0.5
+   "SP.4" | P32_DHWBDCStartTemp  | EDITABLE  40-60  paso 0.5
    "V3.1" | DO_V3V1           | READ_ONLY (ACS/nAC)
    "V3.2" | DO_V3V2           | READ_ONLY (D3/HX)
    "V3.3" | DO_V3V3           | READ_ONLY (ACS/HX)
@@ -190,11 +190,11 @@ pg_acs(
     title           := 'ACS.',
     item_01_label   := 'TT 4', item_01_var := ADR(TT4),              item_01_type := HMI_READ_ONLY,
     item_02_label   := 'TT 5', item_02_var := ADR(TT5),              item_02_type := HMI_READ_ONLY,
-    item_03_label   := 'SP.5', item_03_var := ADR(P30_ACSStorageSetPoint),       item_03_type := HMI_EDITABLE,
+    item_03_label   := 'SP.5', item_03_var := ADR(P30_DHWStorageSetPoint),       item_03_type := HMI_EDITABLE,
         item_03_min := 50.0,  item_03_max := 80.0,  item_03_step := 0.5,
-    item_04_label   := 'HS.5', item_04_var := ADR(P31_ACSStorageHysteresis),       item_04_type := HMI_EDITABLE,
+    item_04_label   := 'HS.5', item_04_var := ADR(P31_DHWStorageHysteresis),       item_04_type := HMI_EDITABLE,
         item_04_min := 1.0,   item_04_max := 5.0,   item_04_step := 0.5,
-    item_05_label   := 'SP.4', item_05_var := ADR(P32_ACSBDCStartTemp), item_05_type := HMI_EDITABLE,
+    item_05_label   := 'SP.4', item_05_var := ADR(P32_DHWBDCStartTemp), item_05_type := HMI_EDITABLE,
         item_05_min := 40.0,  item_05_max := 60.0,  item_05_step := 0.5,
     item_06_label   := 'V3.1', item_06_var := ADR(DO_V3V1),          item_06_type := HMI_READ_ONLY,
     item_07_label   := 'V3.2', item_07_var := ADR(DO_V3V2),          item_07_type := HMI_READ_ONLY,

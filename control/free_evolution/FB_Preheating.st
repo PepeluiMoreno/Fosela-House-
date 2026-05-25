@@ -12,7 +12,7 @@ VAR_OUTPUT
     phase           : E_Preheating_Phase;
     active          : BOOL;
     apt_idx         : UINT;   (* Apartamento actual en purgado 1-5 *)
-    force_BDC_ACS   : BOOL;   (* Forzar BDC a modo ACS *)
+    force_BDC_DHW   : BOOL;   (* Forzar BDC a modo ACS *)
     force_APT_prec  : BOOL;   (* Forzar V3V_APT a precalentada *)
 END_VAR
 VAR
@@ -29,7 +29,7 @@ CASE phase OF
 
 PRE_IDLE:
     active         := FALSE;
-    force_BDC_ACS  := FALSE;
+    force_BDC_DHW  := FALSE;
     force_APT_prec := FALSE;
     apt_idx        := 1;
     timer_hold(IN := FALSE, PT := P72_PreheatingHoldTime);
@@ -40,7 +40,7 @@ PRE_IDLE:
 
 PRE_HEAT:
     active        := TRUE;
-    force_BDC_ACS := TRUE;
+    force_BDC_DHW := TRUE;
     force_APT_prec:= TRUE;
     ctrl_hyg(
         measured   := TT5,
@@ -54,7 +54,7 @@ PRE_HEAT:
 
 PRE_HOLD:
     active        := TRUE;
-    force_BDC_ACS := TRUE;
+    force_BDC_DHW := TRUE;
     force_APT_prec:= TRUE;
     timer_hold(IN := TRUE, PT := P72_PreheatingHoldTime);
     IF timer_hold.Q THEN
@@ -65,7 +65,7 @@ PRE_HOLD:
 
 PRE_FLUSH:
     active        := TRUE;
-    force_BDC_ACS := TRUE;
+    force_BDC_DHW := TRUE;
     force_APT_prec:= TRUE;
     timer_flush(IN := TRUE, PT := P73_PreheatingFlushTime);
     IF timer_flush.Q THEN
@@ -79,7 +79,7 @@ PRE_FLUSH:
 
 PRE_DONE:
     active        := FALSE;
-    force_BDC_ACS := FALSE;
+    force_BDC_DHW := FALSE;
     force_APT_prec:= FALSE;
     phase         := PRE_IDLE;
 

@@ -20,7 +20,7 @@ PROGRAM PLC_PRG
 VAR
     (* ── Instancias de subsistemas ── *)
     mb_master       : FB_ModbusMaster;
-    acs_ctrl        : FB_ACS;
+    acs_ctrl        : FB_DHW;
     climate_ctrl    : FB_Climate;
     pool_ctrl       : FB_Pool;
     apt_ctrl        : FB_Apartments;
@@ -80,7 +80,7 @@ pre_apt_idx := pre_ctrl.apt_idx;
    4. ÁRBITRO BC
    ============================================================ *)
 bdc_arbiter(
-    demand_ACS     := acs_ctrl.demand_BDC OR pre_ctrl.force_BDC_ACS,
+    demand_DHW     := acs_ctrl.demand_BDC OR pre_ctrl.force_BDC_DHW,
     demand_climate := climate_ctrl.demand_BDC,
     demand_pool    := pool_ctrl.demand_BDC,
     enabled        := NOT DI_BDC_FAULT
@@ -96,7 +96,7 @@ bdc_grant_pool := bdc_arbiter.grant_pool AND bc_mode_heat;
 acs_ctrl(
     TT4           := TT4c,
     TT5           := TT5c,
-    bdc_available := bdc_arbiter.grant_ACS,
+    bdc_available := bdc_arbiter.grant_DHW,
     pre_active    := pre_ctrl.active,
     enabled       := TRUE
 );
@@ -154,7 +154,7 @@ IF test_ctrl.override_active THEN
 ELSE
     (* Salidas normales *)
     (* V3V1: FALSE=reservorio (D2), TRUE=→V3V2 *)
-    DO_V3V1        := NOT acs_ctrl.cmd_V3V1_reservorio AND NOT pre_ctrl.force_BDC_ACS;
+    DO_V3V1        := NOT acs_ctrl.cmd_V3V1_reservorio AND NOT pre_ctrl.force_BDC_DHW;
     (* V3V2: FALSE=fancoils (D3), TRUE=piscina (HX_BC) *)
     DO_V3V2        := pool_ctrl.cmd_VP_HX_BC AND NOT climate_ctrl.cmd_V3V2_D3;
     DO_VP_HX_SOLAR := pool_ctrl.cmd_VP_HX_SOLAR;

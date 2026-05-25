@@ -6,28 +6,28 @@
    ============================================================ *)
 FUNCTION_BLOCK FB_BDC_Arbiter
 VAR_INPUT
-    demand_ACS      : BOOL;
+    demand_DHW      : BOOL;
     demand_climate  : BOOL;
     demand_pool     : BOOL;
     enabled         : BOOL := TRUE;
 END_VAR
 VAR_OUTPUT
-    grant_ACS       : BOOL;
+    grant_DHW       : BOOL;
     grant_climate   : BOOL;
     grant_pool      : BOOL;
     active_mode     : E_BDC_Mode;
 END_VAR
 
-grant_ACS     := FALSE;
+grant_DHW     := FALSE;
 grant_climate := FALSE;
 grant_pool    := FALSE;
 active_mode   := BDC_OFF;
 
 IF NOT enabled THEN RETURN; END_IF
 
-IF demand_ACS THEN
-    grant_ACS   := TRUE;
-    active_mode := BDC_ACS;
+IF demand_DHW THEN
+    grant_DHW   := TRUE;
+    active_mode := BDC_DHW;
 
 ELSIF P80_BDCPriority = UINT#0 THEN
     (* ACS > Climatización > Piscina *)

@@ -44,7 +44,7 @@ VAR_GLOBAL
 
     (* ---- Modos y estados del sistema ---- *)
     bdc_mode        : E_BDC_Mode   := BDC_OFF;
-    bdc_priority    : E_BDC_Priority := PRIO_ACS_CLIMATE_POOL;
+    bdc_priority    : E_BDC_Priority := PRIO_DHW_CLIMATE_POOL;
     bc_mode_heat    : BOOL := TRUE;   (* TRUE=calefacción/ACS, FALSE=refrigeración *)
 
     (* ---- Ciclo de precalentamientoón ---- *)

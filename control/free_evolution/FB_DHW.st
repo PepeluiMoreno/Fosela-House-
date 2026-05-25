@@ -1,15 +1,15 @@
 (* ============================================================
-   FB_ACS.st  –  Control de producción de ACS
+   FB_DHW.st  –  Control de producción de ACS
    BC monobloc genérica (sin HTR).
    La BC puede producir ACS de dos formas según el equipo:
-     a) Modo ACS dedicado (BDC_ACS): produce agua caliente 55-65°C
+     a) Modo ACS dedicado (BDC_DHW): produce agua caliente 55-65°C
         directamente al reservorio (D2 serpentines).
      b) Inversión de ciclo (ACS como calefacción): misma V3V1,
         igual lógica, la BC produce caliente al reservorio.
    En ambos casos la lógica PLC es idéntica: V3V1 hacia reservorio
    y la BC en el modo que proceda.
    ============================================================ *)
-FUNCTION_BLOCK FB_ACS
+FUNCTION_BLOCK FB_DHW
 VAR_INPUT
     TT4             : REAL;  (* D1 fondo — agua técnica fría *)
     TT5             : REAL;  (* D2 cabeza — agua técnica caliente *)
@@ -30,8 +30,8 @@ END_VAR
 (* ACS satisfecho cuando TT5 (D2 cabeza) supera la consigna *)
 ctrl_TT5(
     measured   := TT5,
-    setpoint   := P30_ACSStorageSetPoint,
-    hysteresis := P31_ACSStorageHysteresis,
+    setpoint   := P30_DHWStorageSetPoint,
+    hysteresis := P31_DHWStorageHysteresis,
     mode_heat  := TRUE,
     enabled    := enabled
 );
@@ -40,8 +40,8 @@ acs_satisfied := NOT ctrl_TT5.output;
 (* Demanda BC: cuando TT4 (fondo D1) cae bajo el umbral de arranque *)
 ctrl_TT4(
     measured   := TT4,
-    setpoint   := P32_ACSBDCStartTemp,
-    hysteresis := P33_ACSBDCStartHyst,
+    setpoint   := P32_DHWBDCStartTemp,
+    hysteresis := P33_DHWBDCStartHyst,
     mode_heat  := TRUE,
     enabled    := enabled AND NOT acs_satisfied
 );

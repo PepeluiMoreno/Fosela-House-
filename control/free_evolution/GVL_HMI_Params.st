@@ -14,9 +14,9 @@ VAR_GLOBAL RETAIN  (* RETAIN: sobreviven a un corte de alimentación *)
     P19_SolarMode      : UINT := 0;     (* 0=AUTO 1=ACS 2=PISC 3=OFF *)
 
     (* ---- ACS -------------------------------------------- *)
-    P30_ACSStorageSetPoint          : REAL := 65.0;  (* Setpoint D2 cab  [50.0 – 80.0 °C] paso 0.5 *)
-    P31_ACSStorageHysteresis          : REAL := 3.0;   (* Histéresis TT5   [1.0 – 5.0 K]   paso 0.5 *)
-    P32_ACSBDCStartTemp    : REAL := 50.0;  (* Umbral arrq BDC  [40.0 – 60.0 °C] paso 0.5 *)
+    P30_DHWStorageSetPoint          : REAL := 65.0;  (* Setpoint D2 cab  [50.0 – 80.0 °C] paso 0.5 *)
+    P31_DHWStorageHysteresis          : REAL := 3.0;   (* Histéresis TT5   [1.0 – 5.0 K]   paso 0.5 *)
+    P32_DHWBDCStartTemp    : REAL := 50.0;  (* Umbral arrq BDC  [40.0 – 60.0 °C] paso 0.5 *)
 
     (* ---- CLIMATIZACIÓN ----------------------------------- *)
     P50_HeatingSetPoint         : REAL := 45.0;  (* Setpoint calefac [35.0 – 60.0 °C] paso 0.5 *)
