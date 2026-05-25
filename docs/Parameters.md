@@ -22,7 +22,6 @@ El software los usa en tiempo real para calcular los rangos admisibles de los pa
 |---|---|---|---|---|
 | **P00** | `P00_AccumulatorMaxTemp` | T máx de trabajo de los acumuladores según placa. Techo absoluto del sistema: acota P17 (cierre persianas), P30 (consigna ACS) y P70 (higienización). | El software permite consignas que dañan el acumulador (vitrificado, ánodo). La cadena hardware (Z1/Z2) actuará tarde. | Reduce innecesariamente el rango operativo de ACS e higienización. |
 | **P01** | `P01_BDCMaxFlowTemp` | T máx impulsión del primario de la bomba de calor en modo calefacción. Acota P30 (consigna ACS) y P50 (consigna climatización calefacción). | El software ordena temperaturas que la bomba de calor no puede alcanzar → cicleo continuo, desgaste compresor. | Limita innecesariamente la temperatura de ACS y calefacción por debajo de lo que el equipo puede dar. |
-| **P02** | `P02_HTRMaxTemp` | T máx que produce el recuperador de calor del compresor (HTR). Acota P34 (inhibición HTR hacia D2). | El software no inhibe el HTR cuando corresponde → riesgo de sobretemperatura en D2. | El software inhibe el HTR demasiado pronto → se desaprovecha energía gratuita del compresor. |
 | **P03** | `P03_BDCMinCoolTemp` | T mín impulsión de la bomba de calor en modo refrigeración. Acota P52 (consigna refrigeración D3). | El software permite consignas de frío que la bomba de calor no puede alcanzar → cicleo, pérdida de eficiencia. | El software limita el frío por encima de lo que el equipo puede dar → confort insuficiente en verano. |
 | **P04** | `P04_CollectorMaxOperTemp` | T máx de operación continuada de los colectores solares. El software activa alarma TT1 y cierra persianas antes de que TK1 hardware actúe. | El software no actúa antes que TK1 → la protección queda solo en hardware (aceptable pero no óptimo). | El software cierra persianas y lanza alarmas a temperaturas de operación normales → interrupciones innecesarias. |
 | **P05** | `P05_HXMaxTemp` | T máx admisible en los intercambiadores de calor. El software corta el primario correspondiente si TT8/TT10 la supera. | El software no protege los intercambiadores por software → solo queda la VS mecánica como protección. | El software corta primarios a temperaturas de operación normales → calentamiento de piscina interrumpido. |
@@ -56,7 +55,7 @@ El software los usa en tiempo real para calcular los rangos admisibles de los pa
 
 ---
 
-## Bloque P30–P35 · ACS (L1)
+## Bloque P30–P33 · ACS (L1)
 
 | Código | Nombre programa | Función | Si demasiado alto | Si demasiado bajo |
 |---|---|---|---|---|
@@ -64,8 +63,6 @@ El software los usa en tiempo real para calcular los rangos admisibles de los pa
 | **P31** | `P31_ACSStorageHysteresis` | Banda muerta total en TT5. La bomba de calor arranca cuando TT5 < (P30 − P31/2) y para cuando TT5 > (P30 + P31/2). | Poca carga a la bomba de calor → arranques frecuentes → desgaste compresor. | Bomba de calor trabaja casi continuamente → menor rendimiento, mayor consumo. |
 | **P32** | `P32_ACSBDCStartTemp` | T en D2 fondo (TT4) que activa la carga de D2 mediante la bomba de calor. Evita cargar D2 desde arriba cuando el fondo ya está caliente. | La bomba de calor no arranca hasta que D2 está muy frío → usuario sin ACS. Siempre < P30 − 3 K. | La bomba de calor carga D2 innecesariamente aunque haya calor solar suficiente. |
 | **P33** | `P33_ACSBDCStartHyst` | Histéresis de P32. | Sin histéresis suficiente → cicleo de la bomba de calor. | Rango demasiado estrecho → la bomba de calor arranca y para continuamente. |
-| **P34** | `P34_HTRStopTemp` | T en D2 cabeza (TT5) que inhibe el desvío del HTR hacia D2. Cuando D2 está suficientemente caliente el HTR se deriva a piscina. | El HTR sigue calentando D2 cuando ya no es necesario → desaprovecha energía gratuita para piscina. Máx = P02. | El HTR se inhibe demasiado pronto → D2 no alcanza temperatura suficiente solo con HTR. Mín = P30. |
-| **P35** | `P35_HTRStopHyst` | Histéresis de P34. | Sin histéresis → V3V3 conmuta continuamente entre D2 y piscina. | Rango tan estrecho que el HTR cambia de destino con cada ciclo. |
 
 ---
 
@@ -154,7 +151,6 @@ Ajustar durante puesta en marcha comparando con termómetro de referencia calibr
 | **OS06** | `OS06_TT7` | D3 fondo | Ídem | Ídem |
 | **OS07** | `OS07_TT8` | Ida primario bomba calor | Ídem | Ídem |
 | **OS08** | `OS08_TT9` | Retorno primario bomba calor | Ídem | Ídem |
-| **OS09** | `OS00_TT10` | Ida recuperador HTR | Ídem | Ídem |
 | **OS10** | `OS00_TT11` | Piscina | Ídem | Ídem |
 | **OS11** | `OS00_TT12` | Exterior | Ídem | Ídem |
 | **OS12** | `OS00_TT13` | Retorno fancoils | Ídem | Ídem |
@@ -169,7 +165,7 @@ Ajustar durante puesta en marcha comparando con termómetro de referencia calibr
 | P00–P06 | Límites de equipo | CFG | 7 |
 | P10–P19 | Solar | L1 | 10 |
 | P20–P21 | Solar PI | CFG | 2 |
-| P30–P35 | ACS | L1 | 6 |
+| P30–P33 | ACS | L1 | 4 |
 | P40–P44 | ACS apartamentos | L1 | 5 |
 | P50–P53 | Climatización | L1 | 4 |
 | P60–P64 | Piscina | L1 | 5 |

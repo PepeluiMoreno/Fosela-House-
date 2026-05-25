@@ -1,5 +1,6 @@
 # Bill of Materials — Fosela House
 ## Instalación térmica integrada · Jerez de la Frontera
+## Arquitectura: BC monobloc R290 (sin HTR) + solar térmico
 
 Materiales agrupados por kits funcionales.  
 Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
@@ -8,20 +9,21 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 ## K01 · Climatización de piscina
 
+Dos intercambiadores de titanio independientes: uno para el excedente solar y otro para la BC en modo calor.
+
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Intercambiador titanio 5 kW — HX1 y HX_HTR | AstralPool Waterheat EVO TIT-20 ref.71607 | 2 | ~450 € | ~900 € |
-| Intercambiador titanio 15 kW — HX_HP | AstralPool Waterheat EVO TIT-60 ref.71609 | 1 | ~700 € | ~700 € |
+| Intercambiador titanio ~5 kW — HX solar piscina | AstralPool Waterheat EVO TIT-20 ref.71607 | 1 | ~450 € | ~450 € |
+| Intercambiador titanio ~15 kW — HX aerotérmico piscina | AstralPool Waterheat EVO TIT-60 ref.71609 | 1 | ~700 € | ~700 € |
 | Colector distribución PVC DN50 5 salidas | Jardiboutique JB-00500 | 2 | 13,17 € | 26,34 € |
 | Interruptor de flujo paleta PVC DN50 | Pentair ST11 | 1 | ~55 € | ~55 € |
-| Válvula motorizada 2 vías 230VAC — VP_HX | DN40, PVC, NC | 3 | ~35 € | ~105 € |
-| Electroválvula bypass NC 230VAC — EV_BYPASS | DN40, PVC | 1 | ~30 € | ~30 € |
-| Llave de esfera PVC DN50 encolar | Cepex o equiv. | 8 | ~12 € | ~96 € |
-| Unión con tuerca loca PVC DN50 | Cepex o equiv. | 8 | ~8 € | ~64 € |
-| Llave de esfera PVC DN40 (VP y bypass) | Cepex o equiv. | 8 | ~9 € | ~72 € |
-| Unión con tuerca loca PVC DN40 | Cepex o equiv. | 8 | ~6 € | ~48 € |
+| Válvula motorizada 2 vías 230VAC — VP_HX_SOLAR, VP_HX_BC | DN40, PVC, NC | 2 | ~35 € | ~70 € |
+| Llave de esfera PVC DN50 encolar | Cepex o equiv. | 6 | ~12 € | ~72 € |
+| Unión con tuerca loca PVC DN50 | Cepex o equiv. | 6 | ~8 € | ~48 € |
+| Llave de esfera PVC DN40 | Cepex o equiv. | 6 | ~9 € | ~54 € |
+| Unión con tuerca loca PVC DN40 | Cepex o equiv. | 6 | ~6 € | ~36 € |
 | Circuladora P4 circuito piscina secundario | Wilo Yonos PICO 25/1-4 | 1 | ~180 € | ~180 € |
-| **Subtotal K01** | | | | **~2.276 €** |
+| **Subtotal K01** | | | | **~1.691 €** |
 
 ---
 
@@ -48,26 +50,42 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 | Pozo inmersión inox 8×150mm G1/2" PN40 | Amazon B0BL7K4HYJ | 2 | 10,29 € | 20,58 € |
 | Pozo inmersión inox 8×200mm G1/2" PN40 | Amazon B0BL7K4HYJ | 4 | 9,29 € | 37,16 € |
 | Sonda NTC 10K Beta 3977K cable silicona 2m — AI01 colector | iOVEO 036HS05202 | 1 | ~13 € | ~13 € |
-| Sonda NTC 10K Beta 3977K cable PVC 2m — AI02–AI14 | iOVEO 035HP05202 | 12 | ~10 € | ~120 € |
+| Sonda NTC 10K Beta 3977K cable PVC 2m — AI02–AI13 | iOVEO 035HP05202 | 11 | ~10 € | ~110 € |
 | Sonda NTC 10K Beta 3977K exterior IP65 — AI12 | iOVEO 001AF05200 | 1 | ~10 € | ~10 € |
 | Termómetro de esfera bimetálico DN50 — D1, D2, D3 | 0–120°C, vaina inox | 3 | ~20 € | ~60 € |
-| **Subtotal K03** | | | | **~328 €** |
+| **Subtotal K03** | | | | **~318 €** |
 
 ---
 
-## K04 · Acumuladores y circuito ACS
+## K04 · Acumuladores — reservorio de energía técnica
+
+Los dos depósitos Tusol funcionan como reservorio de **agua técnica** (no potable).
+El ACS se produce al paso por estación de agua fresca (K04b).
 
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Acumulador solar Tusol DB2 450 vitrificado SMALGLASS (refurbished) | ref. existente | 2 | 1.000 € | 2.000 € |
-| Válvula de seguridad sanitaria 8 bar DN20 | VS_D1, VS_D2 | 2 | ~20 € | ~40 € |
-| Vaso expansión sanitario 30–35 L membrana EPDM | Reflex Refix DD o equiv. | 1 | ~80 € | ~80 € |
-| Válvula mezcladora termostática VMT1 DN20 | Caleffi 521 o equiv. | 1 | ~60 € | ~60 € |
-| Válvula 3 vías motorizada 230VAC V3V1, V3V2, V3V3 | DN25, PVC | 3 | ~45 € | ~135 € |
-| Llave de esfera latón DN20 — ramales ACS | — | 10 | ~8 € | ~80 € |
-| Filtro Y latón DN20 | — | 2 | ~12 € | ~24 € |
-| Purgador automático de aire DN15 | — | 4 | ~8 € | ~32 € |
-| **Subtotal K04** | | | | **~2.451 €** |
+| Acumulador solar Tusol DB2 450 vitrificado SMALGLASS (refurbished) | ref. existente (adquirido) | 2 | 1.000 € | 2.000 € |
+| Válvula de seguridad 3 bar — circuito agua técnica | DN20 | 2 | ~20 € | ~40 € |
+| Vaso expansión circuito técnico 18-25 L | Reflex N o equiv. | 1 | ~50 € | ~50 € |
+| Llave de esfera latón DN32 — tomas 1¼" ánodo/resistencia | — | 8 | ~12 € | ~96 € |
+| **Subtotal K04** | | | | **~2.186 €** |
+
+---
+
+## K04b · Estación de agua fresca — ACS instantánea
+
+Producción de ACS al paso sin acumulación de agua potable.
+Placa AISI 316L + circuladora modulante + caudalímetro.
+
+| Descripción | Referencia | Cant. | Precio ud | Total |
+|---|---|---|---|---|
+| Intercambiador de placas AISI 316L apto agua potable, 40-50 kW | SWEP, Alfa Laval, GEA o equiv. | 1 | ~350 € | ~350 € |
+| Circuladora modulante perfil calefacción (PWM1) — primario placa | Wilo Yonos PARA ST 15/7-50/PWM3 o equiv. | 1 | ~200 € | ~200 € |
+| Caudalímetro efecto Hall DN15, hasta 20 L/min, salida pulsos | Rango 2-20 L/min, G½" | 1 | ~30 € | ~30 € |
+| Válvula mezcladora termostática VMT1 DN20, 45°C | Caleffi 521 o equiv. | 1 | ~60 € | ~60 € |
+| Corte térmico NC independiente línea ACS — 70°C rearme manual | — | 1 | ~25 € | ~25 € |
+| Llave de esfera DN20, filtro Y DN20 | — | 4 | ~10 € | ~40 € |
+| **Subtotal K04b** | | | | **~705 €** |
 
 ---
 
@@ -75,16 +93,16 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Vaso expansión solar 50 L membrana EPDM alta temp. | Ibaiondo SMF o equiv. | 1 | ~120 € | ~120 € |
+| Vaso expansión solar 25-30 L membrana EPDM alta temp. | Ibaiondo SMF o equiv. | 1 | ~90 € | ~90 € |
 | Válvula de seguridad solar 6 bar DN20 | VS1 | 1 | ~25 € | ~25 € |
-| Grupo solar (bomba P1 TEU-III + caudalímetro + válvulas) | Teula TEU-III DN20 | 1 | ~350 € | ~350 € |
+| Grupo solar (bomba P1 PWM2 + caudalímetro + válvulas) | Wilo Yonos Para ST 15/7-50/PWM3 o equiv. | 1 | ~350 € | ~350 € |
 | Filtro Y inox DN20 circuito primario | — | 1 | ~15 € | ~15 € |
 | Válvula 3 vías motorizada 230VAC V3V_SOL | DN25, inox/latón | 1 | ~55 € | ~55 € |
 | Purgador automático inox DN15 | — | 2 | ~15 € | ~30 € |
 | Llave de esfera inox DN20 | — | 6 | ~12 € | ~72 € |
 | Racores y reducciones latón DN15–DN20 | surtido | 1 | ~40 € | ~40 € |
-| Propilenglicol 35% — 15 L circuito primario | alimentario | 1 | ~45 € | ~45 € |
-| **Subtotal K05** | | | | **~752 €** |
+| Propilenglicol 15% — mezcla para ~15 L circuito primario | alimentario | 1 | ~20 € | ~20 € |
+| **Subtotal K05** | | | | **~697 €** |
 
 ---
 
@@ -92,13 +110,14 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Acumulador buffer D3 150 L | inox o acero pintado | 1 | ~300 € | ~300 € |
-| Circuladora P3 circuito fancoils D3→fancoils | Wilo Yonos PICO 25/1-6 | 1 | ~210 € | ~210 € |
+| Buffer D3 150 L cerrado | inox o acero pintado | 1 | ~300 € | ~300 € |
+| Circuladora P3 fancoils — variable EC | Wilo Yonos PICO 25/1-6 | 1 | ~210 € | ~210 € |
 | Válvula de seguridad 3 bar D3 | — | 1 | ~15 € | ~15 € |
+| Vaso expansión circuito fancoils 12-18 L | — | 1 | ~40 € | ~40 € |
 | Llave de esfera DN25 | — | 6 | ~9 € | ~54 € |
 | Unión con tuerca loca DN25 | — | 4 | ~6 € | ~24 € |
 | Purgador automático DN15 | — | 2 | ~8 € | ~16 € |
-| **Subtotal K06** | | | | **~619 €** |
+| **Subtotal K06** | | | | **~659 €** |
 
 ---
 
@@ -106,8 +125,9 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Controlador principal con display LCD | Eliwell FREE Evolution EVD7500 | 2 | ~470 € | ~940 € |
-| Controlador solar esclavo Modbus | Eliwell FREE Smart SMD4500C | 1 | ~280 € | ~280 € |
+| Controlador principal con display LCD (maestro Modbus) | Eliwell FREE Evolution EVD7500 | 1 | ~200 € | ~200 € |
+| Controlador solar esclavo Modbus | Eliwell FREE Smart SMD5500/C/S 3AOV | 1 | ~67 € | ~67 € |
+| Módulo expansión DO/AO (opcional, margen) | Eliwell FREE EVE7500 | 1 | ~150 € | ~150 € |
 | Cable RS485 apantallado 2 pares | por metro | 20 | ~1,5 € | ~30 € |
 | Resistencias terminación RS485 120Ω | — | 2 | ~1 € | ~2 € |
 | Fuente alimentación 24Vac 50VA carril DIN | — | 2 | ~35 € | ~70 € |
@@ -115,7 +135,7 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 | Magnetotérmicos, diferenciales, bornas | surtido | 1 | ~120 € | ~120 € |
 | Cableado de campo 2×1,5mm² | por metro | 200 | ~0,8 € | ~160 € |
 | Prensaestopas y canaletas | surtido | 1 | ~40 € | ~40 € |
-| **Subtotal K07** | | | | **~1.722 € €** |
+| **Subtotal K07** | | | | **~919 €** |
 
 ---
 
@@ -123,25 +143,26 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Válvula motorizada 3 vías 230VAC V3V_APT | DN20, PVC | 5 | ~35 € | ~175 € |
-| Calentador eléctrico CE 50–80 L | según demanda por apto. | 5 | — | ya adquirido |
-| Válvula de esfera DN20 por ramal | — | 10 | ~8 € | ~80 € |
-| Válvula antiretorno DN20 | — | 5 | ~8 € | ~40 € |
-| **Subtotal K08** | | | | **~295 €** |
+| Válvula 3 vías motorizada retorno muelle 230VAC | DN20, NC (retorno a AFS) | 4 | ~35 € | ~140 € |
+| Cable señal 2×1mm² por apartamento | — | 4×15m | ~0,5 €/m | ~30 € |
+| Racores DN20 conexión acometida termo | — | 8 | ~8 € | ~64 € |
+| **Subtotal K08** | | | | **~234 €** |
+
+> Los termos eléctricos de los apartamentos son equipos existentes. Termostato subido a 55-60°C.
 
 ---
 
 ## K09 · Depuración piscina
 
-| Descripción | Modelo | Cant. | Precio ud | Total |
+| Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Bomba filtración 1CV autoaspirante silenciosa | AstralPool Victoria Plus Silent 1CV monofásica | 1 | ~220 € | ~220 € |
-| Filtro arena Ø550mm con válvula selectora 6 vías | AstralPool Aster 550 lateral | 1 | ~350 € | ~350 € |
-| Arena sílex granulometría 0,4–0,8mm | 8 sacos × 25kg (200 kg total) | 8 | ~11 € | ~90 € |
-| Clorador salino 15 g/h hasta 50 m³ | AstralPool E-Next 50 | 1 | ~450 € | ~450 € |
+| Bomba depuradora existente + filtro de arena | existente | — | — | — |
+| Válvula selectora 6 vías DN50 | AstralPool o equiv. | 1 | ~120 € | ~120 € |
+| Skimmer + boquillas impulsión | existente / a verificar | — | — | — |
+| Clorador salino (si no existe) | Astralpool Aquarite o equiv. | 1 | ~700 € | ~700 € |
+| Sonda redox/pH combinada | AstralPool E-Series | 1 | ~290 € | ~290 € |
 | Dosificador pH peristáltico automático | AstralPool E-Series pH | 1 | ~150 € | ~150 € |
 | **Subtotal K09** | | | | **~1.260 €** |
-
 
 ---
 
@@ -149,9 +170,9 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Colector solar plano 2 m² Solar Keymark, absorbedor cobre selectivo, vidrio templado bajo hierro | marca a confirmar con distribuidor | 6 | ~300 € | ~1.800 € |
-| Estructura soporte cubierta para 6 colectores | acero galvanizado, según inclinación | 1 | ~400 € | ~400 € |
-| **Subtotal K10** | | | | **~2.200 €** |
+| Colector solar plano 2 m² Solar Keymark, absorbedor cobre selectivo | marca a confirmar | 4 | ~300 € | ~1.200 € |
+| Estructura soporte cubierta para 4 colectores | acero galvanizado | 1 | ~300 € | ~300 € |
+| **Subtotal K10** | | | | **~1.500 €** |
 
 ---
 
@@ -166,15 +187,17 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 
 ---
 
-## K12 · Bomba de calor aerotérmica 14 kW
+## K12 · Bomba de calor aerotérmica monobloc
+
+BC monobloc R290 con módulo hidráulico integrado en unidad exterior.
+La conexión al sistema es exclusivamente hidráulica.
+Pendiente: verificar que la circuladora integrada vence ~150 mbar (serpentines en serie D2 + distribución).
 
 | Descripción | Referencia | Cant. | Precio ud | Total |
 |---|---|---|---|---|
-| Bomba de calor monobloc 14 kW R290, 80°C, A+++ | Haier AW142MXGHA | 1 | ~4.500 € | ~4.500 € |
-| Circuladora P2 circuito BDC→D2 | Wilo Yonos PICO 25/1-4 | 1 | ~180 € | ~180 € |
+| Bomba de calor monobloc R290, ~14 kW, A+++ | Haier AW142MXGHA o equiv. | 1 | ~4.500 € | ~4.500 € |
 | Kit hidráulico, accesorios y cableado de campo | — | 1 | ~500 € | ~500 € |
-| **Subtotal K12** | | | | **~5.180 €** |
-
+| **Subtotal K12** | | | | **~5.000 €** |
 
 ---
 
@@ -192,30 +215,28 @@ Precios orientativos IVA incluido salvo indicación. Verificar antes de comprar.
 | Codos y piezas especiales aislamiento | — | 1 | ~60 € | ~60 € |
 | **Subtotal K13** | | | | **~984 €** |
 
-
 ---
 
 ## Resumen general
 
 | Kit | Descripción | Total estimado |
 |---|---|---|
-| K01 | Climatización de piscina | ~2.276 € |
+| K01 | Climatización de piscina (2 HX titanio) | ~1.691 € |
 | K02 | Cadena de seguridad solar + persianas | ~285 € |
-| K03 | Instrumentación de temperatura | ~308 € |
-| K04 | Acumuladores Tusol (refurbished) + ACS | ~2.451 € |
-| K05 | Circuito solar primario | ~752 € |
-| K06 | Circuito climatización fancoils | ~619 € |
-| K07 | Control y automatización | ~1.722 € |
-| K08 | Apartamentos ACS | ~295 € |
+| K03 | Instrumentación de temperatura | ~318 € |
+| K04 | Reservorio agua técnica (Tusol ×2 refurbished) | ~2.186 € |
+| K04b | Estación de agua fresca — ACS instantánea | ~705 € |
+| K05 | Circuito solar primario (glicol 15%) | ~697 € |
+| K06 | Circuito climatización fancoils | ~659 € |
+| K07 | Control y automatización (EVD7500 + SMD5500) | ~919 € |
+| K08 | Apartamentos ACS | ~234 € |
 | K09 | Depuración piscina | ~1.260 € |
-| K10 | Colectores solares + estructura | ~2.200 € |
-| K11 | Distribución por fancoils | ~9.510 € |
-| K12 | Bomba de calor aerotérmica 14 kW Haier AW142MXGHA | ~5.180 € |
+| K10 | Colectores solares 8 m² + estructura | ~1.500 € |
+| K11 | Distribución por fancoils + PICV | ~9.510 € |
+| K12 | BC monobloc R290 ~14 kW | ~5.000 € |
 | K13 | Tubería, racorería y aislamiento | ~984 € |
-| **TOTAL versión estándar** | | **~27.842 €** |
+| **TOTAL** | | **~25.948 €** |
 
-> Precios orientativos IVA incluido salvo indicación.
-> Haier AW142MXGHA: precio real verificado ~4.500 € IVA incluido.
-> Fancoils Daitsu FDLA EC FLEX: precio estimado ~400 € ud sin instalación.
-> No incluye mano de obra, obra civil ni calentadores eléctricos de apartamentos.
+> Precios orientativos IVA incluido salvo indicación.  
+> No incluye mano de obra, obra civil ni termos eléctricos de apartamentos.  
 > Verificar precios actuales antes de comprar.

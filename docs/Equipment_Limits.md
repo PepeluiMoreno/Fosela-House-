@@ -53,7 +53,6 @@ EQUIPO
 | Código CFG | Descripción |
 |---|---|
 | `EQ_BDC_T_MAX_PRIM` | Temperatura máxima impulsión primario (calefacción) |
-| `EQ_BDC_T_MAX_HTR` | Temperatura máxima producción HTR |
 | `EQ_BDC_T_MIN_COOL` | Temperatura mínima impulsión primario (refrigeración) |
 | `EQ_BDC_PS_PRIM` | Presión máxima circuito primario |
 
@@ -62,8 +61,6 @@ EQUIPO
 | Setpoint | Acotado por |
 |---|---|
 | `SP_TT5` — consigna D2 vía BDC | ≤ `EQ_BDC_T_MAX_PRIM` − margen serpentín |
-| `SP_TT5_HTR_stop` — inhibición HTR | ≤ `EQ_BDC_T_MAX_HTR` |
-| `SP_TT10_max` — alarma ida HTR | ≤ `EQ_BDC_T_MAX_HTR` |
 | `SP_cool` — consigna refrigeración D3 | ≥ `EQ_BDC_T_MIN_COOL` |
 | `SP_heat` — consigna calefacción D3 | ≤ `EQ_BDC_T_MAX_PRIM` − margen |
 
@@ -213,8 +210,6 @@ Vista inversa: dado un setpoint, qué parámetros de equipo lo acotan.
 | `SP_TT2_diss` | `EQ_ACUM_T_MAX` | `SP_TT5` |
 | `SP_TT3_pool` | `EQ_ACUM_T_MAX`, `EQ_BUCLE_T_MAX` | `SP_TT5` |
 | `past_target` | `EQ_ACUM_T_MAX`, `SP_TT5` | normativa RD 865/2003 (65°C mín) |
-| `SP_TT5_HTR_stop` | `EQ_BDC_T_MAX_HTR` | `SP_TT5` |
-| `SP_TT10_max` | `EQ_BDC_T_MAX_HTR`, `EQ_HX_T_MAX` | — |
 | `SP_cool` | — | `EQ_BDC_T_MIN_COOL` |
 | `SP_heat` | `EQ_BDC_T_MAX_PRIM` | — |
 | `SP_TT1_MAX_ALM` | `EQ_COL_T_MAX_OPER` | — |
