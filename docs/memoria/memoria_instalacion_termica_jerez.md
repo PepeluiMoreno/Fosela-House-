@@ -507,3 +507,72 @@ Los dos módulos **TM3AI4** incluidos en el lote de Manresa proporcionan 8 canal
 
 > Ninguna de estas mejoras ha sido objeto de decisión. Se listan como posibilidades que el hardware ya adquirido puede asumir sin coste adicional de control.
 > La disponibilidad de la señal analógica de la BC depende del modelo concreto que se instale — verificar ficha técnica antes de planificar su uso.
+
+---
+
+## APÉNDICE B — Instrucciones de montaje de los bucles
+
+Cinco bucles hidráulicos independientes conectan con el tándem D1+D2: **dos de carga** (inyectan calor por los serpentines en circuito cerrado) y **tres de extracción** (sacan agua técnica del cuerpo del depósito hacia los consumidores).
+
+### B.0 Principios comunes a todas las bocas del depósito
+
+Toda conexión a una boca del depósito sigue la misma secuencia desde la boca hacia el circuito, sin excepción:
+
+**Boca del depósito → manguito dieléctrico → llave de bola → resto del circuito**
+
+1. **Manguito dieléctrico pegado a la boca**, lo primero. Corta el par galvánico entre el acero vitrificado del depósito y el cobre/acero de la tubería. Debe quedar lo más cerca posible de la transición de materiales; cualquier elemento metálico intercalado entre la boca y el manguito queda dentro del par galvánico y se corroe.
+2. **Llave de bola a continuación**, para aislar el circuito y poder hacer mantenimiento sin vaciar el depósito.
+3. **Resto del circuito** (circuladora, HX, etc.) en el tramo ya aislable.
+
+Cada circuito cerrado lleva además su **propio purgador en el punto alto** (el aire se acumula arriba y bloquea la circulación) y su **propio vaso de expansión + válvula de seguridad**, independientes de los demás circuitos.
+
+### B.1 Carga solar → D1 (serpentines en serie, glicol 15 %)
+
+- El glicol caliente de los captadores **entra por el serpentín superior** de D1 y **sale por el inferior** (contracorriente: cede calor de arriba abajo, vuelve lo más frío posible → máximo rendimiento del captador).
+- **Circuladora PWM2 en el retorno frío** (salida del serpentín inferior): trabaja con el fluido más frío del lazo, lo que alarga la vida de rodamiento y electrónica.
+- Secuencia desde la boca inferior: `boca serpentín inferior → manguito dieléctrico → llave de bola → circuladora PWM2 → vaso expansión solar + válvula de seguridad → captadores`.
+- **Purgador** en el punto alto (entrada del serpentín superior).
+- Llenado manual con premezcla de glicol 15 % verificada con refractómetro. Sin válvula de llenado automático (diluiría el anticongelante sin aviso).
+
+### B.2 Carga aerotérmica → D2 (serpentines en serie, agua)
+
+- El agua caliente de la BC **entra por el serpentín superior** de D2 y **sale por el inferior**, igual criterio que la solar.
+- La **bomba interna de la BC monobloc** suele estar en el lado de impulsión del propio equipo; si se añade circuladora externa, va en el retorno frío.
+- Secuencia desde la boca inferior: `boca serpentín inferior → manguito dieléctrico → llave de bola → (circuladora si aplica) → vaso expansión + válvula de seguridad propios → BC`.
+- **Purgador** en el punto alto (entrada del serpentín superior).
+
+### B.3 Extracción ACS — producción de DHW (PWM1)
+
+- Toma agua técnica del **punto más alto del tándem** (tapa de D2, boca del ánodo): el agua más caliente para la placa.
+- **Circuladora PWM1 en la impulsión caliente**, justo tras la toma (coherente con la estación de la sección 8).
+- Secuencia: `boca tapa D2 → manguito dieléctrico → llave de bola → circuladora PWM1 → primario placa HX → retorno → fondo de D1`.
+- El resto de la estación (placa, VMT1, caudalímetro, corte térmico, secundario AFS→DHW) está detallado en la sección 8.
+
+### B.4 Extracción climatización — fancoils (P3)
+
+- Toma de la **zona alta de D2, por debajo de la toma de ACS** (boca de resistencia lateral): los fancoils trabajan a ~45 °C y no deben robar grado a la cabeza del DHW.
+- **Circuladora P3 en la impulsión**, tras la toma.
+- Secuencia: `boca resistencia D2 → manguito dieléctrico → llave de bola → circuladora P3 → impulsión fancoils → retorno fancoils → fondo de D1`.
+- Vaso de expansión + válvula de seguridad propios del circuito de fancoils.
+
+### B.5 Extracción piscina — HX de titanio
+
+- Toma de la **zona alta del tándem**, tras la de fancoils en la jerarquía de grado (la piscina admite temperatura baja).
+- **Circuladora en la impulsión**, tras la toma.
+- Secuencia primario: `boca tándem → manguito dieléctrico → llave de bola → circuladora → primario HX titanio → retorno → fondo del tándem`.
+- **Secundario**: agua de la piscina por el secundario del HX, movida por la **depuradora existente** (no requiere circuladora adicional).
+- **Titanio obligatorio**: barrera de separación entre el circuito técnico y el agua clorada de baño (categoría 5, EN 1717). El agua clorada destruiría cualquier intercambiador que no sea de titanio.
+- La lógica estacional de la piscina (calentamiento en primavera/otoño, disipación pasiva en verano, BC sin aporte en modo refrigeración) está en la sección 11.
+
+### Resumen de bocas utilizadas por depósito
+
+| Boca | D1 (solar/frío) | D2 (aerotérmico/caliente) |
+|---|---|---|
+| Serpentín sup. (entrada) | Carga solar ↓ | Carga BC ↓ |
+| Serpentín inf. (salida) | Retorno solar (PWM2) | Retorno BC |
+| Tapa / ánodo | — | Extracción ACS (PWM1) |
+| Resistencia (lateral) | — | Extracción fancoils (P3) + piscina |
+| ACS (tapa) | Enlace serie ← fondo D2 | — |
+| AFS (fondo) | Retorno frío de extracciones | Enlace serie → tapa D1 |
+
+> La asignación definitiva depende del número y altura reales de bocas del DB2 450; cotejar con el plano dimensional. Si una sola boca alta de D2 no basta para ACS + fancoils + piscina, se reparte entre la del ánodo y la de resistencia, o se instala un colector de reparto en la impulsión.
