@@ -76,7 +76,7 @@ Placa AISI 316L + circuladora modulante + caudalímetro.
 |---|---|---|
 | Intercambiador de placas AISI 316L apto agua potable, 40-50 kW | SWEP, Alfa Laval, GEA o equiv. | 1 |
 | Circuladora modulante perfil calefacción (PWM1) — primario placa | Wilo Yonos PARA ST 15/7-50/PWM3 o equiv. | 1 |
-| Caudalímetro Hall latón G¾" **YF-B5** — 1-30 L/min, 120°C líquido, K=6,6 pulsos/L·min, salida DI rápida M241 | [eBay.es ítem 312536675529](https://www.ebay.es/itm/312536675529) | 1 |
+| Caudalímetro Hall latón G¾" **YF-B5** — 1-30 L/min, 120°C líquido, K=6,6 pulsos/L·min, salida DI rápida M241 | [eBay.es ítem 312536675529](https://www.ebay.es/itm/312536675529) · **18,70 €** | 1 |
 | Válvula mezcladora termostática VMT1 DN20, 45°C | Caleffi 521 o equiv. | 1 |
 | Corte térmico NC independiente línea ACS — 70°C rearme manual | — | 1 |
 | Llave de esfera DN20, filtro Y DN20 | — | 4 |
