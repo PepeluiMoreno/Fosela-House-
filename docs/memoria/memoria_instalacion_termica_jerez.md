@@ -122,7 +122,24 @@ No almacenan agua potable. El cuerpo de cada depósito contiene agua técnica en
 
 El productor entra por el serpentín superior y sale por el inferior: zona caliente arriba, fluido devuelto lo más frío posible → mejor rendimiento del captador y mejor COP de la BC.
 
-**Tomas para el lazo de agua técnica**: bocas de 1¼" del ánodo (parte alta) y la resistencia (parte baja) de cada depósito, las de mayor diámetro del cuerpo.
+**Tomas para el lazo de agua técnica**: bocas del ánodo (parte alta) y la resistencia (lateral) de cada depósito para el circuito de extracción, las de mayor diámetro del cuerpo. Las bocas AFS (fondo) y ACS (cabeza) quedan para el enlace serie entre depósitos: fondo de D2 → cabeza de D1.
+
+### 7.1 Conexión de los circuitos de extracción — criterio de estratificación
+
+El tándem D1+D2 se comporta como un único depósito de inercia estratificado de ~812 L. Para preservar la estratificación —que es lo que da valor al volumen acumulado— todo circuito que extrae energía debe **tomar de la zona más alta (más caliente) y devolver a la zona más baja (más fría)**. Tomas o retornos a media altura mezclan el depósito y destruyen la estratificación.
+
+**Jerarquía de extracción por grado de temperatura:**
+
+| Consumidor | Toma (impulsión) | Grado requerido | Retorno |
+|---|---|---|---|
+| DHW (PWM1) | Punto más alto — cabeza de D2 (ánodo) | El más alto (~65°C) | Fondo del tándem (D1) |
+| Fancoils (P3) | Zona alta, por debajo de la toma DHW | Medio (~45°C) | Fondo del tándem (D1) |
+
+El DHW toma del punto absolutamente más alto porque es el consumidor de mayor grado. Los fancoils, que trabajan a temperatura más baja, toman **por debajo** de la toma del DHW: así no degradan la cabeza ni le roban el agua más caliente al DHW. Ambos retornos van lo más abajo posible (fondo de D1), donde el agua fría favorece tanto el rendimiento del captador solar como el COP de la BC durante la carga.
+
+**Bomba solar (PWM2):** no es un circuito de extracción sino de carga. El glicol inyecta calor por los serpentines en circuito cerrado, entrando por el serpentín superior y saliendo por el inferior. Su impulsión no se conecta al agua del depósito sino a la boca de entrada del serpentín superior del depósito D1 (depósito frío del tándem), donde cede calor en la zona de menor temperatura para máximo rendimiento del captador.
+
+> La asignación exacta de cada boca (ánodo, resistencia, AFS, ACS) a su función definitiva requiere cotejar el plano dimensional del DB2 450 para confirmar la altura real de cada toma.
 
 ---
 
