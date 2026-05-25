@@ -9,7 +9,7 @@ Repositorio técnico del proyecto de instalación térmica integrada para vivien
 - **ACS**: producida por inversión de ciclo (BC en modo ACS) o calefacción → reservorio de 800 L agua técnica
 - **Reservorio energía**: 2 × Tusol DB2 450 vitrificado (~800 L agua técnica, serpentines en serie)
 - **Climatización**: 13 fancoils con PICV 0-10V, buffer D3 150 L
-- **Piscina**: ~40 m³, 2 intercambiadores titanio (HX solar + HX aerotérmico)
+- **Piscina**: ~25 m³, 2 intercambiadores titanio (HX solar + HX aerotérmico)
 - **ACS apartamentos**: agua precalentada del reservorio → V3V por apartamento → termo eléctrico existente
 - **Control**: FREE Smart SMD5500 (solar, esclavo Modbus) + FREE Evolution EVD7500 (sistema principal, maestro)
 
