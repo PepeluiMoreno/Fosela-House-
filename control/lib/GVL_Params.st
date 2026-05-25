@@ -30,17 +30,28 @@ VAR_GLOBAL RETAIN
     P18_SolarOverheatShutterHyst   : REAL := 4.0;   (* P18  K *)
     P19_SolarMode                  : UINT := 0;     (* P19  0=AUTO *)
 
-    (* ── P20-P21  Regulador PI solar (CFG) ──────────────── *)
-    P20_SolarPI_Kp : REAL := 0.50;  (* P20 *)
-    P21_SolarPI_Ki : REAL := 0.08;  (* P21  1/s *)
+    (* ── P20-P23  Reguladores PI — solar y ACS (CFG) ───────
+       Kp/Ki a ajustar en puesta en marcha tras análisis de respuesta.
+       Valores iniciales conservadores. *)
+    P20_SolarPI_Kp  : REAL := 0.50;  (* P20  adimensional CFG *)
+    P21_SolarPI_Ki  : REAL := 0.08;  (* P21  1/s             CFG *)
+    P22_ACSPI_Kp    : REAL := 0.40;  (* P22  adimensional CFG *)
+    P23_ACSPI_Ki    : REAL := 0.05;  (* P23  1/s             CFG *)
 
-    (* ── P30-P35  ACS (L1) ──────────────────────────────── *)
-    P30_ACSStorageSetPoint  : REAL := 65.0;  (* P30  °C *)
-    P31_ACSStorageHysteresis: REAL := 4.0;   (* P31  K *)
-    P32_ACSBDCStartTemp     : REAL := 50.0;  (* P32  °C *)
-    P33_ACSBDCStartHyst     : REAL := 3.0;   (* P33  K *)
-    P34_HTRStopTemp         : REAL := 68.0;  (* P34  °C *)
-    P35_HTRStopHyst         : REAL := 3.0;   (* P35  K *)
+    (* ── P30-P39  Estación producción ACS al paso (L1/CFG) ─
+       P30-P31: reservorio (fuente de energía primaria)
+       P32-P35: intercambiador de placas y control
+       P36-P39: instrumentación y bomba PWM1 *)
+    P30_ACSReservoirSetPoint      : REAL := 70.0;   (* P30  °C  setpoint carga reservorio   L1  *)
+    P31_ACSReservoirHysteresis    : REAL := 4.0;    (* P31  K   histéresis carga            L1  *)
+    P32_ACSReservoirMinForACS     : REAL := 65.0;   (* P32  °C  mín. reservorio para prod.  CFG *)
+    P33_ACSReservoirAlarmLow      : REAL := 60.0;   (* P33  °C  alarma reservorio frío      CFG *)
+    P34_ACSPlateOutputSetpoint    : REAL := 60.0;   (* P34  °C  consigna salida placa       L1  *)
+    P35_ACSPlateOutputHysteresis  : REAL := 2.0;    (* P35  K   histéresis control PI       CFG *)
+    P36_ACSFlowMeterK             : REAL := 6.6;    (* P36  pulsos/L·min  K caudalímetro    CFG — confirmar ficha YF-B6 *)
+    P37_ACSFlowDetectMin          : REAL := 0.5;    (* P37  L/min  umbral detección grifo   CFG *)
+    P38_ACSPumpCooldown           : TIME  := T#15S; (* P38  s     tiempo post-cierre grifo  CFG *)
+    P39_ACSMaxOutputAlarm         : REAL := 68.0;   (* P39  °C  alarma sobretemperatura ACS CFG *)
 
     (* ── P40-P46  ACS apartamentos (L1) ─────────────────── *)
     P40_AptMode_01       : UINT := 0;     (* P40  0=PREC 1=AFS *)
