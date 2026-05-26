@@ -671,3 +671,51 @@ Cada circuito cerrado e independiente necesita el suyo:
 - **HX-POOL (titanio):** secundario = circuito de piscina (depuradora), abierto al vaso; primario = rama de su fuente (agua técnica o glicol), cubierto por el vaso de esa fuente.
 
 > Dimensionado definitivo de cada vaso pendiente del volumen real de cada circuito (longitudes de tubería, número de emisores). Los tamaños indicados son de partida.
+
+---
+
+## 16. ARBITRAJE ACS / CLIMA / PISCINA — SIMULTANEIDAD CONDICIONADA
+
+**Corrección de fondo:** la prioridad **no es un corte hidráulico** que apague el clima cuando hay ACS. Una racha de duchas encadenadas (4 apartamentos + vivienda en hora punta) dejaría la casa sin climatizar de forma prolongada. ACS y clima **no son excluyentes**.
+
+**Regla de arbitraje:**
+
+- **ACS y clima se simultanean** como modo normal. El tándem (812 L) es el reservorio que absorbe demandas simultáneas mientras BC + solar recargan.
+- **Matiz por temperatura del tándem:** por debajo de un umbral (tándem frío), se atiende **solo ACS** — el calor disponible se reserva para garantizar agua caliente sanitaria, que no puede salir templada. Por encima del umbral (tándem suficientemente caliente), se permite la **simultaneidad ACS + clima**.
+- **La conmutación alrededor del umbral la gobierna la histéresis intrínseca del tándem (HY)** en cada situación de calentamiento/enfriamiento, no un margen artificial. La inercia del reservorio amortigula el cicleo de forma natural.
+- **El clima nunca se sacrifica por el ACS.** El único consumidor sacrificable bajo contención sostenida es la **piscina**, que tolera el retraso (masa enorme, inercia lentísima).
+
+**Orden de sacrificio bajo escasez:** piscina primero (y única, en la práctica). ACS y clima se mantienen ambos por encima del umbral de temperatura.
+
+**Consecuencia de dimensionado:** la simultaneidad ACS + clima es el **modo normal**, no un caso excepcional. La BC debe tener potencia para recargar el tándem al ritmo de ambos consumos sostenidos; la inercia de los 812 L cubre los picos; la solar y la inercia son el colchón; el último recurso es soltar piscina, nunca clima.
+
+Implica reescribir `FB_BDC_Arbiter`: simultaneidad ACS+clima condicionada al umbral de temperatura del tándem, sacrificio solo de piscina. (Pendiente, ver PENDIENTES.md.)
+
+---
+
+## 17. COLECTOR DE CONSUMIDORES Y POSICIÓN DE LAS BOMBAS
+
+**Punto alto común de extracción.** Todos los consumidores (ACS, clima, piscina) toman de una zona alta común del tándem, no de tomas escalonadas por altura. La prioridad/arbitraje la ejerce el control (capítulo 16), no la hidráulica. Retornos al fondo de D1.
+
+**Colector casero de latón roscado (sin soldar):**
+- Cuerpo de **2"** (DN50), tes de latón reducidas a **1"** (DN25) en cada salida con manguitos reductores. Sección de 2" → velocidad interna ~0,5 m/s incluso con ACS + clima simultáneos (~3.480 L/h), de modo que el cuerpo se comporta como punto de presión estable y ninguno ahoga al otro.
+- Sellado cuidadoso de cada rosca (cáñamo+pasta o anaeróbico). Tapón roscado en extremos, con purgador en punto alto y vaciado en bajo.
+- **Reparto de salidas:** dado que ACS y clima son simultáneos y el cuerpo de 2" lo permite, el consumidor de mayor caudal (clima) puede salir por el extremo y ACS/piscina por las derivaciones, o alimentar por un extremo y sacar clima por el opuesto. El cuerpo sobredimensionado hace que el reparto no se degrade.
+
+**Posición de las bombas — prevalece la hidráulica sobre la temperatura:**
+- El criterio determinante es la **aspiración con presión positiva** (evitar cavitación), con el vaso de expansión del lado de la aspiración. La "parte fría" es un criterio menor (las circuladoras modernas trabajan a 90-110 °C sin problema).
+- Cada bomba en la **impulsión de su ramal**, saliendo del colector hacia su consumidor, con el vaso del circuito garantizando aspiración.
+- **Cada bomba con su válvula de retención aguas abajo** (después de la bomba, antes del colector de retorno) para que, con la bomba parada, la presión del colector no circule en reverso por su ramal.
+- **P-ACS en impulsión** (excepción por control: la anticipación y el lazo PI lo requieren).
+
+**Sin separador hidráulico de marca.** Con la simultaneidad permitida por el cuerpo de 2" y el arbitraje por software, no se necesita un Caleffi SEP4/SEPCOLL (caro). El colector sobredimensionado cumple.
+
+---
+
+## 18. SUPERVISIÓN — HMI WEB Y TELEMETRÍA REMOTA
+
+**HMI local:** servidor web embebido en el M241 (Ethernet integrado). Estados y variables con nombre legible (taxonomía SP/P/HY/OF/ST). **No exponer el PLC a internet** (no abrir puertos del router hacia el M241).
+
+**Supervisión remota (fase posterior):** el M241 actúa como **cliente que publica** sus variables hacia un servidor externo (MQTT o HTTP POST a una API) — solo conexiones salientes, nunca entrantes. Un servidor intermedio (VPS o servicio gestionado) almacena histórico y sirve la web con autenticación al usuario, desde cualquier ubicación. Avisos al móvil ante alarmas.
+
+**Principio:** es **capa de supervisión, no de control**. Si internet, el servidor externo o el servicio caen, el M241 sigue controlando y las Cadenas de Seguridad siguen protegiendo. Comandos de vuelta (si se implementan) limitados a **SP de confort**; nunca tocar Cadenas de Seguridad ni parámetros críticos por vía remota.

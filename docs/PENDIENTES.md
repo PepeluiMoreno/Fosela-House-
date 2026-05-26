@@ -65,6 +65,33 @@ El manual de montaje describe los bucles y su lógica, pero le faltan los **deta
 - [ ] **Confirmar pre-vaso solar** según temperatura de estancamiento de los captadores elegidos.
 - [ ] Dimensionado definitivo de todos según volumen real de cada circuito.
 
+## Nomenclatura y código — taxonomía SP/P/HY/OF/ST
+
+- [ ] **Decidir migración de nomenclatura:** ¿migrar lo existente (hoy todo bajo Pxx) a las cinco familias SP/P/HY/OF/ST, separando setpoints, histéresis e instrumentación, o aplicar solo de aquí en adelante? La migración deja el proyecto impecable pero toca muchos ficheros y referencias.
+- [ ] Crear tabla **HYxx**: una histéresis por situación reservorio-transición (tándem enfriándose por ACS, por clima; calentándose por BC, por solar; piscina; buffer clima estacional...). Caracterizar en puesta en marcha.
+- [ ] Crear tabla **OFxx**: offset de calibración por sonda.
+- [ ] Renombrar enums de estado `E_*` → `ST_*` (con nombre, legibles en HMI web).
+- [ ] Reclasificar lo que hoy es Pxx pero es setpoint (ej. consigna de placa ACS → SP).
+
+## Arbitraje — reescribir FB_BDC_Arbiter (ver memoria §16)
+
+- [ ] **Simultaneidad ACS+clima condicionada por temperatura del tándem:** por debajo del umbral, solo ACS; por encima, ACS+clima a la vez. Conmutación gobernada por la HY del tándem.
+- [ ] **Clima nunca sacrificado por ACS.** Único sacrificable bajo contención: piscina.
+- [ ] Verificar **potencia de la BC** para ACS medio + clima (14 kW) sostenidos en hora punta.
+
+## Sala de máquinas — colector y bombas (ver memoria §17)
+
+- [ ] **Colector de latón:** cuerpo 2", salidas reducidas a 1", sin soldar (roscado). Purgador y vaciado en extremos.
+- [ ] **Confirmar tamaño** de los colectores de Wallapop (cuerpo y salidas) — preguntado al vendedor.
+- [ ] **Confirmar aptitud para agua caliente** de las llaves de bola integradas (modelo de 8,50 €, "metal y plástico").
+- [ ] Bombas en impulsión de cada ramal + retención aguas abajo. P-ACS en impulsión.
+
+## Supervisión remota (fase posterior, ver memoria §18)
+
+- [ ] Arquitectura: M241 cliente MQTT/HTTP → servidor externo (VPS o gestionado) → web con autenticación. Solo conexiones salientes del PLC.
+- [ ] Capa de supervisión, NO de control. Comandos de vuelta limitados a SP de confort.
+- [ ] Decidir: plataforma IoT gestionada vs montaje propio (VPS + broker MQTT + frontend).
+
 ## Documentación
 
 - [ ] **BOM por módulo** y **esquema de principio**: los hace el usuario (mejor dibujante que Claude).

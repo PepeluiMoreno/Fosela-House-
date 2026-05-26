@@ -40,14 +40,12 @@ Convención única para todo el proyecto (esquema de principio, memoria, manual 
 |---|---|---|
 | **V3V estacional** | 3 vías motorizada | Impulsión BC: D2 (invierno) / buffer clima frío (verano) |
 | **V3V disipación** | 3 vías motorizada | Glicol solar: carga D1 / desvío a HX-POOL-SOL (excedente) |
-| **VZ1** | 2 vías zona | Verano-impulsión (BC → buffer clima) |
-| **VZ2** | 2 vías zona | Verano-retorno (buffer clima → BC) |
-| **VZ3** | 2 vías zona | Invierno-impulsión (D2 → P1 → buffer clima) |
-| **VZ4** | 2 vías zona | Invierno-retorno (buffer clima → fondo D1) |
+| **VZ-INV** | 2 vías zona | Vía de invierno: primario buffer ↔ tándem (toma del punto alto común, retorno a fondo D1). Abierta en invierno |
+| **VZ-VER** | 2 vías zona | Vía de verano: primario buffer ↔ BC fría (salida V3V estacional). Abierta en verano |
 | **VMT1** | Mezcladora termostática mecánica | Limita ACS a 55 °C (autónoma, no PLC) |
 | **AFS / FS** | 3 vías por apartamento | Precalentada / agua de red (distribución apartamentos) |
 
-> VZ por parejas de estación: VZ1+VZ2 (verano) y VZ3+VZ4 (invierno) abren y cierran juntas. Nunca cruzadas.
+> Dos VZ enclavadas: VZ-INV y VZ-VER nunca abiertas a la vez. Cada una con su retención. (Simplificación de las 4 VZ iniciales al adoptar punto alto común de extracción.)
 
 ## Sondas / seguridad
 
@@ -56,3 +54,21 @@ Convención única para todo el proyecto (esquema de principio, memoria, manual 
 | Corte térmico ACS | Termostato bimetálico NC, rearme manual, ~70 °C, de inmersión. Corta P-ACS por hardware + avisa al M241. |
 | Z1, Z2 | Termostatos seguridad D1/D2, ~90 °C, NC, rearme manual, hardware independiente. |
 | TK1 | Termostato de contacto ~88 °C rearme manual (cadena de seguridad solar). |
+
+---
+
+## Taxonomía de constantes y estados (convención del proyecto)
+
+Cada constante del proyecto se clasifica por su **naturaleza** mediante un prefijo. Cualquiera que abra el proyecto sabe qué es una constante solo por su prefijo. Convención a aplicar de aquí en adelante (migración de lo existente: pendiente, ver PENDIENTES.md).
+
+| Prefijo | Familia | Naturaleza | Ejemplo |
+|---|---|---|---|
+| **SPxx** | Setpoints | Lo que el sistema quiere conseguir: confort / punto de funcionamiento de los receptores de agua técnica | Consigna ACS, impulsión a fancoils, temperatura piscina |
+| **Pxx** | Parámetros de control | Lo que se decide que debe pasar: umbrales, tiempos, velocidades | Umbral de simultaneidad clima, intervalo de muestreo solar |
+| **HYxx** | Histéresis intrínsecas | Cómo responde físicamente cada reservorio en cada situación térmica (inercia). **No es un margen elegido**, es propiedad del reservorio en esa situación. Hay tantas HY como situaciones reservorio-transición existan | Inercia del tándem enfriándose por extracción de ACS; tándem calentándose por BC; tándem por solar; piscina (inercia lentísima) |
+| **OFxx** | Offsets de instrumentación | Corrección de la desviación de cada sonda (calibración sin tocar hardware) | Error de calibración de una NTC/PT1000 |
+| **ST_** | Estados | Estados de las máquinas de estado de cada FB. Enum **con nombre** (HMI es servidor web, hay sitio para texto legible) | `ST_DHW.ACTIVO`, `ST_Solar.MUESTREO`, `ST_Clima.INVIERNO` |
+
+**Criterio de fondo:** SP = el deseo · P = la regla · HY = la física del reservorio · OF = el error del sensor · ST = la situación del autómata.
+
+**Estados con nombre (no numerados)** porque el HMI será **servidor web**: hay espacio para mostrar texto legible. (Si el HMI fuera un display limitado, se usarían estados numerados + tabla de equivalencia en la documentación.)
