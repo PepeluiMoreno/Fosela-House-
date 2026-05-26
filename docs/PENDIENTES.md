@@ -86,6 +86,13 @@ El manual de montaje describe los bucles y su lógica, pero le faltan los **deta
 - [ ] **Confirmar aptitud para agua caliente** de las llaves de bola integradas (modelo de 8,50 €, "metal y plástico").
 - [ ] Bombas en impulsión de cada ramal + retención aguas abajo. P-ACS en impulsión.
 
+## Integración con la bomba de calor comercial (ver memoria §12)
+
+- [ ] **Confirmar en la ficha del modelo** que la BC admite modo "solo calefacción/agua técnica" gobernada por sonda de tándem o temperatura de impulsión, **ignorando su lógica interna de ACS**.
+- [ ] **Mapear el regletero de la BC:** entradas de demanda (ACS, calefacción, frío), salida para V3V externa ACS/clima, contacto de habilitación, señal verano/invierno. Decidir qué usa el M241, qué se ignora y qué se puentea.
+- [ ] **Evitar que la BC espere una orden de preparación de ACS que nunca llegará** (el ACS lo gestiona el M241 aguas abajo): configurarla como generador de agua técnica puro.
+- [ ] El contacto de salida para V3V externa de la BC **no se usa** en este esquema: dejar sin conectar o puentear a posición fija.
+
 ## Supervisión remota (fase posterior, ver memoria §18)
 
 - [ ] Arquitectura: M241 cliente MQTT/HTTP → servidor externo (VPS o gestionado) → web con autenticación. Solo conexiones salientes del PLC.

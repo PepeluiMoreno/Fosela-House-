@@ -584,33 +584,45 @@ Los fancoils **no cuelgan del tándem**: trabajan en los dos modos (calor en inv
 
 ---
 
-## 12. CLIMATIZACIÓN REVERSIBLE — APROVECHAMIENTO SOLAR EN CALEFACCIÓN
+## 12. CLIMATIZACIÓN REVERSIBLE — ORIGEN HÍBRIDO SOLAR-AEROTERMIA
 
-> Esta sección **amplía y modifica** el apartado B.4. El buffer de clima de 150 L deja de colgar exclusivamente de la BC y pasa a tener fuente conmutable según estación, de modo que la producción solar acumulada en el tándem también sirva a calefacción en invierno.
+> Esta sección **sustituye** al apartado B.4 y **deja obsoleto** el planteamiento anterior de conmutación por válvulas de zona (las 4 VZ / 2 VZ-INV·VZ-VER quedan superadas). La topología definitiva del lazo del buffer se resuelve con **dos V3V desviadoras** (V3V1, V3V2) y la bomba de trasvase **P1**, según el esquema de principio.
 
-El buffer de inercia de clima (150 L, aguja hidráulica de 4 bocas) tiene el **secundario fijo** (P2 → fancoils, conexión cruzada) y el **primario de fuente conmutable**:
+### Concepto
 
-- **Invierno (BC en calor):** el primario se alimenta del **tándem** (toma alta de D2, retorno al fondo de D1). La bomba **P1** (rama de invierno) circula el agua del tándem por el buffer. Como el tándem lo cargan solar + BC, **la solar contribuye a la calefacción**, no solo al ACS. Es la ganancia de eficiencia que motiva el cambio.
-- **Verano (BC en frío):** el primario se alimenta de la **BC en frío** vía la V3V estacional. **P1 parada** (empuja la bomba interna de la BC). El buffer queda aislado del tándem, que sigue caliente para ACS y piscina.
+El buffer de inercia de clima (150 L) alimenta los fancoils por su secundario (P2 → fancoils, fijo). Lo que cambia es **de dónde toma la energía su primario**, y el objetivo no es "pasar a través de D2" sino **permitir la climatización de origen híbrido solar-aerotermia**:
 
-**Conmutación de fuente — cuatro válvulas de zona de 2 vías** (VZ1-VZ4), por parejas de estación:
+- **Invierno (BC en calor):** el agua técnica que sube y baja de la bomba de calor **se funde con el volumen de agua técnica del tándem** (es la misma masa de agua caliente). Por tanto la climatización se nutre **indistintamente del calor solar** (acumulado en el tándem a través de D1) **y del aerotérmico** (BC). Origen híbrido: solar + aerotermia en la misma agua técnica. Se habilita cuando D2 está bien cargado y la **ACS al paso queda garantizada**.
+- **Verano (BC en frío):** el agua de la BC va **fría** y debe quedar **independiente** del tándem (que sigue caliente para ACS y piscina). Las V3V aíslan el lazo: la BC alimenta el buffer directamente en frío, sin tocar el tándem. Dos masas de agua separadas porque tienen temperatura y propósito opuestos.
 
-| Válvula | Función | Invierno | Verano |
-|---|---|---|---|
-| VZ1 | Verano-impulsión (BC → buffer) | Cerrada | Abierta |
-| VZ2 | Verano-retorno (buffer → BC) | Cerrada | Abierta |
-| VZ3 | Invierno-impulsión (D2 → P1 → buffer) | Abierta | Cerrada |
-| VZ4 | Invierno-retorno (buffer → fondo D1) | Abierta | Cerrada |
+> En una frase: **misma agua técnica en invierno** (BC + tándem se suman, clima híbrido) · **circuitos independientes en verano** (frío de la BC vs caliente del tándem, no se mezclan).
 
-**P1 en la rama de invierno, no en el tubo común:** así en verano P1 queda fuera del camino y no entra en serie con la bomba interna de la BC. Cada estación, una sola bomba. Antirretornos en cada rama de impulsión (orientados hacia la T de confluencia) impiden el reflujo por la rama cerrada.
+### Elementos del lazo
 
-**Enclavamiento (crítico):** las válvulas de zona deben estar en posición *antes* de que arranque P1 o cambie el modo de la BC. Se respeta el tiempo de maniobra más un retardo de seguridad (P55_SeasonInterlockDelay). Arrancar con las válvulas a medias mezclaría caliente y frío.
+- **P1 — bomba de trasvase D2 → buffer.** Su función es llevar agua caliente del tándem al buffer **cuando D2 está bien cargado y la ACS al paso está garantizada**. Sale de un colector de D2 y va al otro pasando por el buffer. No es una "bomba de estación": es la bomba de carga del buffer desde el tándem.
+- **V3V1 — desviadora en impulsión.** Desvía el caudal de P1 hacia el **buffer** o hacia el **colector de D2**.
+- **V3V2 — desviadora en retorno.** Reconecta el retorno del buffer al colector de retorno según el modo, coordinada con V3V1.
+- **V3V de modo de la BC** — la válvula propia de la bomba de calor (la "de toda la vida"): según la BC produzca para ACS/agua técnica o para clima, manda su impulsión a un lado o a otro. Es independiente de P1.
+- **P2 — secundario**, del buffer a los fancoils. Sin cambios.
 
-**Prioridad:** al volver la climatización a colgar del tándem en invierno, compite con el ACS por el calor. El árbitro del PLC da prioridad al ACS; la climatización cede.
+### Garantía de ACS prioritaria
 
-Implementado en `FB_ClimateReversible.st`.
+P1 solo trasvasa calor del tándem al buffer **cuando la ACS al paso está garantizada** (D2 suficientemente cargado). Así la climatización híbrida nunca compromete el agua caliente sanitaria: el clima aprovecha el calor del tándem solo cuando sobra respecto a la garantía de ACS. Esto enlaza con el arbitraje del capítulo 16 (simultaneidad condicionada por temperatura del tándem).
 
----
+> El código `FB_ClimateReversible.st` (planteamiento de VZ) queda **pendiente de reescribir** conforme a esta topología de dos V3V desviadoras + P1 de trasvase. Ver PENDIENTES.md.
+
+### Consecuencia: la BC no conmuta destino en invierno
+
+Como en invierno la BC calienta siempre **la misma agua técnica** (la del tándem), **le es indiferente que ese calor acabe en ACS o en clima**: no tiene que conmutar entre "preparar ACS" y "preparar clima". El reparto lo hacen aguas abajo P-ACS y P1. La V3V de modo de la BC deja de ser una desviadora ACS/clima continua y se reduce a una **conmutación estacional** (agua técnica del tándem en invierno / buffer frío en verano): una sola maniobra al cambiar de temporada.
+
+### ⚠️ Advertencia de integración con la BC comercial
+
+La BC de mercado viene pensada para el esquema convencional y puede traer lógica de ACS interna. Hay que prever:
+
+- **Contacto de salida para V3V externa ACS/clima:** en este esquema **no se usa**. Identificarlo en el regletero y dejarlo sin conectar (o puentear a posición fija si la BC necesita verlo definido).
+- **Riesgo de espera de "orden de preparación de ACS" que nunca llega:** si la BC está configurada esperando una demanda de ACS (con su sonda de depósito de ACS y su lógica de prioridad) para entrar en un modo, y en este esquema esa señal nunca le llega (el ACS lo gestiona el M241 aguas abajo), la BC podría no arrancar ese modo, quedarse esperando, o dar error de sonda de ACS.
+- **Solución:** configurar la BC como **generador de agua técnica puro**, gobernada por temperatura de impulsión o por sonda en el tándem, sin gestionar ACS ni prioridades internas. Toda la inteligencia ACS/clima/prioridad la lleva el M241 por fuera.
+- **Pendiente con la ficha del modelo concreto:** (1) confirmar que admite modo "solo calefacción/agua técnica" por sonda de tándem, ignorando su lógica de ACS; (2) mapear su regletero — entradas de demanda (ACS, calefacción, frío), salida V3V externa, habilitación, señal verano/invierno — para saber qué usa el M241, qué ignora y qué hay que puentear.
 
 ## 13. DISIPACIÓN ENCADENADA DEL EXCEDENTE SOLAR
 
