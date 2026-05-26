@@ -79,6 +79,12 @@ El manual de montaje describe los bucles y su lógica, pero le faltan los **deta
 - [ ] **Clima nunca sacrificado por ACS.** Único sacrificable bajo contención: piscina.
 - [ ] Verificar **potencia de la BC** para ACS medio + clima (14 kW) sostenidos en hora punta.
 
+## ⚠️ Integración con la bomba de calor — V3V y gestión de ACS
+
+- [ ] **Leer el manual de la BC concreta** (esquemas hidráulicos admitidos, gestión de ACS, configuración de la 3 vías) para resolver que la BC NO gestiona el desvío ACS/clima en este diseño (en invierno calienta agua técnica única).
+- [ ] Riesgo: la BC puede **esperar una orden/sonda de demanda de ACS que nunca llegará**, o traer **contactos para su V3V de ACS que quedan huérfanos**.
+- [ ] Decidir solución según modelo: (a) modo solo calefacción a consigna fija del tándem; (b) simular demanda de ACS (sonda en tándem o contacto del M241); (c) usar su consigna de calefacción directamente.
+
 ## Sala de máquinas — colector y bombas (ver memoria §17)
 
 - [ ] **Colector de latón:** cuerpo 2", salidas reducidas a 1", sin soldar (roscado). Purgador y vaciado en extremos.

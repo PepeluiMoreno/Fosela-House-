@@ -609,6 +609,19 @@ El buffer de inercia de clima (150 L) alimenta los fancoils por su secundario (P
 
 P1 solo trasvasa calor del tándem al buffer **cuando la ACS al paso está garantizada** (D2 suficientemente cargado). Así la climatización híbrida nunca compromete el agua caliente sanitaria: el clima aprovecha el calor del tándem solo cuando sobra respecto a la garantía de ACS. Esto enlaza con el arbitraje del capítulo 16 (simultaneidad condicionada por temperatura del tándem).
 
+### Consecuencia: la BC no conmuta destino en invierno
+
+Como en invierno la BC siempre calienta **la misma agua técnica** (el tándem), le es **indiferente** que ese calor acabe en ACS o en clima. Por tanto **la BC no necesita conmutar entre "producir para ACS" y "producir para clima"**: solo mantiene el tándem caliente. El reparto ACS/clima lo hacen aguas abajo P-ACS y P1. La V3V de modo de la BC queda reducida a **conmutación estacional calor/frío** (tándem en invierno / buffer frío en verano), una sola maniobra por temporada, no una conmutación continua según demanda.
+
+**⚠️ Punto crítico de integración con la BC:** las bombas de calor de climatización + ACS suelen venir de fábrica esperando **gobernar ellas la V3V de desvío ACS/calefacción** (traen contacto de relé para esa válvula) y/o esperando una **sonda/orden de demanda de ACS** para entrar en modo ACS. En este diseño:
+- La orden de preparación de ACS **no le llegará nunca** (el ACS se hace al paso en HX-ACS, no hay sonda de ACS en la BC).
+- Los contactos de su V3V de ACS quedarían **huérfanos**.
+
+Hay que resolverlo según el modelo concreto de BC (leer su manual: "esquemas hidráulicos admitidos", "gestión de ACS", "configuración 3 vías"):
+1. Configurar la BC en **modo solo calefacción / agua técnica** a consigna fija del tándem (lo más limpio si lo permite).
+2. **Simular la demanda de ACS** hacia la BC (sonda en el tándem o contacto desde el M241) si exige verla para dar la consigna alta.
+3. Usar directamente su **consigna de calefacción** si basta para cargar el tándem.
+
 > El código `FB_ClimateReversible.st` (planteamiento de VZ) queda **pendiente de reescribir** conforme a esta topología de dos V3V desviadoras + P1 de trasvase. Ver PENDIENTES.md.
 
 ### Consecuencia: la BC no conmuta destino en invierno
