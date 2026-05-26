@@ -2,6 +2,29 @@
 
 Lista viva de lo que queda por cerrar. Actualizar al cierre de cada sesión.
 
+---
+
+## ⚠️ PRINCIPIO RECTOR — OPERACIÓN MANUAL SIN PLC (Cadenas de Seguridad)
+
+**Todo el diseño basado en PLC debe poder degradarse a operación manual.** Además de la lógica del M241, hay que responder a la pregunta: *¿cómo se diseña la instalación para que, con el PLC averiado o sin alimentación, siga habiendo ACS, siga habiendo agua técnica adecuada, y la instalación siga siendo segura?*
+
+Esto se materializa con elementos **pasivos e independientes del PLC** — termostatos, relés, conmutadores, válvulas con retorno por muelle, termostatos de seguridad con rearme manual, conmutadores manual/auto, etc. El usuario los denomina **Cadenas de Seguridad**.
+
+Cada función crítica necesita su cadena de seguridad que actúe sin software:
+
+- [ ] **Continuidad de ACS:** ante fallo, las V3V de apartamentos caen por muelle a agua de red → termos eléctricos existentes siguen dando ACS. Definir y cablear.
+- [ ] **Continuidad de agua técnica adecuada:** que el tándem mantenga temperatura útil sin el PLC (termostato pasivo gobernando la carga de la BC en modo local).
+- [ ] **Disipación del calor excedente sin PLC:** la cadena de disipación (piscina → persianas) debe poder dispararse por termostato físico (Z1/Z2 ~90 °C, TK1 ~88 °C) cortando P-SOL y cerrando persianas por hardware, esté el PLC vivo o no.
+- [ ] **Seguridad de la BC sin PLC:** protecciones internas del equipo + termostato/presostato externos que la paren en condiciones peligrosas independientemente del control.
+- [ ] **Ocultación de paneles (persianas) sin PLC:** las persianas deben cerrar por hardware (fail-safe) ante sobretemperatura o corte de tensión, sin depender del M241.
+- [ ] **Conmutadores manual/auto** en cada bomba y válvula motorizada para forzar estados a mano.
+- [ ] **Filosofía fail-safe de cada actuador:** definir a qué posición cae cada válvula/bomba ante pérdida de tensión (la posición segura, nunca la peligrosa).
+
+> El PLC OPTIMIZA; las Cadenas de Seguridad GARANTIZAN. El diseño eléctrico debe construirse de modo que el PLC se monte *encima* de unas cadenas de seguridad cableadas que funcionan solas. Quitar el PLC debe degradar prestaciones, nunca comprometer ACS, agua técnica ni seguridad.
+
+---
+
+
 ## Manual de montaje — detalles de instalación que faltan
 
 El manual de montaje describe los bucles y su lógica, pero le faltan los **detalles finos de fontanería** que un instalador necesita pieza a pieza:

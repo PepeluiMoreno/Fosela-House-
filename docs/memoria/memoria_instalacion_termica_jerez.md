@@ -625,3 +625,26 @@ Cuando el campo solar produce más de lo que el reservorio puede admitir, la dis
 **Arranque solar por muestreo (no por sonda de captador):** la bomba P-SOL arranca periódicamente a **bajo caudal** (P13_SolarPumpMinSpeed) durante una ventana corta (P57_SolarSampleDuration) para "tomar muestra" de lo que baja del campo, sin consumir apenas energía ni disipar calor del depósito. Si el ΔT respecto al depósito supera el umbral de arranque (P11), pasa a modulación normal; si no, vuelve a esperar (P56_SolarSampleInterval). Esto evita el cable de la sonda de captador al tejado y reaprovecha la bomba modulante y las sondas de ida/retorno que ya existen.
 
 Implementado en `FB_Solar.st`.
+
+---
+
+## 14. FILOSOFÍA DE DISEÑO — CADENAS DE SEGURIDAD Y OPERACIÓN SIN PLC
+
+La instalación se diseña en **dos capas independientes**:
+
+1. **Capa de control (PLC M241):** optimiza. Modula bombas, arbitra prioridades, gestiona el muestreo solar, la estación de ACS, la climatización reversible y la disipación encadenada. Es la inteligencia del sistema.
+2. **Capa de seguridad cableada (Cadenas de Seguridad):** garantiza. Elementos pasivos e independientes del software —termostatos, relés, conmutadores, válvulas con retorno por muelle, termostatos de seguridad con rearme manual— que mantienen la instalación funcional y segura **aunque el PLC esté averiado o sin alimentación**.
+
+**Principio:** *el PLC optimiza, las Cadenas de Seguridad garantizan.* El control se monta encima de unas cadenas de seguridad que funcionan solas. Retirar el PLC debe degradar prestaciones (se pierde la optimización), nunca comprometer las funciones esenciales.
+
+Funciones que deben sobrevivir a un fallo del PLC, cada una con su cadena de seguridad:
+
+- **ACS:** las V3V de apartamentos caen por muelle a agua de red → los termos eléctricos existentes siguen dando ACS sin corte (EN 1717).
+- **Agua técnica adecuada:** termostato pasivo capaz de gobernar la carga de la BC en modo local, manteniendo temperatura útil en el tándem.
+- **Disipación del excedente solar:** termostatos físicos (Z1/Z2 ~90 °C, TK1 ~88 °C) que cortan P-SOL y cierran persianas por hardware, sin intervención del PLC.
+- **Seguridad de la BC:** protecciones internas del equipo más seguridades externas (termostato/presostato) que la detienen ante condiciones peligrosas.
+- **Ocultación de paneles:** persianas con cierre fail-safe ante sobretemperatura o corte de tensión.
+
+Cada actuador (bomba, válvula motorizada) lleva conmutador **manual/auto** y una **posición de fallo** definida (la segura) para pérdida de tensión.
+
+> El desarrollo detallado de cada Cadena de Seguridad —esquema eléctrico, elementos, enclavamientos por hardware— queda pendiente (ver PENDIENTES.md) y es trabajo prioritario antes de cerrar el proyecto eléctrico.
