@@ -66,6 +66,13 @@ VAR_GLOBAL RETAIN
     P52_CoolingSetPoint  : REAL := 9.0;   (* P52  °C *)
     P53_CoolingHysteresis: REAL := 2.0;   (* P53  K *)
 
+    (* ── P54-P57  Clima reversible y muestreo solar (CFG) ──
+       NADA HARDCODED: enclavamiento estacional y muestreo a bajo caudal *)
+    P54_SeasonChangeMinHold : TIME := T#10M;  (* P54  histéresis temporal de cambio de estación *)
+    P55_SeasonInterlockDelay: TIME := T#20S;  (* P55  retardo válvulas-en-posición antes de bombas *)
+    P56_SolarSampleInterval : TIME := T#15M;  (* P56  cada cuánto se muestrea el campo solar *)
+    P57_SolarSampleDuration : TIME := T#90S;  (* P57  duración ventana de muestreo a bajo caudal *)
+
     (* ── P60-P64  Piscina (L1) ──────────────────────────── *)
     P60_PoolSetPoint         : REAL := 27.0;   (* P60  °C *)
     P61_PoolHysteresis       : REAL := 1.0;    (* P61  K *)

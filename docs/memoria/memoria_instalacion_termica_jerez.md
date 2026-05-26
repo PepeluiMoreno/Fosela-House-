@@ -581,3 +581,47 @@ Los fancoils **no cuelgan del tándem**: trabajan en los dos modos (calor en inv
 | AFS (fondo) | Retorno frío de extracciones | Enlace serie → tapa D1 |
 
 > La asignación definitiva depende del número y altura reales de bocas del DB2 450; cotejar con el plano dimensional. Si una sola boca alta de D2 no basta para ACS + fancoils + piscina, se reparte entre la del ánodo y la de resistencia, o se instala un colector de reparto en la impulsión.
+
+---
+
+## 12. CLIMATIZACIÓN REVERSIBLE — APROVECHAMIENTO SOLAR EN CALEFACCIÓN
+
+> Esta sección **amplía y modifica** el apartado B.4. El buffer de clima de 150 L deja de colgar exclusivamente de la BC y pasa a tener fuente conmutable según estación, de modo que la producción solar acumulada en el tándem también sirva a calefacción en invierno.
+
+El buffer de inercia de clima (150 L, aguja hidráulica de 4 bocas) tiene el **secundario fijo** (P2 → fancoils, conexión cruzada) y el **primario de fuente conmutable**:
+
+- **Invierno (BC en calor):** el primario se alimenta del **tándem** (toma alta de D2, retorno al fondo de D1). La bomba **P1** (rama de invierno) circula el agua del tándem por el buffer. Como el tándem lo cargan solar + BC, **la solar contribuye a la calefacción**, no solo al ACS. Es la ganancia de eficiencia que motiva el cambio.
+- **Verano (BC en frío):** el primario se alimenta de la **BC en frío** vía la V3V estacional. **P1 parada** (empuja la bomba interna de la BC). El buffer queda aislado del tándem, que sigue caliente para ACS y piscina.
+
+**Conmutación de fuente — cuatro válvulas de zona de 2 vías** (VZ1-VZ4), por parejas de estación:
+
+| Válvula | Función | Invierno | Verano |
+|---|---|---|---|
+| VZ1 | Verano-impulsión (BC → buffer) | Cerrada | Abierta |
+| VZ2 | Verano-retorno (buffer → BC) | Cerrada | Abierta |
+| VZ3 | Invierno-impulsión (D2 → P1 → buffer) | Abierta | Cerrada |
+| VZ4 | Invierno-retorno (buffer → fondo D1) | Abierta | Cerrada |
+
+**P1 en la rama de invierno, no en el tubo común:** así en verano P1 queda fuera del camino y no entra en serie con la bomba interna de la BC. Cada estación, una sola bomba. Antirretornos en cada rama de impulsión (orientados hacia la T de confluencia) impiden el reflujo por la rama cerrada.
+
+**Enclavamiento (crítico):** las válvulas de zona deben estar en posición *antes* de que arranque P1 o cambie el modo de la BC. Se respeta el tiempo de maniobra más un retardo de seguridad (P55_SeasonInterlockDelay). Arrancar con las válvulas a medias mezclaría caliente y frío.
+
+**Prioridad:** al volver la climatización a colgar del tándem en invierno, compite con el ACS por el calor. El árbitro del PLC da prioridad al ACS; la climatización cede.
+
+Implementado en `FB_ClimateReversible.st`.
+
+---
+
+## 13. DISIPACIÓN ENCADENADA DEL EXCEDENTE SOLAR
+
+Cuando el campo solar produce más de lo que el reservorio puede admitir, la disipación es **encadenada en tres escalones, de aprovechar a quemar**:
+
+1. **Desvío a piscina.** Si hay excedente (D1 saturado, ≥ P00_AccumulatorMaxTemp) y la piscina admite más calor (< P62_PoolMaxTemp), la **V3V de disipación** desvía el glicol solar hacia el **HX-POOL-SOL** (intercambiador tubular de titanio, camino directo glicol→piscina que esquiva el tándem). El excedente no se tira: calienta el vaso.
+2. **Límite de la piscina.** Cuando la piscina alcanza su temperatura máxima admitida (P62_PoolMaxTemp), deja de ser sumidero.
+3. **Persianas.** Agotado el sumidero, se cierran las persianas motorizadas para cortar la radiación en origen. Último recurso, defensa pasiva sin electricidad.
+
+> En pleno verano, con la piscina tendiendo a sobrecalentarse por sí sola, su capacidad de tragar excedente es limitada justo cuando más excedente hay: el tercer escalón (persianas) será relativamente frecuente, lo cual es esperable y correcto.
+
+**Arranque solar por muestreo (no por sonda de captador):** la bomba P-SOL arranca periódicamente a **bajo caudal** (P13_SolarPumpMinSpeed) durante una ventana corta (P57_SolarSampleDuration) para "tomar muestra" de lo que baja del campo, sin consumir apenas energía ni disipar calor del depósito. Si el ΔT respecto al depósito supera el umbral de arranque (P11), pasa a modulación normal; si no, vuelve a esperar (P56_SolarSampleInterval). Esto evita el cable de la sonda de captador al tejado y reaprovecha la bomba modulante y las sondas de ida/retorno que ya existen.
+
+Implementado en `FB_Solar.st`.

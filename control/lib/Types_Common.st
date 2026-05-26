@@ -70,3 +70,35 @@ VAR_GLOBAL CONSTANT
     MB_W_P19        : UINT := 203;
     MB_W_POOL_DEM   : UINT := 204;
 END_VAR
+
+(* ============================================================
+   Enumeraciones añadidas — sesión clima reversible / estación ACS / solar
+   ============================================================ *)
+TYPE E_DHW_Station_State :
+(
+    IDLE := 0,
+    ANTICIPATION := 1,
+    ACTIVE := 2,
+    COOLDOWN := 3,
+    PREHEATING := 4,
+    ALARM := 5,
+    INHIBITED := 6
+);
+END_TYPE
+
+TYPE E_Solar_State :
+(
+    SLEEP := 0,
+    SAMPLING := 1,
+    RUNNING := 2,
+    DISSIPATING := 3,
+    OVERHEAT := 4
+);
+END_TYPE
+
+TYPE E_Season :
+(
+    WINTER := 0,
+    SUMMER := 1
+);
+END_TYPE
