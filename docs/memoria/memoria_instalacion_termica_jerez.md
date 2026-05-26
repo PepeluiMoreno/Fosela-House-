@@ -648,3 +648,26 @@ Funciones que deben sobrevivir a un fallo del PLC, cada una con su cadena de seg
 Cada actuador (bomba, válvula motorizada) lleva conmutador **manual/auto** y una **posición de fallo** definida (la segura) para pérdida de tensión.
 
 > El desarrollo detallado de cada Cadena de Seguridad —esquema eléctrico, elementos, enclavamientos por hardware— queda pendiente (ver PENDIENTES.md) y es trabajo prioritario antes de cerrar el proyecto eléctrico.
+
+---
+
+## 15. VASOS DE EXPANSIÓN — CRITERIO Y UBICACIÓN
+
+**Regla general de ubicación:** cada circuito cerrado lleva su propio vaso de expansión, montado en el **lado frío, en la aspiración de la bomba**. Ahí la membrana sufre menos y la bomba trabaja con la presión estabilizada. Nunca entre la bomba y un antirretorno cerrado.
+
+Cada circuito cerrado e independiente necesita el suyo:
+
+| Circuito | Tamaño | Posición | Criterio |
+|---|---|---|---|
+| **Agua técnica (tándem D1+D2)** | 25-30 L | Zona fría del circuito | ~10 % del volumen + margen por temperatura de trabajo hasta 95 °C |
+| **Solar (glicol)** | 25-30 L | Retorno frío, junto a P-SOL | Debe absorber el **vapor de estancamiento**: volumen captadores + ida + dilatación. Pre-vaso si la T de estancamiento lo exige |
+| **Fancoils (secundario clima)** | 12-18 L | Aspiración de P2 | Según volumen del circuito de fancoils (13 emisores + tubería) |
+| **Primario buffer clima** | 8-12 L | Lazo del primario, junto a P1 | Vaso propio: la conmutación estacional puede aislarlo de ambas fuentes durante las maniobras de válvula |
+| **Primario BC** | Verificar ficha | Integrado o externo | La monobloc suele traer vaso integrado; añadir externo si el primario (serpentines D2 + buffer) excede su capacidad |
+
+**Sin vaso propio:**
+- **HX-ACS primario:** rama del circuito de agua técnica → lo cubre el vaso del tándem.
+- **HX-ACS secundario:** agua de red a presión, circuito abierto → la red absorbe.
+- **HX-POOL (titanio):** secundario = circuito de piscina (depuradora), abierto al vaso; primario = rama de su fuente (agua técnica o glicol), cubierto por el vaso de esa fuente.
+
+> Dimensionado definitivo de cada vaso pendiente del volumen real de cada circuito (longitudes de tubería, número de emisores). Los tamaños indicados son de partida.

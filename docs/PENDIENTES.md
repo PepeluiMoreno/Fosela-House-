@@ -56,6 +56,15 @@ El manual de montaje describe los bucles y su lógica, pero le faltan los **deta
 - [ ] **Mapa de I/O del M241**: asignar cada señal a su terminal (DI/DO/AI/HSC/TR), contar canales, validar contra hardware adquirido.
 - [ ] **Revisar FB_Climate.st antiguo**: superado por FB_ClimateReversible; decidir si se elimina o se reutiliza.
 
+## Vasos de expansión — añadir al BOM (ver memoria §15)
+
+- [ ] **Vaso fancoils (secundario clima):** 12-18 L, aspiración de P2. NUEVO, faltaba.
+- [ ] **Vaso primario buffer clima:** 8-12 L, junto a P1. NUEVO, faltaba.
+- [ ] **Vaso primario BC:** verificar ficha del equipo; añadir externo si el integrado no cubre el primario (serpentines D2 + buffer).
+- [ ] **Ajustar vaso agua técnica** a 25-30 L (BOM dice 18-25) por temperatura de trabajo hasta 95 °C.
+- [ ] **Confirmar pre-vaso solar** según temperatura de estancamiento de los captadores elegidos.
+- [ ] Dimensionado definitivo de todos según volumen real de cada circuito.
+
 ## Documentación
 
 - [ ] **BOM por módulo** y **esquema de principio**: los hace el usuario (mejor dibujante que Claude).
