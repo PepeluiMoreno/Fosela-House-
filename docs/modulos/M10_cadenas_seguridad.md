@@ -8,9 +8,11 @@
 La instalación se diseña en **dos capas independientes**:
 
 1. **Control (M241):** optimiza.
-2. **Cadenas de Seguridad (cableadas):** garantizan. Elementos pasivos —termostatos, relés, conmutadores, válvulas con retorno por muelle, termostatos de rearme manual— que mantienen ACS, agua técnica y seguridad **aunque el PLC esté averiado o sin tensión**.
+2. **Cadenas de Seguridad (cableadas):** garantizan. Elementos **pasivos** —termostatos bimetálicos, válvulas con retorno por muelle, contactos mecánicos, conmutadores manuales— que mantienen ACS, agua técnica y seguridad **aunque el PLC esté averiado o sin tensión**.
 
 > *El PLC optimiza; las Cadenas de Seguridad garantizan.* Quitar el PLC degrada prestaciones, nunca compromete lo esencial.
+
+> **Criterio rector de la capa de seguridad: nada de electrónica.** Para protegerse del fallo de la electrónica, la cadena de seguridad no puede depender de electrónica. Se construye con elementos **físicos de acción directa** (bimetálicos, muelles, contactos mecánicos). Donde sea posible se evita incluso el relé (componente activo con bobina); la primera opción es siempre el corte/conmutación mecánica directa.
 
 ## Funciones que deben sobrevivir al fallo del PLC
 
@@ -26,72 +28,79 @@ La instalación se diseña en **dos capas independientes**:
 
 ## Lógica cableada de resiliencia (a diseñar)
 
-Parte de la resiliencia al fallo de la electrónica **no puede vivir en el PLC**: tiene que ser **lógica cableada** (relés, termostatos, enclavamientos físicos) que opere con el PLC muerto. Pendiente de bajar a esquema. Candidatos identificados:
+Parte de la resiliencia al fallo de la electrónica **no puede vivir en el PLC**: tiene que ser **lógica pasiva** (termostatos bimetálicos, muelles, contactos mecánicos) que opere con el PLC muerto. Pendiente de bajar a esquema. Candidatos identificados:
 
-- **Corte térmico ACS → P-ACS:** contacto NC del termostato en **serie con la alimentación** de P-ACS. Independiente del PLC.
+- **Corte térmico ACS → P-ACS:** contacto NC bimetálico en **serie con la alimentación** de P-ACS. Independiente del PLC.
 - **Z1/Z2/TK1 → P-SOL + persianas:** cortan P-SOL y fuerzan cierre de persianas por hardware, sin pasar por el PLC.
-- **Enclavamiento disipación ⇒ depuradora:** si se quiere resiliente, garantizar que no se abra la disipación a piscina sin circulación; valorar enclavar por relé (la V3V de disipación solo se energiza con la depuradora en marcha) además de en software.
+- **Enclavamiento disipación ⇒ depuradora:** garantizar que no se abra la disipación a piscina sin circulación (además de en software).
 - **Posición de fallo de actuadores:** V3V apartamentos → red; cortes D2 → cierran vía tándem; persianas → cierran. Por muelle, sin depender del PLC.
 - **Conmutador manual/0/auto por actuador:** permite operar bombas/válvulas a mano con el PLC fuera.
 
 ## Dispositivo autónomo de cierre de persianas (sobretemperatura del captador)
 
-Primer dispositivo de lógica cableada concretado. Objetivo: **cerrar las persianas que ocultan los captadores cuando se dispara un termostato de sobretemperatura, aunque el PLC no funcione**, evitando el estancamiento del campo solar.
+Primer dispositivo de lógica de seguridad concretado. Objetivo: **cerrar las persianas que ocultan los captadores al dispararse una sobretemperatura, aunque el PLC no funcione**, evitando el estancamiento del campo solar.
 
-**Concepto:** la orden de cierre por seguridad debe poder actuar con independencia del PLC y, cuando lo haga, **tener prioridad sobre el mando del PLC** (no sumarse a él, para no enfrentar dos órdenes opuestas sobre el mismo motor). Es una OR cableada con prioridad de la seguridad, no un simple paralelo.
+**Elemento de actuación: termostato bimetálico mecánico (klixon).** Es física pura: una lámina bimetálica que, al alcanzar el tarado, se deforma y **abre o cierra un contacto mecánicamente**. **Sin electroimán, sin bobina, sin electrónica** — no hay nada que falle electrónicamente. Es lo más robusto posible para esta función.
+
+**Concepto:** la orden de cierre por seguridad actúa con independencia del PLC y, cuando lo hace, tiene **prioridad sobre el mando del PLC** (no se suma a él; el propio klixon hace de conmutador físico). OR cableada con prioridad de la seguridad, **sin relé**.
+
+Tipos de klixon según uso:
+- **NC (abre al calentar):** en reposo conduce; al superar el tarado, abre. Va **en serie** para cortar.
+- **NA (cierra al calentar):** en reposo abierto; al calentar cierra. Para *activar* algo con la sobretemperatura.
+- **Conmutado SPDT mecánico (común + NA + NC):** conmuta el común de una vía a otra mecánicamente. Permite la conmutación PLC↔seguridad **sin relé**.
 
 Dos arquitecturas según el tipo de actuador de persiana:
 
 ### Opción A — Persiana fail-safe por muelle (RECOMENDADA)
 
-Actuador con **retorno por muelle a posición cerrada** (igual que una compuerta cortafuegos). El PLC la mantiene **abierta** dándole tensión; al perder tensión, cae a **cerrada** por muelle.
+Actuador con **retorno por muelle a cerrada** (como una compuerta cortafuegos). El PLC la mantiene **abierta** dándole tensión; sin tensión, cae a **cerrada** por muelle.
 
-- El **termostato de sobretemperatura (NC)** se cablea **en serie con la alimentación** del actuador (la que viene comandada por el PLC).
-- Disparo del termostato → corta la tensión → la persiana **cae a cerrada por muelle**.
+- **Klixon NC** (rearme manual) **en serie con la alimentación** del actuador.
+- Disparo por sobretemperatura → el bimetálico abre → corta la tensión → la persiana **cae a cerrada por muelle**.
 - Fallo del PLC o corte general → misma consecuencia: cerrada.
 
-Ventajas: eléctricamente trivial (un contacto en serie), sin órdenes opuestas, sin finales de carrera, **fail-safe puro**. No depende de que el motor responda activamente. Es la opción robusta.
+Un solo componente pasivo (klixon NC) y dos terminales. Sin electrónica, sin relé, sin finales de carrera. **Fail-safe puro.**
 
 ```
-+V ──[contacto NC termostato sobretemp.]──[mando PLC: mantener abierta]── actuador muelle ── 0V
-        (abre el circuito al disparar)        (energiza = abierta)        (sin tensión = cerrada)
++V ──[klixon NC sobretemp.]──[mando PLC: mantener abierta]── actuador muelle ── 0V
+       (abre al calentar)        (energiza = abierta)        (sin tensión = cerrada)
 ```
 
-### Opción B — Persiana con motor reversible (subir/bajar)
+### Opción B — Persiana con motor reversible (subir/bajar), también sin electrónica
 
-Si el actuador ya es un motor reversible con finales de carrera, no se puede "dejar caer": hay que **mandarle activamente bajar**. Aquí el termostato no se pone en paralelo directo (enfrentaría órdenes), sino que gobierna un **relé de seguridad conmutador**:
+Si el actuador es un motor reversible (no se puede "dejar caer"), se usa un **klixon conmutado SPDT mecánico** — la conmutación la hace la lámina bimetálica, **sin relé**:
 
-- **Reposo** (termostato frío): el relé deja pasar el **mando del PLC** al motor → operación normal (sube/baja según el PLC).
-- **Disparo** (sobretemperatura): el relé **desconecta el mando del PLC y conecta directamente la orden de BAJAR** al motor → la persiana cierra con prioridad, ignore lo que diga el PLC.
+- **Reposo** (frío): común → **mando del PLC** (sube/baja según el PLC).
+- **Disparo** (sobretemperatura): el bimetálico conmuta el común → **orden fija de BAJAR** → la persiana cierra con prioridad, ignore lo que diga el PLC.
 
 ```
-                    ┌─ reposo: ── mando PLC (subir/bajar) ─┐
-motor persiana ──[relé de seguridad]                       ├─→ motor
-                    └─ disparo: ── orden fija BAJAR ────────┘
-                          ↑
-              bobina gobernada por termostato sobretemp.
+                    ┌─ reposo (frío):   común → mando PLC (subir/bajar) ─┐
+motor persiana ──[klixon SPDT mecánico]                                  ├─→ motor
+                    └─ disparo (calor):  común → orden fija BAJAR ────────┘
 ```
 
-Requiere relé de seguridad, contemplar finales de carrera y tiempo de maniobra. Válido, pero más componentes y casuística que la opción A.
+Verificar que el contacto del klixon **aguanta la corriente del motor** de la persiana (los motores de persiana son cargas pequeñas; suele bastar). Solo si el motor pidiera más de lo que aguanta el klixon, este gobernaría un contactor — pero entonces se introduce un componente activo, a evitar salvo necesidad.
 
 ### Requisitos comunes a ambas
 
-- **Alimentación independiente del PLC:** el circuito termostato + actuador debe tomar energía de una línea que **no dependa de la fuente de control 24V ni de una salida del PLC**; así sigue operando con el PLC colgado mientras haya tensión.
-- **Termostato de rearme manual:** una vez disparado, no rearma solo (evita ciclos); se revisa la causa antes de reabrir.
-- **Aviso al PLC:** el contacto del termostato lleva también una señal al M241 (DI) para registro/alarma, pero **el corte/cierre no pasa por el PLC**.
-- **Coherencia con Z1/Z2/TK1:** este dispositivo es el actuador físico del cierre que la disipación solar (M02) invoca como 2.º escalón; el mismo termostato (o TK1) puede gobernarlo.
+- **Alimentación independiente del PLC:** el circuito klixon + actuador toma energía de una línea que **no depende de la fuente de control 24V ni de una salida del PLC**; sigue operando con el PLC colgado mientras haya tensión.
+- **Klixon de rearme manual:** una vez disparado, no rearma solo (evita reabrir las persianas al enfriar un poco); obliga a revisar la causa. Mismo criterio que Z1/Z2/TK1 y el corte de ACS.
+- **Aviso al PLC:** un contacto auxiliar lleva la señal al M241 (DI) para registro/alarma, pero **el cierre no pasa por el PLC**.
+- **Coherencia con Z1/Z2/TK1:** este es el actuador físico del cierre que la disipación solar (M02) invoca como 2.º escalón; el mismo TK1 (o un klixon dedicado en el captador) puede gobernarlo.
 
-**Recomendación:** elegir actuador de persiana **fail-safe por muelle (Opción A)**. Simplifica la seguridad a un contacto en serie y es intrínsecamente seguro ante cualquier fallo (electrónica o tensión). Reservar la Opción B solo si el actuador disponible es de motor reversible no sustituible.
+**Recomendación:** actuador de persiana **fail-safe por muelle (Opción A)** + **klixon NC de rearme manual en serie**. Toda la seguridad se reduce a un bimetálico en serie con la alimentación: intrínsecamente seguro ante cualquier fallo (electrónica, PLC o tensión) y sin un solo componente activo.
 
 ## Reglas de diseño
 
 - Cada actuador con **conmutador manual/0/auto**.
 - Cada actuador con **posición de fallo** definida (la segura) ante pérdida de tensión.
-- Las seguridades térmicas cortan **por hardware, en serie con la potencia**; el M241 solo recibe el aviso.
+- Las seguridades térmicas cortan **por hardware (bimetálico mecánico), en serie con la potencia**; el M241 solo recibe el aviso.
+- **Primero el corte/conmutación mecánica directa; el relé solo si es inevitable; la electrónica nunca** en la capa de seguridad.
 
 ## Pendientes
 
-- **Diseño de la lógica cableada** del resto de cadenas (relés, enclavamientos hardware, esquema eléctrico).
+- **Diseño de la lógica cableada** del resto de cadenas (esquema eléctrico con bimetálicos).
 - Tabla de posición de fallo por actuador (bombas, V3V1/V3V2, cortes D2, V3V de modo BC, V3V disipación, V3V apartamentos, persianas, depuradora).
-- Decidir qué enclavamientos van **solo en software**, cuáles **solo cableados** y cuáles **en ambas capas** (redundantes).
+- Decidir qué enclavamientos van **solo en software**, cuáles **solo cableados (pasivos)** y cuáles **en ambas capas** (redundantes).
 - Elegir tipo de actuador de persiana (muelle vs motor reversible) → fija la arquitectura A o B.
+- Tarado y referencia del klixon de persianas (temperatura, NC/SPDT, rearme manual, capacidad de contacto).
