@@ -24,9 +24,11 @@ Climatizar la vivienda (13 fancoils) en calor y frío, desde un **buffer de iner
 
 > Esta topología **sustituye** el planteamiento anterior de válvulas de zona (VZ) y el antiguo buffer "D3". Queda obsoleto.
 
-## Diseño de distribución
+## Distribución a fancoils — arborescente con PICV
 
-- **Diámetros (multicapa):** tronco a fancoils **32 mm**, dos ramas **25 mm**, bajadas a cada FCU **20 mm**. Primario (P1) también 32.
+- **Distribución arborescente:** tronco **32 mm** → ramas **25 mm** → bajadas a cada FCU **20 mm** (multicapa). Primario del buffer (P1) también 32.
+- **Una PICV por fancoil** (válvula de control independiente de la presión): regula + mantiene caudal constante ante variaciones de presión + controla. 
+- **Sin colector de fancoils:** la independencia de presión de las PICV anula la desventaja de la arborescente (los fancoils del final del ramal reciben menos presión, pero su PICV lo compensa). PICV y colector resuelven el mismo problema → poner ambos es redundante. Se elige arborescente + PICV (menos tubería, control superior).
 - Caudal clima ~2.400 L/h (14 kW, ΔT 5).
 - **Vaso de expansión** del conjunto buffer+fancoils (misma masa de agua, una aguja): en la aspiración de P2 (ver M08).
 
@@ -40,3 +42,4 @@ Climatizar la vivienda (13 fancoils) en calor y frío, desde un **buffer de iner
 
 - Reescribir `FB_ClimateReversible.st` (topología 2 V3V + P1 trasvase).
 - Verificar potencia BC para ACS + clima simultáneos sostenidos.
+- Selección de PICV (rango de caudal por fancoil).
