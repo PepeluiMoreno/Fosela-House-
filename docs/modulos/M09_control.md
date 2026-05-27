@@ -22,11 +22,63 @@ Schneider TM241CE24T (CPU a transistor, Ethernet integrado)
 
 ### Bombas modulantes: PWM por hardware (no por software)
 
-P-SOL y P-ACS son **Wilo iPWM3**, cuya entrada de control es **PWM** (no 0-10V). El PWM **no se genera escribiendo una salida en el ciclo de scan** (inviable a 1 kHz): se usa el **generador de pulsos por hardware** de la CPU a transistor — se configura la salida rápida en modo **PWM (función PTO/PWM del expert I/O del M241)** y el silicio produce la onda a la frecuencia fija y al ciclo de trabajo que el código le indica. Desde ST solo se escribe el **duty cycle** (0-100%); la onda la hace el hardware. Nivel adaptado con **divisor 24V→~9,6V** al rango de la Wilo.
+P-SOL y P-ACS son bombas con entrada **PWM** (no 0-10V). Dos modelos candidatos —Grundfos Alpha Solar (perfil C) y Wilo iPWM3 (PWM señal 2 solar)— funcionalmente equivalentes (ver M02). El PWM **no se genera escribiendo una salida en el ciclo de scan** (inviable a 1 kHz): se usa el **generador de pulsos por hardware** de la CPU a transistor — se configura la salida rápida en modo **PWM (función PTO/PWM del expert I/O del M241)** y el silicio produce la onda a la frecuencia y al ciclo de trabajo que el código le indica. Desde ST solo se escribe el **duty cycle** (0-100%); la onda la hace el hardware. Nivel adaptado con un **divisor de tensión** dimensionado al modelo (24V→9,6V Wilo; 24V→5V Grundfos, a confirmar).
+
+### FB_Pump parametrizado por perfil de bomba (patrón)
+
+El `FB_Pump` no incrusta valores de una marca concreta. Trabaja con **velocidad lógica 0-100%** ("velocidad natural", lo que el control conoce), y traduce internamente a duty cycle físico aplicando las peculiaridades del modelo desde un **perfil parametrizado**. Cambiar de Grundfos a Wilo (o mezclarlas) es solo pasarle otro perfil al instanciar el FB; el código del lazo de control (FB_Solar, FB_DHW_Station) no se entera.
+
+**Estructura del perfil (tipo en ST):**
+
+```pascal
+TYPE PumpProfile :
+STRUCT
+    Inverted          : BOOL;   (* lógica invertida (true=solar failsafe) *)
+    PwmFreq_Hz        : REAL;   (* frecuencia PWM nominal *)
+    PwmMinDuty        : REAL;   (* duty para "máxima velocidad" *)
+    PwmMaxDuty        : REAL;   (* duty para "parada" *)
+    PwmVoltageNom     : REAL;   (* nivel de tensión PWM esperado *)
+    MinSpeedPct       : REAL;   (* velocidad mínima útil *)
+    MaxHead_m         : REAL;   (* altura nominal *)
+    RampRate_pctPerSec: REAL;   (* limitación de rampa para evitar golpes *)
+END_STRUCT
+END_TYPE
+```
+
+**Perfiles definidos (valores orientativos, refinar con datasheets):**
+
+```pascal
+VAR CONSTANT
+    PROFILE_GRUNDFOS_ALPHA_SOLAR : PumpProfile := (
+        Inverted := TRUE, PwmFreq_Hz := 100.0,
+        PwmMinDuty := 10.0, PwmMaxDuty := 90.0,
+        PwmVoltageNom := 5.0, MinSpeedPct := 30.0,
+        MaxHead_m := 7.5, RampRate_pctPerSec := 20.0 );
+
+    PROFILE_WILO_IPWM3_SOLAR : PumpProfile := (
+        Inverted := TRUE, PwmFreq_Hz := 1000.0,
+        PwmMinDuty := 8.0, PwmMaxDuty := 92.0,
+        PwmVoltageNom := 9.6, MinSpeedPct := 25.0,
+        MaxHead_m := 6.0, RampRate_pctPerSec := 20.0 );
+END_VAR
+```
+
+**Uso en el `FB_Pump`:** recibe `Profile : PumpProfile` y `SpeedSetpoint_pct : REAL` (0-100). Internamente:
+
+1. Aplica `MinSpeedPct` y la rampa.
+2. Si `Inverted=TRUE`, invierte la consigna: `DutyOut := 100.0 - SpeedFiltered;`
+3. Escala a la ventana útil del PWM: `DutyOut := PwmMinDuty + DutyOut * (PwmMaxDuty - PwmMinDuty)/100.0`.
+4. Escribe el duty al canal PWM hardware.
+
+**Beneficios:**
+- **Intercambiable sin tocar lógica:** cambiar el modelo de bomba es cambiar el perfil en la instanciación, una línea.
+- **Mezclable:** P-SOL puede ser Grundfos y P-ACS Wilo (o al revés), cada una con su perfil.
+- **Documentación viva:** los valores reales de cada bomba quedan en una tabla legible al lado del código.
+- **Coherente con la taxonomía `P_xxx`** (parámetros constructivos). El perfil entero es un agregado de parámetros constructivos por modelo.
 
 ### Salidas analógicas: no hay (deliberado)
 
-El proyecto **no lleva salidas analógicas (0-10V/4-20mA)**. Las únicas señales moduladas son las dos bombas, y van por **PWM** por exigencia de la entrada Wilo iPWM3. El resto de actuadores (P1/P2/P-POOL, V3V, cortes, persianas, apartamentos) son **on/off o por muelle**. 
+El proyecto **no lleva salidas analógicas (0-10V/4-20mA)**. Las únicas señales moduladas son las dos bombas, y van por **PWM** por exigencia de las bombas elegidas. El resto de actuadores (P1/P2/P-POOL, V3V, cortes, persianas, apartamentos) son **on/off o por muelle**. 
 - Solo haría falta un módulo de salida analógica (**TM3AQ2/AQ4**) si se cambiara a bombas con entrada **0-10V** en vez de PWM, o si se introdujera una válvula mezcladora proporcional 0-10V. Ninguno está en el diseño actual.
 - Para **leer presiones** (transductores) haría falta un **TM3AI4** (entrada analógica) — tampoco previsto: los manómetros son de lectura visual (M08).
 
@@ -46,17 +98,20 @@ El proyecto **no lleva salidas analógicas (0-10V/4-20mA)**. Las únicas señale
 
 Cada parámetro `SP`/`P` se define como registro **{default, min, max, unidad}**, no solo un valor. El min/max acota el rango editable (seguridad ante valores absurdos por HMI + topes de los campos). Cómo se transcribe a cada autómata: ver M12.
 
+**Caso especial — `PumpProfile`:** agregado de parámetros constructivos por modelo de bomba. No se edita por HMI (es de instalación, no de operación); va como `CONSTANT` en el código y se elige en la instanciación del `FB_Pump`.
+
 ## Bloques de función (estado)
 
 | FB | Función | Estado |
 |---|---|---|
+| `FB_Pump` | Bomba modulante PWM con perfil parametrizado | **reescribir** con `PumpProfile` |
 | `FB_DHW_Station` | Estación ACS (M04) | escrito |
 | `FB_Solar` | Solar + muestreo + disipación (M02) | escrito |
 | `FB_ClimateReversible` | Clima (M05) | **reescribir** a topología 2 V3V + P1 |
 | `FB_BDC_Arbiter` | Arbitraje | **reescribir** (ver abajo) |
 | `FB_PoolReversible` | Piscina (M06) | pendiente |
 | `FB_PoolFiltration` | Depuradora desvinculada del HVAC (M06) | pendiente |
-| lib | PI, Pump, Valve2Way, Valve3Way, Hysteresis, Alarm | escritos |
+| lib | PI, Valve2Way, Valve3Way, Hysteresis, Alarm | escritos |
 
 ## Arbitraje ACS / clima / piscina (a reescribir)
 
@@ -87,6 +142,7 @@ Flujo:
 - Mapa de I/O del M241 (asignación señal↔borne), coherente con M12 y el clemero (M13).
 - Verificar referencias/canales del hardware en el catálogo de EcoStruxure antes de comprar.
 - Integrar FBs en `PLC_PRG_Evolution`.
+- **Reescribir `FB_Pump` con `PumpProfile` parametrizado**, y refinar los valores de los dos perfiles (PROFILE_GRUNDFOS_ALPHA_SOLAR, PROFILE_WILO_IPWM3_SOLAR) con datos confirmados de datasheet.
 - Decidir si los conmutadores manual/auto se realimentan al PLC (DI) → puede exigir expansión TM3DI.
 - Migración de nomenclatura existente a SP/P/HY/OF/ST (decisión: completa vs incremental).
 - Definir el registro {default, min, max, unidad} de cada parámetro.
