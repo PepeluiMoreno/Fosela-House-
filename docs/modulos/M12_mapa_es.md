@@ -98,7 +98,19 @@ Configuración elegida: **Config 2 — CPU a transistor + relés de interposici�
 
 **Sondas: PT1000** (los TM3TI8T no leen NTC 10K).
 
-> Verificar referencias y conteos de canal en el **catálogo de hardware del propio EcoStruxure Machine Expert** (fuente definitiva) antes de comprar. Margen de expansión: el M241 admite varios módulos TM3 más (crecimiento futuro / módulo TM3AI4 para presiones si se añaden).
+#### Lista de compra del autómata (precios de referencia, may-2026)
+
+| Ud. | Referencia | Descripción | Precio ref. |
+|---|---|---|---|
+| 1 | TM241CE24T | CPU transistor, 14 DI / 10 DO, Ethernet + serie | ~150 € nueva |
+| 2 | TM3TI8T | 8 canales temperatura (PT1000) c/u | ~209 € las dos nuevas (1 usada más barata posible) |
+| 1 | TM3DQ16T | 16 DO transistor | ~86 € |
+
+Total orientativo: **~445 € nuevo**; menos con una TM3TI8T de segunda mano. Precios de eBay (mayo 2026), a contrastar.
+
+> **Antes de comprar:** verificar cada referencia en el **catálogo de hardware del propio EcoStruxure Machine Expert** (fuente definitiva): confirmar que la CPU es **24T** (transistor source; la 24U es sink, la 24R es relé y NO sirve para PWM), y que los módulos son exactamente TM3TI8T y TM3DQ16T. Si se compra una TM3TI8T usada, confirmar referencia exacta y funcionamiento con el vendedor.
+>
+> Margen de expansión: el M241 admite varios módulos TM3 más (crecimiento futuro / TM3AI4 para presiones, o TM3DI si se realimentan los conmutadores manual/auto, ver M09).
 
 ### Opción B — Eliwell FREE Evolution + módulo Ethernet
 
