@@ -30,20 +30,21 @@
 
 ## Selección de bombas
 
-Todas las bombas de la sala son **circuladoras domésticas DN25 (rosca exterior 1½" con tuerca loca)**, que encajan en la línea de **1" de la sala** mediante racorería estándar. Las dos modulantes (P-SOL, P-ACS) se gobiernan por **PWM** desde las salidas rápidas de la CPU (M12); las tres on/off (P1, P2, P-POOL) se arrancan/paran por **relé de interposición** y trabajan a **velocidad fija seleccionada manualmente** al montar.
+Todas las bombas de la sala son **circuladoras domésticas DN25 (rosca exterior 1½" con tuerca loca)**, que encajan en la línea de **1" de la sala** mediante racorería estándar. Las dos modulantes (P-SOL, P-ACS) se gobiernan por **PWM** desde las salidas rápidas de la CPU (M12); las tres on/off (P1, P2, P-POOL) se arrancan/paran por **relé de interposición**. La modulación interna (ALPHA2 autoadaptativa por presión) es compatible con el on/off del PLC: el relé le da tensión y la bomba regula sola.
 
 | Bomba | Función | Caudal nom. | Altura req. | Tipo control | Modelo |
 |---|---|---|---|---|---|
 | **P-SOL** | Lazo solar (glicol) | según captadores | ~3-4 m | PWM modulante (M02) | Wilo iPWM3 o equivalente, **apta glicol/alta temp.** |
 | **P-ACS** | Primario ACS instantáneo | ~1.080 L/h | ~3-4 m | PWM modulante (M04) | Wilo iPWM3 o equivalente |
 | **P1** | Trasvase D2 → buffer clima | ~2.400 L/h | **6-8 m** (doble serpentín en serie) | On/off velocidad fija | **Grundfos UPS 25-80** (8 m, candidata principal); alternativa **ALPHA1/2 25-60** (6 m, si la curva confirma) |
-| **P2** | Buffer → fancoils | ~2.400 L/h | ~4 m (arborescencia PICV) | On/off velocidad fija | **Grundfos ALPHA1 25-40 130** (en posesión, Wallapop) |
-| **P-POOL** | Primario HX piscina | ~900-1.075 L/h | ~3-4 m | On/off velocidad fija | cualquier circuladora doméstica DN25 (no exigente) |
+| **P2** | Buffer → fancoils | ~2.400 L/h | ~4 m (arborescencia PICV) | On/off + modulación interna por presión | **Grundfos ALPHA2 25-40 180** (autoadaptativa, ideal para demanda variable de fancoils con PICV) |
+| **P-POOL** | Primario HX piscina | ~900-1.075 L/h | ~3-4 m | On/off velocidad fija | **Grundfos ALPHA1 25-40 130** (la de Wallapop, 3 velocidades por botón) |
 
 **Notas:**
 - **P1 es la más exigente:** mueve el agua técnica en circuito cerrado a través de **dos serpentines en serie** (D2 + buffer), con pérdida de carga sumada. Por eso 6-8 m de altura; la **UPS 25-80** da holgura sin electrónica que falle. Verificar curva a 2.400 L/h.
-- **P2 (ALPHA1 25-40):** 3 velocidades por botón, alta eficiencia, ideal para el circuito de fancoils (el que más horas trabaja). Seleccionar curva al montar según pérdida real.
-- **P-SOL en glicol:** elegir variante apta para glicol y temperatura de circuito solar. NO sirve la ALPHA1 (no apta para glicol).
+- **P2 (ALPHA2 25-40 180):** modulante autoadaptativa por presión proporcional/constante; encaja con la demanda variable del circuito de fancoils (las PICV abren/cierran según zona, la bomba reduce velocidad sola cuando hay menos demanda). El PLC solo le da tensión por relé; la modulación es interna.
+- **P-POOL (ALPHA1 25-40 130):** caudal constante y demanda invariable, no necesita modulación. La de 3 velocidades por botón sobra y aprovecha la bomba ya adquirida.
+- **P-SOL en glicol:** elegir variante apta para glicol y temperatura de circuito solar. NO sirve la ALPHA1/2 (no aptas para glicol).
 - **P-ACS:** circulación de agua técnica (no agua sanitaria), por lo que valen circuladoras de calefacción estándar en variante PWM.
 
 ## Vasos de expansión
@@ -89,4 +90,4 @@ Los valores que dependen del componente comercial elegido (caudal nominal de cap
 - Afinar litraje de vasos con volúmenes reales (tubería de clima ~60 L y circuito solar ~25 L son los más estimados).
 - Verificar litraje del vaso integrado de la BC (para su circuito en verano).
 - **Comprar P1**: candidata Grundfos UPS 25-80 (verificar curva a 2.400 L/h con doble serpentín).
-- Seleccionar P-SOL (PWM, apta glicol) y P-ACS (PWM); P-POOL cualquier DN25 doméstica.
+- Seleccionar P-SOL (PWM, apta glicol) y P-ACS (PWM).
