@@ -24,19 +24,29 @@ La instalación se verifica con **instrumentación local de lectura visual** (ma
 
 ### Termómetros (temperatura, lectura visual)
 
-| Id | Ubicación | Para qué se chequea |
-|---|---|---|
-| TI-SOL-I | Ida de glicol (salida hacia captadores) | ΔT solar (con TI-SOL-R) → rendimiento del campo |
-| TI-SOL-R | Retorno de glicol (desde captadores) | ΔT solar |
-| TI-ACS-P | Retorno del primario de ACS (HX) | Que el primario retorna frío → el HX cede bien; calorimetría ACS |
-| TI-ACS-D | Distribución de ACS tras la mezcladora VMT1 | Que llega ~55 °C a apartamentos; verifica la VMT mecánica |
-| TI-CLI-I | Impulsión a fancoils | Temperatura de impulsión de clima |
-| TI-CLI-R | Retorno de fancoils | ΔT de clima (con TI-CLI-I) → que los fancoils intercambian |
-| TI-D1 | D1 (zona solar del tándem) | Estado térmico del tándem (apoyo visual a la sonda PT1000 de control) |
-| TI-D2 | D2 (zona caliente / tapa) | Ídem |
-| TI-POOL | Agua de piscina (lado técnico) | Temperatura de baño |
+| Id | Ubicación | Para qué se chequea | Vaina (orient.) |
+|---|---|---|---|
+| TI-SOL-I | Ida de glicol (salida hacia captadores) | ΔT solar (con TI-SOL-R) → rendimiento del campo | corta ~50 mm (tubería) |
+| TI-SOL-R | Retorno de glicol (desde captadores) | ΔT solar | corta ~50 mm (tubería) |
+| TI-ACS-P | Retorno del primario de ACS (HX) | Que el primario retorna frío → el HX cede bien; calorimetría ACS | corta ~50 mm (tubería) |
+| TI-ACS-D | Distribución de ACS tras la mezcladora VMT1 | Que llega ~55 °C a apartamentos; verifica la VMT mecánica | corta ~50 mm (tubería) |
+| TI-CLI-I | Impulsión a fancoils | Temperatura de impulsión de clima | corta ~50 mm (tubería) |
+| TI-CLI-R | Retorno de fancoils | ΔT de clima (con TI-CLI-I) → que los fancoils intercambian | corta ~50 mm (tubería) |
+| TI-D1 | D1 (zona solar del tándem) | Estado térmico del tándem (apoyo visual a la sonda PT1000 de control) | larga ~200 mm (depósito) |
+| TI-D2 | D2 (zona caliente / tapa) | Ídem | larga ~200 mm (depósito) |
+| TI-POOL | Agua de piscina (lado técnico) | Temperatura de baño | corta ~50 mm (tubería) |
 
-> Algunos puntos coinciden físicamente con sondas que SÍ van al PLC (D1, D2, impulsión fancoils, etc.). Donde ya hay sonda PT1000 de control, el termómetro local es **redundancia barata de verificación** (comprobar que la sonda no deriva), no un punto nuevo de cableado. Donde NO hay sonda al PLC (retornos de ACS y fancoils, ida/retorno de glicol como par de ΔT), el termómetro local es la **única** medida — y sustituye a la sonda que en su momento se valoró llevar al PLC para calorimetría.
+## Longitud de vaina (Tauchhülse) — criterio
+
+La vaina (*Tauchhülse*, inox para solar/glicol y tándem) se pide según dónde mida:
+
+- **En depósito (D1, D2, buffer):** vaina **larga**, que la punta llegue al **centro de la masa de agua** (no a la pared, mediría el acero). Tándem D1/D2 ~**200-250 mm**; buffer 150 L ~**100-150 mm**. **Si el depósito trae dedos/vainas de fábrica, usarlos** y no comprar vaina.
+- **En tubería (glicol, fancoils, ACS, piscina):** vaina **corta** ~**50 mm**, montada en T o codo, con la punta en la **vena del fluido** (centro del tubo), sin frenar el caudal. Montaje a contracorriente o en codo para que el fluido bañe la punta.
+- **Captador solar:** se usa la vaina del propio captador (de fábrica). En este proyecto, además, el arranque solar es por **muestreo a bajo caudal** (M02), no por sonda de captador → probablemente no se necesita.
+
+Detalles de compra: **diámetro interior** acorde a la sonda (PT1000 solares ~6 mm) + **pasta térmica** (*Wärmeleitpaste*) para buen contacto; **rosca** según toma (depósito **G½"**; T en tubería **G½"** o **G¼"**); material **Edelstahl** (inox) en solar y tándem.
+
+> Las mismas longitudes aplican a las **sondas PT1000 de control** (M12) que van a depósito o tubería, no solo a los termómetros locales.
 
 ## Tipo de instrumento
 
