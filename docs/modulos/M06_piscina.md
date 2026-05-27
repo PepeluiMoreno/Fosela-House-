@@ -1,6 +1,6 @@
 # M06 — Climatización de piscina
 
-**Estado:** 🔶 diseño cerrado · `FB_PoolReversible` y `FB_PoolFiltration` pendientes.
+**Estado:** 🔶 diseño cerrado · equipo de depuración especificado · `FB_PoolReversible` y `FB_PoolFiltration` pendientes.
 **Toma de:** M01 (tándem, vía BC) y M02 (excedente solar) · **Control:** árbitro (M09) + disipación (M02).
 
 ## Propósito
@@ -13,7 +13,7 @@ Climatizar la piscina (~25 m³) con el objetivo de **extender la temporada de ba
   - **HX-POOL-SOL** ← excedente solar (camino directo glicol→piscina, esquiva el tándem).
   - **HX-POOL-BC** ← BC en modo calor.
 - Titanio obligatorio (agua clorada; barrera categoría 5 EN 1717).
-- Secundario de ambos: agua de piscina movida por la **depuradora existente** (sin circuladora propia).
+- Secundario de ambos: agua de piscina movida por la **bomba de filtración** (la del equipo de depuración, sin circuladora propia).
 - **P-POOL** en el retorno frío del primario.
 - **Manta térmica / cubierta:** parte del diseño, no accesorio. Sin ella el objetivo abril-octubre no es realista con aerotermia a coste razonable (la evaporación nocturna dispara las pérdidas).
 
@@ -26,9 +26,28 @@ Climatizar la piscina (~25 m³) con el objetivo de **extender la temporada de ba
 
 - Caudal del primario de piscina: con ~10 kW y **ΔT alto (8-10 °C)** → ~860-1.075 L/h → entra holgado por una salida de **3/4"** del colector (M08). No necesita el extremo de 1".
 
+## Equipo de depuración — especificado
+
+**DepuraPool INDOOR (depuradora de interior), configuración:**
+- **Filtro 600** + **válvula selectora Star** (6 vías, **manual**) + **bomba de filtración 0,75 kW** + **bypass** (de serie, para intercalar equipos como la bomba de calor).
+- **Sin cuadro eléctrico** (opción elegida): el mando lo pone el PLC del proyecto, no el cuadro del fabricante. Coherente con la filosofía de control único + resiliencia (bomba = motor asíncrono sin electrónica).
+- Precio de referencia: **~1.180 € IVA incl.** (filtro 600, bomba 0,75 kW, sin cuadro).
+- Equipo de interior → va en la sala técnica.
+
+Razones de la elección:
+- **Sin cuadro** = sin electrónica del fabricante que estorbe; la gobierna el PLC vía contactor (M13), confirmación por presostato/caudalímetro (DI11, M12).
+- Bomba **0,75 kW** suficiente para 25 m³ (la de 1 kW iría sobrada y consume más).
+- **Bypass de serie**, con opción de bypass específico para bomba de calor (el fabricante lo ofrece): encaja con los dos HX-POOL.
+
+Pendiente de confirmar con el fabricante (su teleasistencia, gratis 1 año):
+- Que el **bypass admita intercalar los DOS HX de titanio** (HX-POOL-SOL y HX-POOL-BC) en el circuito de filtración.
+- Caudal nominal de la bomba 0,75 kW → verificar que el secundario de los HX trabaja bien con él.
+
+> Nota: la **válvula selectora es manual** — el PLC arranca/para la bomba, pero el contralavado del filtro (cambio de modo de la selectora) se hace a mano. Automatizarlo exigiría selectora motorizada (introduce electrónica; no se hace).
+
 ## Depuradora — `FB_PoolFiltration` (desvinculado del HVAC)
 
-La depuradora la **gobierna el PLC** (bomba mayor → **contactor**, ver M13), pero su lógica de filtrado es **independiente de la climatización**:
+La depuradora la **gobierna el PLC** (bomba 0,75 kW → **contactor**, ver M13), pero su lógica de filtrado es **independiente de la climatización**:
 
 - `FB_PoolFiltration` corre los **ciclos de filtrado propios** (horas/día, calendario), ajenos al HVAC.
 - El HVAC (disipación solar M02, o calentamiento) puede **forzar la marcha** de la depuradora mediante una **petición de forzado** al FB: si ya está en marcha por ciclo, se aprovecha; si no, arranca por petición.
@@ -45,5 +64,6 @@ Esto desacopla filtrado y climatización: la depuración no depende del HVAC, y 
 ## Pendientes
 
 - Potencia pico del campo solar (Pxx, pdte. caudal captadores M02) → cierra HX-POOL-SOL.
+- Confirmar con DepuraPool: bypass para los dos HX y caudal de la bomba 0,75 kW.
 - `FB_PoolReversible`: selección de fuente (SOL/BC) + P-POOL + límite `P62`.
 - `FB_PoolFiltration`: ciclos propios + entrada de forzado + salida de confirmación de marcha.
