@@ -45,6 +45,19 @@ Pendiente de confirmar con el fabricante (su teleasistencia, gratis 1 año):
 
 > Nota: la **válvula selectora es manual** — el PLC arranca/para la bomba, pero el contralavado del filtro (cambio de modo de la selectora) se hace a mano. Automatizarlo exigiría selectora motorizada (introduce electrónica; no se hace).
 
+## Colector de PVC de los HX de piscina (secundario)
+
+Los dos HX de titanio se montan en un **colector de PVC de presión**, encolado, con **racorería desmontable** (tuercas de enlace) y **llaves de corte**:
+
+- **Entre ellos: en paralelo.** Cada HX cuelga del colector en su propia rama, con **llave de corte + tuercas de enlace** (3 piezas/uniones desmontables para poder desmontar cada HX sin cortar tubería). Mismo agua de entrada para ambos.
+- **El conjunto: en serie con la filtración.** Ese bloque en paralelo se **intercala en serie en el retorno de la depuradora a la piscina**, a través del **bypass** del equipo (tras filtro y selectora). Todo el caudal de retorno atraviesa el bloque de HX.
+- **Llaves de corte por rama:** permiten aislar el HX que no trabaja (los dos son estacionalmente casi excluyentes: BC en primavera/otoño, SOL en verano) y desmontar para mantenimiento sin vaciar el circuito.
+- **El propio bypass** del equipo permite además derivar todo el caudal directo a piscina (sin pasar por los HX) para filtrado sin climatización.
+
+Material y montaje: **PVC de presión** (encolado), apto para agua clorada del secundario; uniones a los HX de titanio con **tuercas de enlace / racor desmontable** (no encolado fijo contra el HX, para poder retirarlo). Llaves de bola de PVC.
+
+> Geometría: **paralelo entre los dos HX**, ese paralelo **en serie** dentro del circuito de filtración (vía bypass). No es serie entre los HX.
+
 ## Depuradora — `FB_PoolFiltration` (desvinculado del HVAC)
 
 La depuradora la **gobierna el PLC** (bomba 0,75 kW → **contactor**, ver M13), pero su lógica de filtrado es **independiente de la climatización**:
@@ -65,5 +78,6 @@ Esto desacopla filtrado y climatización: la depuración no depende del HVAC, y 
 
 - Potencia pico del campo solar (Pxx, pdte. caudal captadores M02) → cierra HX-POOL-SOL.
 - Confirmar con DepuraPool: bypass para los dos HX y caudal de la bomba 0,75 kW.
+- Diámetro del colector de PVC y de las ramas (según caudal de la bomba de filtración).
 - `FB_PoolReversible`: selección de fuente (SOL/BC) + P-POOL + límite `P62`.
 - `FB_PoolFiltration`: ciclos propios + entrada de forzado + salida de confirmación de marcha.
