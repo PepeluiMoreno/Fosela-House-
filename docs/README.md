@@ -34,6 +34,7 @@ SOLAR (glicol 15%) ──serpentín──> D1 (frío) ──serie──> D2 (cal
 | [M11](modulos/M11_supervision.md) | Supervisión remota | ⏳ fase posterior |
 | [M12](modulos/M12_mapa_es.md) | Mapa de E/S y configuraciones de autómata | 🔶 censo cerrado, falta catálogo Eliwell |
 | [M13](modulos/M13_cuadro_electrico.md) | Cuadro eléctrico (distribución y montaje) | ⏳ criterios fijados, falta esquema y calibres |
+| [M14](modulos/M14_instrumentacion_local.md) | Instrumentación local y protocolo de chequeo | 🔶 criterio fijado, falta ubicar puntos y hoja de ronda |
 
 Leyenda: ✅ definido · 🔶 parcial · ⏳ pendiente
 
@@ -55,3 +56,4 @@ El proyecto mantiene **dos opciones de controlador** (ver M12): **Eliwell FREE E
 3. **El agua potable nunca se almacena:** ACS siempre al paso (M04).
 4. **Estratificación del reservorio** como activo a preservar (M01).
 5. **Autómata intercambiable** (M12): Eliwell o Modicon, mismo diseño, distinto mapeo de E/S.
+6. **No sobre-instrumentar** (M14): al PLC solo lo imprescindible para el control; la verificación, por instrumentación local y protocolo de chequeo.
