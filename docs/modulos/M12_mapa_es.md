@@ -43,25 +43,29 @@ El diseño hidráulico y la lógica de control son **independientes del autómat
 | DI5 | Aviso TK1 (~88°C solar) | contacto | M02/M10 |
 | DI6–9 | Demanda de zonas/fancoils (termostatos) | contacto | M05 |
 | DI10 | Alarma/estado BC (si no va por RS-485) | contacto | M03 |
+| DI11 | Confirmación marcha/caudal depuradora | contacto | M06/M02 |
 
 ### Salidas digitales / relé
+
+> Buena práctica: **no usar los relés internos del PLC** para las cargas. Cada DO → **relé de interposición** → carga. Las bombas pequeñas van por relé; la **depuradora** (motor mayor) por **contactor** mandado por relé (ver M13).
 
 | # | Señal | Módulo | Notas |
 |---|---|---|---|
 | DO1 | P-SOL (PWM) | M02 | salida rápida + divisor |
 | DO2 | P-ACS (PWM) | M04 | salida rápida + divisor |
-| DO3 | P1 (trasvase clima) | M05 | on/off |
-| DO4 | P2 (fancoils) | M05 | on/off |
-| DO5 | P-POOL | M06 | on/off |
+| DO3 | P1 (trasvase clima) | M05 | on/off, relé interp. |
+| DO4 | P2 (fancoils) | M05 | on/off, relé interp. |
+| DO5 | P-POOL (primario HX piscina) | M06 | on/off, relé interp. |
 | DO6 | V3V1 (desviadora impulsión) | M05 | actuador-dependiente |
 | DO7 | V3V2 (desviadora retorno) | M05 | actuador-dependiente |
 | DO8 | V3V modo BC (estacional) | M03 | |
-| DO9 | V3V disipación solar | M02 | |
+| DO9 | V3V disipación solar | M02 | enclavada con depuradora |
 | DO10–11 | 2× corte antitermosifón serpentín D2 | M05 | spring-return |
 | DO12–15 | V3V apartamentos ×4 | M07 | spring-return |
 | DO16–17 | Persianas (subir/bajar) | M02 | fail-safe cierra |
 | DO18 | Sirena AV1 | M10 | |
-| DO19 | Habilitación BC | M03 | |
+| DO19 | Habilitación BC | M03 | línea propia + contacto |
+| DO20 | Mando contactor **depuradora** | M06 | relé → contactor |
 
 ### Comunicaciones
 
@@ -87,7 +91,7 @@ El diseño hidráulico y la lógica de control son **independientes del autómat
 
 ### Opción B — Eliwell FREE Evolution + módulo Ethernet (recomendada Eliwell)
 
-Controlador modular con display, RS-485 y **módulo Ethernet** (necesario para el HMI web y la supervisión). I/O base + módulos de expansión hasta cubrir el censo (16 NTC, ~10 DI, ~19 DO, salidas analógicas/PWM para bombas).
+Controlador modular con display, RS-485 y **módulo Ethernet** (necesario para el HMI web y la supervisión). I/O base + módulos de expansión hasta cubrir el censo (16 NTC, ~11 DI, ~20 DO, salidas analógicas/PWM para bombas).
 
 | Recurso | Cobertura |
 |---|---|
@@ -101,7 +105,7 @@ Controlador modular con display, RS-485 y **módulo Ethernet** (necesario para e
 
 ### Opción C — Eliwell FREE Smart (compacta, alternativa)
 
-Controlador compacto con display y RS-485. ⚠️ **Sin Ethernet** (verificar): si no lo lleva, **no hay HMI web ni supervisión remota** — se opera por display local + RS-485. Menos I/O; apto si se reduce alcance o se acepta menos instrumentación.
+Controlador compacto con display y RS-485. **Sin Ethernet** (confirmado): no hay HMI web ni supervisión remota — se opera por display local + RS-485. Menos I/O; apto si se reduce alcance o se acepta menos instrumentación.
 
 ## Consecuencias de la elección
 
@@ -111,8 +115,7 @@ Controlador compacto con display y RS-485. ⚠️ **Sin Ethernet** (verificar): 
 
 ## Pendientes
 
-- **Confirmar con catálogo Eliwell** las cuentas exactas de canales del FREE Evolution y FREE Smart y los módulos de expansión necesarios para cubrir el censo.
-- Confirmar si el FREE Smart admite módulo Ethernet; si no, decidir HMI alternativo o descartarlo para este alcance.
+- **Confirmar con catálogo Eliwell** las cuentas exactas de canales del FREE Evolution y los módulos de expansión necesarios para cubrir el censo.
 - Verificar nivel/forma de la salida de bombas en Eliwell para el rango iPWM3 de Wilo (4,5–15V).
 - Recuento fino de DO (actuadores de V3V: 1 vs 2 DO según sean SPDT u open/close).
 - Cerrar si las seguridades térmicas (corte ACS, Z1/Z2, TK1) se llevan al autómata como avisos además de su corte por hardware (recomendado sí).

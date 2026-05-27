@@ -29,7 +29,12 @@ Campo solar térmico que carga el depósito D1 y, en excedente, calienta la pisc
 - Muestreo: P-SOL a `P13_SolarPumpMinSpeed` durante `P57_SolarSampleDuration` cada `P56_SolarSampleInterval`; si ΔT > `P11` → RUNNING.
 - **Disipación encadenada** (ver M06): 1º desvío a piscina (V3V disipación → HX-POOL-SOL si pool < `P62`), 2º persianas.
 
+### ⚠️ Enclavamiento disipación ⇒ depuradora
+
+La disipación a piscina por HX-POOL-SOL **exige circulación en el secundario**, que la da la **depuradora** (M06). Antes de abrir la V3V de disipación a piscina, el control debe **arrancar la depuradora y confirmar marcha/caudal**; sin circulación confirmada no se vuelca calor al HX (no disiparía y podría sobrecalentar el intercambiador). El arranque se hace como **petición de forzado** al `FB_PoolFiltration` (M06), no gobernando la depuradora desde el solar.
+
 ## Pendientes
 
 - Caudal nominal de captadores → diámetro del lazo (16-20 mm) y dimensionado del vaso.
 - Confirmar pre-vaso según temperatura de estancamiento.
+- Implementar el enclavamiento disipación⇒depuradora (DO mando + DI confirmación, ver M12).
