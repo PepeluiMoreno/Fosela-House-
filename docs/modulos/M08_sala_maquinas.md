@@ -30,15 +30,21 @@
 
 ## Vasos de expansión
 
-Regla: cada **masa de agua cerrada e independiente**, su vaso, en el lado frío/aspiración.
+Regla: cada **masa de agua cerrada e independiente**, su vaso, en el lado frío/aspiración. **Tres vasos a montar** + el integrado de la BC. Litrajes con asunciones de volumen conservadoras (a afinar con volúmenes reales).
 
-| Vaso | Circuito | Notas |
-|---|---|---|
-| **Solar** | Glicol (M02) | Imprescindible; absorbe vapor de estancamiento. Junto a P-SOL, en el retorno frío (boca inferior serpentín D1) |
-| **Fancoils + buffer 150 L** | Clima (M05) | Una sola masa (la aguja los une). En aspiración de P2 |
-| **BC (integrado)** | M03 | Trabaja en verano (en invierno comparte agua con el tándem). Verificar que cubre ~812 L o añadir externo |
+| Vaso | Circuito (volumen est.) | Tipo | Litraje | Precarga | Ubicación |
+|---|---|---|---|---|---|
+| **Solar** | Glicol (~25 L) | **Solar específico** (membrana alta temp. HNBR, apto glicol, 10 bar) | **25 L** | ~1,2 bar | Retorno frío, junto a P-SOL (boca inferior serpentín D1) |
+| **Clima** | Fancoils + buffer 150 L (~230 L) | Calefacción (membrana EPDM) | **18 L** (24 si se quiere holgura) | ~1,0 bar | Aspiración de P2 |
+| **Agua técnica tándem** | Tándem (812 L) | Calefacción | **50 L** | ~0,5-1 bar | Lado frío del agua técnica (fondo D1) |
+| BC (integrado) | Circuito BC | — | no se compra | — | Verificar que cubre su propio circuito en verano |
 
-**Sin vaso propio:** primarios de HX (ramas del agua técnica, los cubre el vaso del tándem/BC); secundarios separados por barrera (ACS → red; piscina → vaso de la piscina).
+**Notas de dimensionado:**
+- **Tándem 50 L:** el integrado de la BC (~8-10 L) **NO cubre** los 812 L del tándem. El tándem necesita vaso propio: 812 L que se calientan a 60 °C (y hasta ~90 °C antes de Z1/Z2) dilatan ~14-28 L → con factor de presión, ~35 L a temperatura de servicio, **50 L con margen** por el escenario de 90 °C. Este vaso cubre el tándem en invierno y en verano; el integrado de la BC queda solo para el circuito de la BC cuando va independiente (verano).
+- **Solar 25 L:** lo dominante es el vapor de estancamiento, no la dilatación. Al ir en el retorno frío, la membrana no recibe el fluido a máxima temperatura. Si el punto del vaso superara ~70 °C en estancamiento, añadir **vaso intermedio (pre-vaso)** — a verificar; al estar en retorno frío, probablemente innecesario.
+- **Clima 18 L:** circuito dominado por el buffer de 150 L; válvula de seguridad 3 bar.
+
+**Sin vaso propio:** primarios de HX (ramas del agua técnica, los cubre el vaso del tándem); secundarios separados por barrera (ACS → red; piscina → vaso de la piscina).
 
 ## Diámetros y racordería
 
@@ -62,4 +68,5 @@ Los valores que dependen del componente comercial elegido (caudal nominal de cap
 ## Pendientes
 
 - Confirmar medidas del colector candidato (1" cuerpo / 3/4" salidas) y aptitud para agua caliente de sus llaves.
-- Dimensionado definitivo de vasos según volumen real de cada circuito.
+- Afinar litraje de vasos con volúmenes reales (tubería de clima ~60 L y circuito solar ~25 L son los más estimados).
+- Verificar litraje del vaso integrado de la BC (para su circuito en verano).
