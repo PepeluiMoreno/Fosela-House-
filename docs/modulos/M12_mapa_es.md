@@ -1,6 +1,6 @@
 # M12 — Mapa de E/S y configuraciones de autómata
 
-**Estado:** 🔶 censo de señales cerrado · **hardware Schneider fijado** · cuentas exactas de canales Eliwell pendientes de catálogo.
+**Estado:** 🔶 censo de señales cerrado · **hardware Schneider fijado (Ruta A — lote 2ª mano + 0-10V)** · cuentas exactas de canales Eliwell pendientes de catálogo.
 **Transversal a:** todos los módulos. **Relacionado con:** M09 (control).
 
 ## Principio
@@ -36,6 +36,17 @@ El diseño hidráulico y la lógica de control son **independientes del autómat
 
 **Total: 13 + 3 reserva = 16 canales.**
 
+### Salidas analógicas — bombas modulantes (0-10V)
+
+> Las dos bombas modulantes se gobiernan por **señal analógica 0-10V** (módulo TM3AQ), no por PWM. Ver M09 (decisión Ruta A: CPU relé 24R, que no genera PWM).
+
+| # | Señal | Tipo | Módulo |
+|---|---|---|---|
+| AO1 | Consigna velocidad P-SOL | 0-10V | M02 |
+| AO2 | Consigna velocidad P-ACS | 0-10V | M04 |
+
+**Bombas: con entrada de control 0-10V** (Wilo Stratos/Yonos con modo 0-10V o equivalente; **NO** las iPWM3, que son PWM).
+
 ### Entradas digitales
 
 | # | Señal | Tipo | Módulo |
@@ -49,27 +60,27 @@ El diseño hidráulico y la lógica de control son **independientes del autómat
 | DI10 | Alarma/estado BC (si no va por RS-485) | contacto | M03 |
 | DI11 | Confirmación marcha/caudal depuradora | contacto | M06/M02 |
 
-### Salidas digitales / relé
+### Salidas digitales / relé (on/off)
 
-> Buena práctica: **no usar los relés internos del PLC** para las cargas. Cada DO → **relé de interposición** → carga. Las bombas pequeñas van por relé; la **depuradora** (motor mayor) por **contactor** mandado por relé (ver M13).
+> Buena práctica: **no usar los relés internos del PLC** para las cargas. Cada DO → **relé de interposición** → carga. La **depuradora** (motor mayor) por **contactor** mandado por relé (ver M13). Las dos bombas modulantes NO están aquí: van por salida analógica 0-10V (ver arriba).
 
 | # | Señal | Módulo | Notas |
 |---|---|---|---|
-| DO1 | P-SOL (PWM) | M02 | salida rápida CPU + divisor |
-| DO2 | P-ACS (PWM) | M04 | salida rápida CPU + divisor |
-| DO3 | P1 (trasvase clima) | M05 | on/off, relé interp. |
-| DO4 | P2 (fancoils) | M05 | on/off, relé interp. |
-| DO5 | P-POOL (primario HX piscina) | M06 | on/off, relé interp. |
-| DO6 | V3V1 (desviadora impulsión) | M05 | actuador-dependiente |
-| DO7 | V3V2 (desviadora retorno) | M05 | actuador-dependiente |
-| DO8 | V3V modo BC (estacional) | M03 | |
-| DO9 | V3V disipación solar | M02 | enclavada con depuradora |
-| DO10–11 | 2× corte antitermosifón serpentín D2 | M05 | spring-return |
-| DO12–15 | V3V apartamentos ×4 | M07 | spring-return |
-| DO16–17 | Persianas (subir/bajar) | M02 | fail-safe cierra |
-| DO18 | Sirena AV1 | M10 | |
-| DO19 | Habilitación BC | M03 | línea propia + contacto |
-| DO20 | Mando contactor **depuradora** | M06 | relé → contactor |
+| DO1 | P1 (trasvase clima) | M05 | on/off, relé interp. |
+| DO2 | P2 (fancoils) | M05 | on/off, relé interp. |
+| DO3 | P-POOL (primario HX piscina) | M06 | on/off, relé interp. |
+| DO4 | V3V1 (desviadora impulsión) | M05 | actuador-dependiente |
+| DO5 | V3V2 (desviadora retorno) | M05 | actuador-dependiente |
+| DO6 | V3V modo BC (estacional) | M03 | |
+| DO7 | V3V disipación solar | M02 | enclavada con depuradora |
+| DO8–9 | 2× corte antitermosifón serpentín D2 | M05 | spring-return |
+| DO10–13 | V3V apartamentos ×4 | M07 | spring-return |
+| DO14–15 | Persianas (subir/bajar) | M02 | fail-safe cierra |
+| DO16 | Sirena AV1 | M10 | |
+| DO17 | Habilitación BC | M03 | línea propia + contacto |
+| DO18 | Mando contactor **depuradora** | M06 | relé → contactor |
+
+**Total: ~18 DO on/off.**
 
 ### Comunicaciones
 
@@ -80,47 +91,52 @@ El diseño hidráulico y la lógica de control son **independientes del autómat
 
 ## Configuraciones de autómata
 
-### Opción A — Schneider Modicon M241 (FIJADA)
+### Opción A — Schneider Modicon M241 (FIJADA — Ruta A)
 
-Configuración elegida: **Config 2 — CPU a transistor + relés de interposición para todo** (la PWM exige CPU a transistor; los relés de interposición ya estaban decididos en M13).
+Configuración elegida: **lote de 2ª mano (CPU relé) + bombas a 0-10V**. La CPU relé **no genera PWM**, por lo que las dos bombas modulantes pasan a **control 0-10V** mediante un módulo de salida analógica TM3AQ (que el propietario ya posee). Esto rescata el lote completo y resulta más económico que la ruta con CPU a transistor.
 
 | Recurso | Hardware | Cubre |
 |---|---|---|
-| **CPU** | **TM241CE24T** | 14 DI, 10 DO transistor (incl. salidas rápidas para PWM), Ethernet + línea serie |
+| **CPU** | **TM241CE24R** (relé) | 14 DI, 10 DO relé, Ethernet + línea serie |
 | **Temperatura** | **2× TM3TI8T** | 16 canales (PT1000) |
-| **Salidas extra** | **1× TM3DQ16T** | 16 DO transistor → 26 DO en total (sobre ~20 necesarias) |
-| **PWM bombas** | 2 salidas rápidas de la CPU | P-SOL, P-ACS (+ divisor 24V→~9,6V para Wilo iPWM3) |
+| **Salidas analógicas** | **1× TM3AQ** | 0-10V para P-SOL y P-ACS |
+| **Salidas extra on/off** | **1× TM3DQ16R** (del lote) | DO relé adicionales hasta ~18 |
+| **Entradas analógicas** | **1× TM3AI4** (del lote) | libre, para presiones futuras (no usado hoy) |
 | **DI** | 14 integradas en la CPU | ~11 necesarias (1 rápida para el Hall) |
-| **Interposición** | Relés externos por cada DO | Conmutan la potencia; las salidas del PLC son señal de mando |
+| **Interposición** | Relés externos por cada DO | Conmutan la potencia |
 | **RS-485** | Línea serie integrada | Modbus RTU a BC |
 | **Ethernet** | Integrado | Web server (HMI) + Modbus TCP + supervisión |
 | **Programación** | EcoStruxure Machine Expert (CODESYS 3.5) | — |
 
-**Sondas: PT1000** (los TM3TI8T no leen NTC 10K).
+**Sondas: PT1000.** **Bombas: 0-10V** (no iPWM3).
 
-#### Lista de compra del autómata (precios de referencia, may-2026)
+#### Lista de compra del autómata (Ruta A, precios de referencia may-2026)
 
-| Ud. | Referencia | Descripción | Precio ref. |
-|---|---|---|---|
-| 1 | TM241CE24T | CPU transistor, 14 DI / 10 DO, Ethernet + serie | ~150 € nueva |
-| 2 | TM3TI8T | 8 canales temperatura (PT1000) c/u | ~209 € las dos nuevas (1 usada más barata posible) |
-| 1 | TM3DQ16T | 16 DO transistor | ~86 € |
+| Ud. | Referencia | Descripción | Origen | Precio ref. |
+|---|---|---|---|---|
+| 1 | Lote: TM241CE24R + TM3TI8T + TM3DQ16R + TM3AI4 | CPU relé + 1 temp + 16 DO relé + 4 AI | oferta 2ª mano | **150 €** |
+| 1 | TM3TI8T | 2.º módulo de temperatura (faltan 8 canales) | 2ª mano (eBay) | ~100 € |
+| 1 | TM3AQ | salida analógica 0-10V para las 2 bombas | ya en posesión | 119 € |
 
-Total orientativo: **~445 € nuevo**; menos con una TM3TI8T de segunda mano. Precios de eBay (mayo 2026), a contrastar.
+Total orientativo: **~369 €** (TM3AI4 incluido de regalo, queda libre para presiones).
 
-> **Antes de comprar:** verificar cada referencia en el **catálogo de hardware del propio EcoStruxure Machine Expert** (fuente definitiva): confirmar que la CPU es **24T** (transistor source; la 24U es sink, la 24R es relé y NO sirve para PWM), y que los módulos son exactamente TM3TI8T y TM3DQ16T. Si se compra una TM3TI8T usada, confirmar referencia exacta y funcionamiento con el vendedor.
->
-> Margen de expansión: el M241 admite varios módulos TM3 más (crecimiento futuro / TM3AI4 para presiones, o TM3DI si se realimentan los conmutadores manual/auto, ver M09).
+**Plan B (si el lote falla o se prefiere PWM):** CPU **TM241CE24T** (transistor, PWM nativo) + 2× TM3TI8T + 1× TM3DQ16T + bombas Wilo iPWM3 (con divisor 24V→~9,6V). ~445 € nuevo. Es la configuración alternativa; la Ruta A la sustituye salvo problema con el lote.
+
+> **Antes de comprar/montar:**
+> - Verificar referencias exactas en el **catálogo de EcoStruxure Machine Expert** (fuente definitiva).
+> - **Probar el lote de 2ª mano al recibirlo:** CPU arranca, los 8 canales del TM3TI8T, las salidas del TM3DQ16R y las entradas del TM3AI4.
+> - Confirmar referencia exacta del 2.º TM3TI8T con el vendedor.
+> - **Elegir bombas con entrada 0-10V** (no las iPWM3 del plan B).
 
 ### Opción B — Eliwell FREE Evolution + módulo Ethernet
 
-Controlador modular con display, RS-485 y **módulo Ethernet** (necesario para el HMI web y la supervisión). I/O base + módulos de expansión hasta cubrir el censo (16 NTC, ~11 DI, ~20 DO, salidas analógicas/PWM para bombas). **Sondas: NTC 10K.**
+Controlador modular con display, RS-485 y **módulo Ethernet** (necesario para el HMI web y la supervisión). I/O base + módulos de expansión hasta cubrir el censo (16 NTC, ~11 DI, ~18 DO, 2 salidas analógicas 0-10V para bombas). **Sondas: NTC 10K.**
 
 | Recurso | Cobertura |
 |---|---|
 | NTC | I/O analógica del base + expansiones hasta 16 |
 | DI / DO | base + expansiones hasta el censo |
-| PWM bombas | salida analógica/PWM según modelo (verificar nivel para iPWM3) |
+| AO bombas | salida analógica 0-10V según modelo |
 | RS-485 | integrada |
 | Ethernet | **módulo Ethernet** |
 | Display | sí |
@@ -132,14 +148,16 @@ Controlador compacto con display y RS-485. **Sin Ethernet** (confirmado): no hay
 
 ## Consecuencias de la elección
 
-- **Modicon M241 (TM241CE24T)** y **Evolution + Ethernet** mantienen todo (HMI web M09, supervisión M11). Son equivalentes funcionales.
+- **Modicon M241 (TM241CE24R, Ruta A)** y **Evolution + Ethernet** mantienen todo (HMI web M09, supervisión M11). Son equivalentes funcionales.
 - **FREE Smart** sin Ethernet pierde el HMI web; M09/M11 habría que replantearlos (display local).
 - En las tres, las **Cadenas de Seguridad (M10) son cableadas e independientes del autómata**.
 - **El tipo de sonda cambia con el autómata:** PT1000 (Schneider) / NTC 10K (Eliwell).
+- **Las bombas modulantes son 0-10V** en la configuración fijada (no PWM).
 
 ## Pendientes
 
-- Verificar referencias/canales del hardware Schneider en el catálogo de EcoStruxure antes de comprar.
+- Verificar referencias/canales del hardware Schneider en el catálogo de EcoStruxure y **probar el lote de 2ª mano** al recibirlo.
+- Seleccionar bombas P-SOL y P-ACS con **entrada 0-10V**.
 - **Confirmar con catálogo Eliwell** las cuentas de canales del FREE Evolution y expansiones.
 - Recuento fino de DO (actuadores de V3V: 1 vs 2 DO según sean SPDT u open/close).
 - Cerrar si las seguridades térmicas (corte ACS, Z1/Z2, TK1) se llevan al autómata como avisos además de su corte por hardware (recomendado sí).
