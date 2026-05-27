@@ -33,6 +33,7 @@ SOLAR (glicol 15%) ──serpentín──> D1 (frío) ──serie──> D2 (cal
 | [M10](modulos/M10_cadenas_seguridad.md) | Cadenas de Seguridad (operación sin PLC) | ⏳ principio fijado, falta esquema eléctrico |
 | [M11](modulos/M11_supervision.md) | Supervisión remota | ⏳ fase posterior |
 | [M12](modulos/M12_mapa_es.md) | Mapa de E/S y configuraciones de autómata | 🔶 censo cerrado, falta catálogo Eliwell |
+| [M13](modulos/M13_cuadro_electrico.md) | Cuadro eléctrico (distribución y montaje) | ⏳ criterios fijados, falta esquema y calibres |
 
 Leyenda: ✅ definido · 🔶 parcial · ⏳ pendiente
 
