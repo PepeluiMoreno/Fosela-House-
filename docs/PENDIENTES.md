@@ -1,111 +1,145 @@
 # Pendientes — Casa Fosela
 
-Lista viva de lo que queda por cerrar. Actualizar al cierre de cada sesión.
+Lista viva. Actualizar al cierre de cada sesión.
+
+---
+
+## 🎯 PRÓXIMA SESIÓN — Desarrollo de los Bloques de Función (FBs)
+
+**Objetivo:** escribir/completar los FBs del control en `control/*.st` (texto, fuente de verdad — ver M09 §toolchain). El hardware y la hidráulica están cerrados; toca el software.
+
+**Antes de tocar código, releer:**
+- `docs/README.md` (mapa general).
+- `docs/modulos/M09_control.md` (control, toolchain, taxonomía SP/P/HY/OF/ST, hardware Schneider, **patrón `PumpProfile`**).
+- `docs/modulos/M12_mapa_es.md` (censo de E/S y bornes).
+- `docs/nomenclatura.md` (convención de variables).
+- El módulo del FB concreto que se vaya a escribir (M02/M04/M05/M06).
+
+**Orden propuesto (de menos a más dependencias):**
+
+1. **`FB_Pump` refactorizado con `PumpProfile`** (M09 §FB_Pump parametrizado). Trabaja con velocidad lógica 0-100% y traduce a duty cycle físico aplicando el perfil. Dos perfiles iniciales: `PROFILE_GRUNDFOS_ALPHA_SOLAR` y `PROFILE_WILO_IPWM3_SOLAR`. Base de las dos bombas modulantes (P-SOL, P-ACS).
+
+2. **`FB_Solar`** (M02). Ya escrito en versión antigua — revisar y adaptar al nuevo `FB_Pump`. Estados SLEEP/SAMPLING/RUNNING/DISSIPATING/OVERHEAT. Cuidado con la **lógica invertida PWM** (encapsular en `PWMSolarInvert()`).
+
+3. **`FB_DHW_Station`** (M04). Ya escrito — revisar y adaptar al nuevo `FB_Pump`.
+
+4. **`FB_ClimateReversible`** (M05). **Reescribir** a la topología actual: 2 V3V (V3V1 impulsión, V3V2 retorno) + P1 trasvase + buffer 150 L. Modo invierno/verano por V3V estacional.
+
+5. **`FB_PoolReversible`** (M06). Selección de fuente (SOL/BC), P-POOL, límite `P62_PoolMaxTemp`, integración con la disipación solar.
+
+6. **`FB_PoolFiltration`** (M06). Ciclos propios de filtrado (calendario/horas/día) + entrada de **forzado** desde HVAC + salida de **confirmación de marcha** (necesaria para el enclavamiento de disipación, M02).
+
+7. **`FB_BDC_Arbiter`** (M09). **Reescribir**: simultaneidad ACS+clima condicionada por T del tándem (HY intrínseca, no margen artificial). Clima nunca sacrificado por ACS; único sacrificable: piscina.
+
+8. **Integración** de todos los FBs en `PLC_PRG_Evolution` con wiring de I/O reales (mapeo señal↔borne, ver M12).
 
 ---
 
 ## ⚠️ PRINCIPIO RECTOR — OPERACIÓN MANUAL SIN PLC (Cadenas de Seguridad)
 
-**Todo el diseño basado en PLC debe poder degradarse a operación manual.** Además de la lógica del M241, hay que responder a la pregunta: *¿cómo se diseña la instalación para que, con el PLC averiado o sin alimentación, siga habiendo ACS, siga habiendo agua técnica adecuada, y la instalación siga siendo segura?*
+**Todo el diseño basado en PLC debe poder degradarse a operación manual.** Cada función crítica necesita su cadena de seguridad **pasiva** (klixon bimetálico, muelle, contacto mecánico) que opere con el PLC averiado. Ver M10.
 
-Esto se materializa con elementos **pasivos e independientes del PLC** — termostatos, relés, conmutadores, válvulas con retorno por muelle, termostatos de seguridad con rearme manual, conmutadores manual/auto, etc. El usuario los denomina **Cadenas de Seguridad**.
+**Criterio rector:** nada de electrónica en la capa de seguridad. Primero corte mecánico directo; el relé solo si es inevitable; la electrónica nunca.
 
-Cada función crítica necesita su cadena de seguridad que actúe sin software:
+Funciones a cubrir (cada una con esquema cableado pendiente):
 
-- [ ] **Continuidad de ACS:** ante fallo, las V3V de apartamentos caen por muelle a agua de red → termos eléctricos existentes siguen dando ACS. Definir y cablear.
-- [ ] **Continuidad de agua técnica adecuada:** que el tándem mantenga temperatura útil sin el PLC (termostato pasivo gobernando la carga de la BC en modo local).
-- [ ] **Disipación del calor excedente sin PLC:** la cadena de disipación (piscina → persianas) debe poder dispararse por termostato físico (Z1/Z2 ~90 °C, TK1 ~88 °C) cortando P-SOL y cerrando persianas por hardware, esté el PLC vivo o no.
-- [ ] **Seguridad de la BC sin PLC:** protecciones internas del equipo + termostato/presostato externos que la paren en condiciones peligrosas independientemente del control.
-- [ ] **Ocultación de paneles (persianas) sin PLC:** las persianas deben cerrar por hardware (fail-safe) ante sobretemperatura o corte de tensión, sin depender del M241.
-- [ ] **Conmutadores manual/auto** en cada bomba y válvula motorizada para forzar estados a mano.
-- [ ] **Filosofía fail-safe de cada actuador:** definir a qué posición cae cada válvula/bomba ante pérdida de tensión (la posición segura, nunca la peligrosa).
+- [ ] **Continuidad de ACS:** V3V de apartamentos caen por muelle a agua de red → termos eléctricos siguen funcionando.
+- [ ] **Continuidad de agua técnica:** termostato pasivo gobernando la BC en modo local.
+- [ ] **Disipación solar sin PLC:** Z1/Z2/TK1 cortan P-SOL y cierran persianas por hardware.
+- [ ] **Persianas:** klixon NC rearme manual en serie con la alimentación (Opción A, M10). Pendiente elegir actuador fail-safe muelle vs motor reversible.
+- [ ] **Corte térmico ACS:** klixon NC en serie con P-ACS.
+- [ ] **Conmutadores manual/0/auto por actuador.**
+- [ ] **Tabla de posiciones de fallo** por actuador (V3V apartamentos → red; cortes D2 → cerrados; persianas → cerradas; etc.).
 
-> El PLC OPTIMIZA; las Cadenas de Seguridad GARANTIZAN. El diseño eléctrico debe construirse de modo que el PLC se monte *encima* de unas cadenas de seguridad cableadas que funcionan solas. Quitar el PLC debe degradar prestaciones, nunca comprometer ACS, agua técnica ni seguridad.
+> El PLC OPTIMIZA; las Cadenas de Seguridad GARANTIZAN.
 
 ---
 
+## 📦 Estado actual del proyecto (cerrado)
 
-## Manual de montaje — detalles de instalación que faltan
+**Hardware Schneider:** TM241CE24T + 2× TM3TI8T (PT1000) + TM3DQ16T (~440 €).
 
-El manual de montaje describe los bucles y su lógica, pero le faltan los **detalles finos de fontanería** que un instalador necesita pieza a pieza:
+**Bombas asignadas:**
+- **P2** (fancoils): Grundfos ALPHA2 25-40 180 (modulante autoadaptativa por presión).
+- **P-POOL** (primario HX piscina): Grundfos ALPHA1 25-40 130 (la de Wallapop, 3 velocidades fijas).
+- **P1** (trasvase D2→buffer): **pendiente** — Grundfos UPS 25-80 / Wilo Star-RS 25/8 (6-8 m por doble serpentín en serie, ~2.400 L/h).
+- **P-SOL** (lazo solar): **pendiente** — Grundfos Alpha Solar 25-75 130 (95 € Wallapop) o Wilo iPWM3. Ambas PWM perfil solar invertido (failsafe).
+- **P-ACS** (primario ACS): **pendiente** — variante PWM, agua técnica.
 
-- [ ] **Ubicación de sondas** en cada circuito: qué boca/vaina, a qué altura, sonda de superficie vs inmersión. Sondas de ida/retorno solar (NTC en vaina), TT_DHW_out (rápida), TT_DHW_ret, TT5 tapa D2, sondas de buffer clima, etc.
-- [ ] **Ubicación de clixons / termostatos de seguridad**: corte térmico ACS, Z1/Z2, TK1 — punto de montaje exacto y cableado en serie con la potencia.
-- [ ] **Purgadores**: punto alto de cada circuito cerrado (solar, clima primario, etc.).
-- [ ] **Llaves de llenado y vaciado**: posición en cada circuito.
-- [ ] **Racorería y conexiones**: tipo de racor en cada unión, "racores locos", latiguillos, etc.
-- [ ] **Manguitos dieléctricos**: confirmados en todas las bocas de depósito (criterio ya documentado).
-- [ ] **Diámetros y roscas concretos** de cada tramo (DN, rosca M/H) por módulo.
-- [ ] **Antirretornos**: orientación y posición exacta en cada rama (criterio ya documentado).
+**Depuradora piscina:** DepuraPool Indoor, filtro 600 + selectora Star manual + bomba 0,75 kW + bypass, **sin cuadro** (~1.180 €). Gobernada por PLC vía contactor + DI confirmación de marcha.
 
-## Arquitectura / decisiones
+**Colector PVC HX piscina:** dos HX de titanio en paralelo entre sí (cada rama con llave + tuercas de enlace), el conjunto en serie con la filtración vía bypass.
 
-- [ ] **Plano dimensional del DB2 450**: confirmar número y altura real de bocas para asignar cada toma a su función (criterio de altura por prioridad ya fijado: ACS arriba > clima medio > piscina abajo).
-- [ ] **Factor K del caudalímetro YF-B6**: el anuncio no traía specs. Confirmar ficha y actualizar P36_DHWFlowMeterK.
-- [ ] **Coordinación de bombas en verano** (clima): confirmar que el antirretorno de la rama de invierno aísla P1 cuando empuja la BC. Resuelto en diseño (P1 en rama de invierno), validar en montaje.
-- [ ] **Jerarquía de prioridad invierno**: al colgar clima del tándem, compite con ACS. Fijar en el árbitro (ACS prioritario).
-- [ ] **Segundo TM3TI8T** (Coeva/Sonepar Vic) para completar 16 canales NTC.
-- [ ] **Confirmar compras**: lote 1 Manresa (140 €), YF-B6 (18,70 €), buck LM2596.
+**Vasos de expansión:** tres a montar — solar 25 L (específico HNBR para glicol), clima 18 L (calefacción EPDM), tándem 50 L (calefacción). + integrado BC para su propio circuito en verano.
 
-## Código ST — bloques por escribir o completar
+**Instrumentación local (M14):** manómetros y termómetros en puntos clave + protocolo de chequeo periódico. Frontera clara con el PLC (al PLC solo lo imprescindible para el control).
 
-- [ ] **Integrar** FB_DHW_Station, FB_Solar, FB_ClimateReversible en PLC_PRG_Evolution (wiring de I/O reales).
-- [ ] **FB_SeasonMode**: gestor central de modo estacional (coordina V3V estacional + VZ1-4 + arranque BC), si se separa de FB_ClimateReversible.
-- [ ] **FB_PoolReversible**: dos HX (HX-POOL-SOL excedente, HX-POOL-BC modo calor) + lógica estacional + P-POOL.
-- [ ] **FB_Dissipation**: cadena de disipación (1º piscina vía V3V disipación, 2º persianas) — parcialmente en FB_Solar, extraer si conviene.
-- [ ] **Mapa de I/O del M241**: asignar cada señal a su terminal (DI/DO/AI/HSC/TR), contar canales, validar contra hardware adquirido.
-- [ ] **Revisar FB_Climate.st antiguo**: superado por FB_ClimateReversible; decidir si se elimina o se reutiliza.
+**Cadenas de seguridad (M10):** principio rector "nada de electrónica" fijado. Dispositivo autónomo de persianas por klixon bimetálico mecánico diseñado (Opción A muelle / Opción B motor reversible con klixon SPDT). Pendiente bajar a esquema el resto.
 
-## Vasos de expansión — añadir al BOM (ver memoria §15)
+---
 
-- [ ] **Vaso fancoils (secundario clima):** 12-18 L, aspiración de P2. NUEVO, faltaba.
-- [ ] **Vaso primario buffer clima:** 8-12 L, junto a P1. NUEVO, faltaba.
-- [ ] **Vaso primario BC:** verificar ficha del equipo; añadir externo si el integrado no cubre el primario (serpentines D2 + buffer).
-- [ ] **Ajustar vaso agua técnica** a 25-30 L (BOM dice 18-25) por temperatura de trabajo hasta 95 °C.
-- [ ] **Confirmar pre-vaso solar** según temperatura de estancamiento de los captadores elegidos.
-- [ ] Dimensionado definitivo de todos según volumen real de cada circuito.
+## 🛒 Pendientes de compra
 
-## Nomenclatura y código — taxonomía SP/P/HY/OF/ST
+- [ ] **Bomba P1** (Grundfos UPS 25-80 o Wilo Star-RS 25/8).
+- [ ] **Bomba P-SOL** (decidir Grundfos Alpha Solar 25-75 130 a 95 € o Wilo iPWM3).
+- [ ] **Bomba P-ACS** (variante PWM).
+- [ ] **Cables Grundfos** (si Alpha Solar): Superseal (potencia) + Mini Superseal 3 vías (señal PWM).
+- [ ] **CPU TM241CE24T** + **TM3DQ16T** (nuevos).
+- [ ] **Confirmar 2ª TM3TI8T usada** (oferta eBay alemán enviada).
+- [ ] **DepuraPool Indoor sin cuadro:** confirmar a fabricante el bypass para DOS HX.
+- [ ] **Sondas PT1000** (~9 imprescindibles + spare) con vainas inox: cortas ~50 mm tubería / largas ~200 mm depósito (M14).
+- [ ] **Klixon bimetálico** rearme manual para persianas y corte térmico ACS.
+- [ ] **Tres vasos de expansión** (litrajes en M08).
+- [ ] **Colector latón** Wallapop (cuerpo 1" / salidas 3/4") — confirmar y comprar.
+- [ ] **Caudalímetro YF-B6** (factor K en pendiente).
 
-- [ ] **Decidir migración de nomenclatura:** ¿migrar lo existente (hoy todo bajo Pxx) a las cinco familias SP/P/HY/OF/ST, separando setpoints, histéresis e instrumentación, o aplicar solo de aquí en adelante? La migración deja el proyecto impecable pero toca muchos ficheros y referencias.
-- [ ] Crear tabla **HYxx**: una histéresis por situación reservorio-transición (tándem enfriándose por ACS, por clima; calentándose por BC, por solar; piscina; buffer clima estacional...). Caracterizar en puesta en marcha.
-- [ ] Crear tabla **OFxx**: offset de calibración por sonda.
-- [ ] Renombrar enums de estado `E_*` → `ST_*` (con nombre, legibles en HMI web).
-- [ ] Reclasificar lo que hoy es Pxx pero es setpoint (ej. consigna de placa ACS → SP).
+---
 
-## Arbitraje — reescribir FB_BDC_Arbiter (ver memoria §16)
+## 🔧 Pendientes de montaje / detalles fontanería (M08 / manual_montaje)
 
-- [ ] **Simultaneidad ACS+clima condicionada por temperatura del tándem:** por debajo del umbral, solo ACS; por encima, ACS+clima a la vez. Conmutación gobernada por la HY del tándem.
-- [ ] **Clima nunca sacrificado por ACS.** Único sacrificable bajo contención: piscina.
-- [ ] Verificar **potencia de la BC** para ACS medio + clima (14 kW) sostenidos en hora punta.
+- [ ] **Ubicación de sondas PT1000** en cada circuito (vainas, alturas).
+- [ ] **Purgadores y llaves de llenado/vaciado** por circuito.
+- [ ] **Manguitos dieléctricos** en cada boca de depósito.
+- [ ] **Diámetros y roscas concretos** por tramo en cada módulo.
+- [ ] **Antirretornos** por rama (criterio documentado, ubicación exacta pendiente).
+- [ ] **Plano dimensional del DB2 450**: confirmar bocas reales para asignar a cada función.
 
-## ⚠️ Integración con la bomba de calor — V3V y gestión de ACS
+---
 
-- [ ] **Leer el manual de la BC concreta** (esquemas hidráulicos admitidos, gestión de ACS, configuración de la 3 vías) para resolver que la BC NO gestiona el desvío ACS/clima en este diseño (en invierno calienta agua técnica única).
-- [ ] Riesgo: la BC puede **esperar una orden/sonda de demanda de ACS que nunca llegará**, o traer **contactos para su V3V de ACS que quedan huérfanos**.
-- [ ] Decidir solución según modelo: (a) modo solo calefacción a consigna fija del tándem; (b) simular demanda de ACS (sonda en tándem o contacto del M241); (c) usar su consigna de calefacción directamente.
+## 🧠 Decisiones de software pendientes
 
-## Sala de máquinas — colector y bombas (ver memoria §17)
+- [ ] **Verificar nivel de tensión PWM Grundfos** (probablemente 5V) con multímetro al recibir la bomba, para ajustar el divisor (vs 9,6V Wilo).
+- [ ] **Migración de nomenclatura** a SP/P/HY/OF/ST: ¿completa o incremental?
+- [ ] Crear tabla **HYxx** (histéresis por transición del tándem).
+- [ ] Crear tabla **OFxx** (offsets de calibración por sonda).
+- [ ] Renombrar enums `E_*` → `ST_*` (legibles en HMI web).
+- [ ] Definir el registro `{default, min, max, unidad}` de cada parámetro.
+- [ ] **Factor K caudalímetro** YF-B6 → actualizar `P36_DHWFlowMeterK`.
 
-- [ ] **Colector de latón:** cuerpo 2", salidas reducidas a 1", sin soldar (roscado). Purgador y vaciado en extremos.
-- [ ] **Confirmar tamaño** de los colectores de Wallapop (cuerpo y salidas) — preguntado al vendedor.
-- [ ] **Confirmar aptitud para agua caliente** de las llaves de bola integradas (modelo de 8,50 €, "metal y plástico").
-- [ ] Bombas en impulsión de cada ramal + retención aguas abajo. P-ACS en impulsión.
+---
 
-## Integración con la bomba de calor comercial (ver memoria §12)
+## 🏗️ Integración con la BC (pendiente del modelo concreto)
 
-- [ ] **Confirmar en la ficha del modelo** que la BC admite modo "solo calefacción/agua técnica" gobernada por sonda de tándem o temperatura de impulsión, **ignorando su lógica interna de ACS**.
-- [ ] **Mapear el regletero de la BC:** entradas de demanda (ACS, calefacción, frío), salida para V3V externa ACS/clima, contacto de habilitación, señal verano/invierno. Decidir qué usa el M241, qué se ignora y qué se puentea.
-- [ ] **Evitar que la BC espere una orden de preparación de ACS que nunca llegará** (el ACS lo gestiona el M241 aguas abajo): configurarla como generador de agua técnica puro.
-- [ ] El contacto de salida para V3V externa de la BC **no se usa** en este esquema: dejar sin conectar o puentear a posición fija.
+- [ ] **Leer manual de la BC** elegida (esquemas hidráulicos, gestión de ACS, V3V).
+- [ ] Configurarla como **generador de agua técnica puro**, sin que espere demanda de ACS interna.
+- [ ] Mapear regletero (demanda, V3V externa, habilitación, verano/invierno).
+- [ ] **Modbus RTU** con la BC desde el PLC (estado, consignas) — DI10 alarma BC se libera si va por bus.
+- [ ] Verificar **potencia BC** para ACS medio + clima sostenidos en hora punta.
+- [ ] **Vaso integrado BC**: verificar litraje para su circuito en verano.
 
-## Supervisión remota (fase posterior, ver memoria §18)
+---
 
-- [ ] Arquitectura: M241 cliente MQTT/HTTP → servidor externo (VPS o gestionado) → web con autenticación. Solo conexiones salientes del PLC.
-- [ ] Capa de supervisión, NO de control. Comandos de vuelta limitados a SP de confort.
-- [ ] Decidir: plataforma IoT gestionada vs montaje propio (VPS + broker MQTT + frontend).
+## 🌐 Supervisión remota (fase posterior, M11)
 
-## Documentación
+- [ ] Arquitectura: M241 cliente MQTT/HTTP → servidor externo. Solo conexiones salientes.
+- [ ] Plataforma: IoT gestionada vs VPS + broker MQTT propio.
 
-- [ ] **BOM por módulo** y **esquema de principio**: los hace el usuario (mejor dibujante que Claude).
-- [ ] Volcar el esquema de principio final a la memoria una vez dibujado.
+---
+
+## 📄 Documentación pendiente
+
+- [ ] **BOM por módulo** (lo hará el usuario).
+- [ ] **Esquema de principio final** dibujado en QElectroTech (lo hará el usuario).
+- [ ] **Cuadro eléctrico M13:** esquema y calibres — **al final**, cuando todos los elementos estén definidos.
+- [ ] **Hoja de ronda M14:** rangos esperados (a rellenar tras puesta en marcha).
+- [ ] **Esquema eléctrico de las cadenas de seguridad** (M10) con klixones, conmutadores y posiciones de fallo.
