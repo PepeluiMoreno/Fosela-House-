@@ -5,7 +5,7 @@
 
 ## Propósito
 
-Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desde un **buffer de inercia de ~50 L** (aguja hidráulica), aprovechando en invierno el calor híbrido solar+aerotérmico acumulado en el tándem.
+Climatizar **la vivienda** (220 m², 13 fancoils) en calor y frío, desde un **buffer de inercia de ~50 L** (aguja hidráulica), aprovechando en invierno el calor híbrido solar+aerotérmico acumulado en el tándem.
 
 > **Los apartamentos turísticos NO se climatizan** — solo reciben ACS (M07). La climatización es exclusiva de la vivienda.
 
@@ -31,18 +31,20 @@ Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desd
 
 ## Distribución a fancoils — arborescente con PICV y corte por zona
 
-- **13 fancoils de 2 kW (solo vivienda).** Caudal por fancoil a ΔT 5 °C: 2000 / (1,16 × 5) ≈ **345 L/h** (~5,75 L/min). *(Posible variante: fancoils de 1,5 kW en habitaciones pequeñas → ~259 L/h, preajuste PICV ~2,4-2,6, alivia el caudal pico de P2. A confirmar.)*
+- **13 fancoils, mayoritariamente de 1,5 kW (solo vivienda).** Dimensionado correcto por estancia (vivienda bien aislada en Jerez): los dormitorios/estudio individuales se cubren de sobra con 1,5 kW, mejor regulación y menos ruido que con 2 kW sobredimensionado. **A lo sumo 1-2 excepciones de 2 kW** (p. ej. salón muy expuesto). Caudales por fancoil a ΔT 5 °C:
+  - **1,5 kW:** 1500 / (1,16 × 5) ≈ **259 L/h** (~4,3 L/min) — el caso dominante.
+  - **2 kW:** ≈ **345 L/h** — solo las excepciones.
 - **Distribución arborescente:** tronco **32 mm** → ramas **25 mm** → bajadas a cada FCU **20 mm** (multicapa). Primario del buffer (P1) también 32. **Sin colector de fancoils** (la independencia de presión de las PICV lo hace innecesario). Valorar **tronco inicial de 40 mm** — solo para **reducir ruido** a caudal alto (no cambia la categoría de bomba).
 - **PICV Frese 53-1615 (OPTIMA Compact) + actuador electrotérmico** (una por fancoil):
-  - **Cuerpo: Frese 53-1615 compacta, DN15 ½" F/F, PN25, rango "alto" 100-575 L/h (carrera 5,0 mm).** El caudal de fancoil (345 L/h) cae **cómodo en el rango**. ~24 €/ud. **Comprada.** DN15 correcta (no necesita DN20). Cuerpo latón DZR, diafragma HNBR, juntas EPDM, -10/+120 °C, admite glicol hasta 50%.
-  - **DN15 + multicapa 20 al fancoil:** mismo calibre (Ø interior multicapa 20 ≈ 15-16 mm = paso DN15), sin estrangulamiento. A 345 L/h, velocidad ~0,48 m/s (holgada). Conexión: multicapa 20 → racor ½" → PICV ½". Accesorio de conexión opcional Frese **43-2330** (racores + acoplamientos DN15, G¾"-R½").
+  - **Cuerpo: Frese 53-1615 compacta, DN15 ½" F/F, PN25, rango "alto" 100-575 L/h (carrera 5,0 mm).** Ambos caudales (259 y 345 L/h) caen **cómodos en el rango**. ~24 €/ud. **Comprada.** DN15 correcta (no necesita DN20). Cuerpo latón DZR, diafragma HNBR, juntas EPDM, -10/+120 °C, admite glicol hasta 50%.
+  - **DN15 + multicapa 20 al fancoil:** mismo calibre (Ø interior multicapa 20 ≈ 15-16 mm = paso DN15), sin estrangulamiento. A 259-345 L/h, velocidad ~0,4-0,5 m/s (holgada). Conexión: multicapa 20 → racor ½" → PICV ½". Accesorio de conexión opcional Frese **43-2330** (racores + acoplamientos DN15, G¾"-R½").
   - **Actuador electrotérmico todo/nada NC** (corte por zona): cierra el agua del fancoil cuya estancia está satisfecha. **Requisitos Frese (ineludibles): rosca M30×1,5, fuerza mínima 100N, NC.** Frese declina responsabilidad con actuadores no especificados.
     - **Referencia (original Frese): 48-5528** (230 V CA) — electrotérmico todo/nada NC, carrera 5,0 mm. Variante 24V: **48-5527** (24 V CA/CC). *(Las 48-5525/5526 son carrera 2,5 mm, NO aplican aquí.)*
     - **Equivalencia (alternativa compatible): Watts 22CX 230V NC 4 hilos** (M30×1,5, electrotérmico todo/nada NC, 230V, 1,8W, IP54). Cumple rosca y NC; los 4 hilos aportan contacto auxiliar de fin de carrera opcional. Verificar fuerza ≥100N. Distribuidor Polarstock.
     - ⚠️ **NO sirven los actuadores de suelo radiante genéricos**: suelen ser M28×1,5 o clip propietario. La Frese exige **M30×1,5**.
   - **Funciones que cubre la PICV:** equilibrado (limitación de caudal preajustado + independencia de presión, mecánicas) **y** corte por zona (vía actuador). Una sola pieza por fancoil hace ambas; no hacen falta válvulas de zona aparte ni colector de equilibrado.
   - **Corte manual de servicio (gratis):** la Frese OPTIMA Compact (DN10-DN32) admite **tapón roscado** que la convierte en **válvula de corte total hasta 10 bar**. Permite **aislar/anular un fancoil** para mantenimiento sin vaciar el circuito, sin llaves de corte adicionales. Cierre **manual de servicio**, distinto del corte por zona automático (actuador).
-- **Preselección de caudal:** girar el anillo de preajuste de cada PICV a la posición que da **345 L/h** → en rango alto carrera 5,0 mm, preajuste **~3,0** (334 L/h) o **3,2** (352 L/h). Igual en las 13 (fancoils idénticos). ⚠️ **La escala de preselección NO es accesible una vez montado el actuador** → **preseleccionar el caudal primero, montar el actuador después.** Respetar la flecha de sentido de flujo.
+- **Preselección de caudal:** girar el anillo de preajuste de cada PICV a la posición que da su caudal → rango alto carrera 5,0 mm: **~2,4-2,6** para 259 L/h (1,5 kW), **~3,0-3,2** para 345 L/h (2 kW). ⚠️ **La escala de preselección NO es accesible una vez montado el actuador** → **preseleccionar el caudal primero, montar el actuador después.** Respetar la flecha de sentido de flujo.
 
 ## Control de los fancoils y gobierno del actuador
 
@@ -58,9 +60,10 @@ Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desd
 ## Simultaneidad y dimensionado de P2
 
 - **Simultaneidad estimada: al menos 8 zonas a la vez** en uso normal; el **pico** puede ser las 12 (vivienda entera pidiendo en día extremo). P2 se dimensiona **holgada** para cubrir el pico y trabajar cómoda en el caso normal.
-- **Escenario normal (8 zonas):** 8 × 345 ≈ **2,76 m³/h**. Con corte por zona, las 4 zonas satisfechas tienen su PICV cerrada → P2 mueve menos caudal pero contra red más cerrada. Pérdida pesimista ≈ Δp PICV ~2,5 m + fancoil ~2 m + tubería ~2 m + sala ~1 m = **~7,5 m a 2,76 m³/h**.
-- **Pico (12 zonas):** 12 × 345 ≈ **4,5 m³/h**, pérdida pesimista **~8,5 m** (estimación pesimista; la real ronda 6-7 m). Ver M08.
-- → **P2 = Wilo Yonos MAXO 25 (serie de distribución), altura 0,5-7/8/10/12 m según disponibilidad** (DN25, caudal máx ~10 m³/h, presión constante). La barrera de P2 es el **caudal** (4,5 m³/h), que solo cruzan las de gama distribución (MAXO/Stratos/MAGNA3); la altura desde la "7" cubre el caso normal (la "8/10/12" da más holgura en el pico). **Ajustar a presión constante ~8 m al montar.** Ver M08 para historial de descartes y alternativas (Stratos 25/1-8, MAGNA3 25-80/32-80).
+- **Con fancoils de 1,5 kW (259 L/h) dominante:**
+  - **Escenario normal (8 zonas):** ~8 × 259 ≈ **2,1 m³/h**. Pérdida pesimista ≈ Δp PICV ~2,5 m + fancoil ~1,5 m + tubería ~1,5 m + sala ~1 m = **~6,5 m**.
+  - **Pico (12 zonas, todas a la vez):** ~13 × 259 ≈ **3,4 m³/h**; con 1-2 excepciones de 2 kW, **~3,5 m³/h**. Pérdida pesimista **~7,5 m** (el grueso sigue siendo el Δp de las PICV; estimación pesimista, real ~6 m).
+- → **P2 = Wilo Yonos MAXO 25/0,5-7** (o cualquier MAXO 25 de altura ≥7), DN25, presión constante. Con el pico reducido a **~3,5 m³/h**, la **MAXO 25/0,5-7 cubre con holgura** (a 3,5 m³/h aún da ~5-6 m, suficiente para los ~7,5 m pesimistas / ~6 m reales). La barrera sigue siendo el **caudal** (que solo cruzan las de gama distribución: MAXO/Stratos/MAGNA3), pero al bajar a 3,5 m³/h la **MAXO 25/0,5-7 — más fácil de encontrar y barata que la -12 — ya es suficiente.** Ajustar a presión constante ~6-7 m al montar. Ver M08.
 - El corte por zona aporta **ahorro energético** (no bombea por fancoils satisfechos). Con P2 de **presión constante** (electrónica), al cerrarse zonas la bomba reduce velocidad y evita sobrepresión; encaja con que arranque por el Zelio aun con el circuito no del todo dispuesto (M10).
 - **Vaso de expansión** del conjunto buffer+fancoils (18 L): en la aspiración de P2 (ver M08).
 
@@ -77,11 +80,12 @@ Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desd
 
 | # | Componente | Especificación | Cant. | Estado | Precio ud. | Notas |
 |---|---|---|---|---|---|---|
-| 1 | Fancoil 2 kW | ventilador 0-10V, termostato de estancia | 13 | — | — | 345 L/h c/u a ΔT 5 °C |
-| 2 | PICV cuerpo | **Frese 53-1615** OPTIMA Compact DN15 ½" F/F, rango alto 100-575 L/h | 13 | ✅ comprada | ~24 € | preajuste ~3,0-3,2 → 345 L/h |
+| 1 | Fancoil 1,5 kW | ventilador 0-10V, termostato de estancia | ~11-13 | — | — | 259 L/h c/u a ΔT 5 °C (dominante) |
+| 1b | Fancoil 2 kW | ídem | 0-2 | — | — | 345 L/h; solo excepciones (salón expuesto) |
+| 2 | PICV cuerpo | **Frese 53-1615** OPTIMA Compact DN15 ½" F/F, rango alto 100-575 L/h | 13 | ✅ comprada | ~24 € | preajuste ~2,4-2,6 (1,5 kW) / ~3,0-3,2 (2 kW) |
 | 3 | Actuador PICV | **Frese 48-5528** electrotérmico todo/nada NC 230V (≡ Watts 22CX 230V NC) | 13 | a comprar | ~25-30 € | M30×1,5, ≥100N; montar tras preseleccionar |
 | 4 | Accesorio conexión PICV | Frese **43-2330** (racores+acoplamientos DN15 G¾"-R½") | 13 | opcional | ~6 € | si no se usa racor multicapa estándar |
-| 5 | **P2** bomba fancoils | **Wilo Yonos MAXO 25/0,5-7…12** DN25, presión constante | 1 | a comprar | ~250-350 € | ajustar a ~8 m al montar |
+| 5 | **P2** bomba fancoils | **Wilo Yonos MAXO 25/0,5-7** (o MAXO 25 ≥7) DN25, presión constante | 1 | a comprar | ~250-350 € | pico ~3,5 m³/h; ajustar a ~6-7 m al montar |
 | 6 | Vaso expansión clima | 18 L, calefacción (EPDM), precarga ~1,0 bar | 1 | a comprar | ~30 € (nuevo) | en aspiración de P2; no compensa usado |
 | 7 | Buffer inercia ~50 L | aguja | 1 | ✅ **incluido con la BC** | — | no se aprovisiona aparte; verificar bocas/vaina |
 | 8 | Termostato de estancia | con **contacto de demanda** (relé libre) + entrada **change-over**, salida 0-10V al ventilador | 12 | a comprar | — | 12 zonas (salón comparte); confirmar contacto + change-over |
@@ -96,10 +100,10 @@ Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desd
 - **Comprar actuadores electrotérmicos** Frese 48-5528 (230V) — equivalente Watts 22CX 230V NC —, uno por fancoil (13). Verificar fuerza ≥100N si se opta por el equivalente.
 - Reescribir `FB_ClimateReversible.st` (topología 2 V3V + P1 + OR de demandas + change-over).
 - Confirmar que los termostatos de estancia tienen **contacto de demanda** (relé libre) **y** entrada de **change-over**.
-- **Comprar P2: Wilo Yonos MAXO 25** (altura 7-12 según se encuentre; ver M08) — punto crítico de aprovisionamiento (difícil de encontrar a precio asequible); ajustar presión constante ~8 m al montar.
+- **Comprar P2: Wilo Yonos MAXO 25/0,5-7** (o MAXO 25 ≥7; ver M08); ajustar presión constante ~6-7 m al montar. Pico reducido a ~3,5 m³/h con fancoils de 1,5 kW → más opciones y más barata que la -12.
 - **Buffer: incluido con la BC** — verificar bocas/vaina al recibir el equipo.
 - Comprar vaso de clima 18 L **nuevo** (~30 €) + actuadores + termostatos + manguera.
+- Cerrar el reparto fino de potencias (cuántos 1,5 kW y cuántos 2 kW; tamaño del salón) para fijar el caudal pico exacto.
 - Valorar tronco inicial de 40 mm si la velocidad genera ruido.
 - Cuantificar metros de multicapa y accesorios tras el trazado en plano.
-- Confirmar si habrá fancoils de 1,5 kW en habitaciones pequeñas (recalcular caudal pico).
 - Dimensionar la BdC por **demanda térmica de la vivienda** (~12 kW, ver M03), no por suma de fancoils.
