@@ -45,24 +45,25 @@ El diseño hidráulico y la lógica de control son **independientes del autómat
 | DI3 | Aviso Z1 (D1, ~90°C) | contacto | M01/M10 |
 | DI4 | Aviso Z2 (D2, ~90°C) | contacto | M01/M10 |
 | DI5 | Aviso TK1 (~88°C solar) | contacto | M02/M10 |
-| DI6 | **Demanda de clima agregada (OR de los 13 termostatos)** | contacto | M05 |
+| DI6 | **Demanda de clima agregada (OR de las 12 zonas, vía Zelio)** | contacto | M05 |
 | DI7 | Alarma/estado BC (si no va por RS-485) | contacto | M03 |
 | DI8 | Confirmación marcha/caudal depuradora | contacto | M06/M02 |
 
-**~8 usadas de 14 → reserva amplia.** (El detalle fancoil a fancoil NO entra al PLC: se agrega fuera, ver abajo.)
+**~8 usadas de 14 → reserva amplia.** (El detalle zona a zona NO entra al PLC: se agrega en el Zelio, ver abajo.)
 
-### Demandas de termostatos y corte por zona (M05)
+### Demandas de termostatos y corte por zona (M05) — RESUELTO con Zelio
 
-Cada uno de los **13 fancoils** lleva una **manguera de 4 hilos** a la sala de máquinas: 2 para el **contacto de demanda** on/off del termostato, 2 para el **change-over** (calor/frío). El **actuador on/off de la PICV se gobierna localmente** en cada fancoil con el contacto de su termostato (no se centraliza, por ser distribución arborescente).
+**13 fancoils físicos = 12 zonas de control**, porque los **dos fancoils del salón comparten termostato** (van siempre juntos, un solo contacto de demanda). El resto (dormitorios, estudio, invitados, 2 pasillos) son zonas individuales: 11 + 1 (salón) = **12 contactos de demanda**.
 
-En la sala, los 13 contactos de demanda se combinan en **OR** para arrancar/parar P2 (no bombear sin consumidores). Dos formas de resolver esa OR — **decisión pendiente**:
+Cada zona lleva su cableado a los termostatos para: el **contacto de demanda** on/off y el **change-over** (calor/frío). El **actuador electrotérmico NC de la PICV se gobierna localmente** en cada fancoil con el contacto de su termostato (no se centraliza, por ser distribución arborescente). Los dos fancoils del salón, con su termostato común, abren/cierran a la vez.
 
-| Opción | Qué se compra | Al PLC | Pros |
-|---|---|---|---|
-| **A — Relé programable** (recomendada) | **Schneider Zelio Logic** (p.ej. SR3B261BD, 230V, con E/S suficientes para 13 entradas) o equivalente | **1 DI** ("hay demanda") | OR independiente del M241 (sigue parando P2 aunque el PLC falle, en línea con M10). No carga el censo de DI |
-| **B — Tarjeta de entradas al PLC** | **TM3DI16 / TM3DI16G** (16 DI) | 13 DI (una por fancoil) | Visibilidad fancoil a fancoil en el HMI; OR por software en ST |
+**OR de demandas — resuelta con Zelio Logic (FIJADO, opción A):**
+- Se usa un **Zelio Logic de 12 entradas** (ya disponible) ubicado en la **vivienda (2ª planta)**, donde están los termostatos.
+- Recoge los **12 contactos de demanda**, hace la **OR**, y baja **una sola señal digital** a la **planta baja (sala de máquinas)**, directamente al **cuadro**: *"hay demanda de agua técnica en fancoils"*.
+- Esa señal entra al M241 como **DI6** (y/o gobierna el arranque de P2 vía relé).
+- **Ventajas:** OR independiente del M241 (la parada de P2 por "sin demanda" sigue operando aunque el PLC falle, en línea con M10); no carga el censo de DI (1 señal en vez de 12); un solo hilo de señal sube/baja entre plantas en vez de 12.
 
-> Recomendación: **Opción A (Zelio)**. Mete los 13 contactos en el relé programable, hace la OR (y el change-over si se quiere), y manda **una sola señal** al M241 (DI6). Mantiene el censo de DI holgado y añade una capa de control independiente. La Opción B es válida si se quiere saber en el HMI qué fancoil pide, a coste de 13 DI (TM3DI16) y de depender del PLC.
+> Descartada la opción B (TM3DI16 con las 12 zonas individuales al PLC): el Zelio ya disponible lo resuelve sin tarjeta extra y con la ventaja de independencia del PLC. Se renuncia a ver zona por zona en el HMI (no necesario).
 
 ### Salidas digitales / relé
 
@@ -73,7 +74,7 @@ En la sala, los 13 contactos de demanda se combinan en **OR** para arrancar/para
 | DO1 | P-SOL (PWM) | M02 | salida rápida CPU + divisor. **FIJADO PWM** |
 | DO2 | P-ACS (PWM) | M04 | salida rápida CPU + divisor. **FIJADO PWM** |
 | DO3 | P1 (trasvase clima) | M05 | on/off, relé interp. |
-| DO4 | P2 (fancoils) | M05 | on/off, relé interp. Arranca/para por OR de demandas |
+| DO4 | P2 (fancoils) | M05 | on/off, relé interp. Arranca/para por OR de demandas (vía Zelio) |
 | DO5 | P-POOL (primario HX piscina) | M06 | on/off, relé interp. |
 | DO6 | V3V1 (desviadora impulsión) | M05 | actuador-dependiente |
 | DO7 | V3V2 (desviadora retorno) | M05 | actuador-dependiente |
@@ -85,9 +86,9 @@ En la sala, los 13 contactos de demanda se combinan en **OR** para arrancar/para
 | DO18 | Sirena AV1 | M10 | |
 | DO19 | Habilitación BC | M03 | línea propia + contacto |
 | DO20 | Mando contactor **depuradora** | M06 | relé → contactor |
-| DO21 | Change-over calor/frío a termostatos (común) | M05 | si se gobierna desde el PLC y no desde el Zelio |
+| DO21 | Change-over calor/frío a termostatos (común) | M05 | gestionable desde el PLC o desde el Zelio |
 
-**~20-21 DO** (2 PWM en salidas rápidas de la CPU + resto on/off vía relé de interposición). Los **actuadores on/off de las PICV NO son DO del PLC**: se gobiernan localmente con el contacto del termostato de cada estancia.
+**~20-21 DO** (2 PWM en salidas rápidas de la CPU + resto on/off vía relé de interposición). Los **actuadores electrotérmicos de las PICV NO son DO del PLC**: se gobiernan localmente con el contacto del termostato de cada zona.
 
 ### Comunicaciones
 
@@ -107,7 +108,7 @@ En la sala, los 13 contactos de demanda se combinan en **OR** para arrancar/para
 | **CPU** | **TM241CE24T** (transistor) | 14 DI, 10 DO transistor (incl. salidas rápidas para PWM), Ethernet + línea serie |
 | **Temperatura** | **2× TM3TI8T** | 16 canales (PT1000) |
 | **Salidas extra** | **1× TM3DQ16T** | 16 DO transistor → 26 DO en total (sobre ~20 necesarias) |
-| **Demanda fancoils** | **Zelio Logic** (externo, opción A) **o** TM3DI16 (opción B) | OR de 13 termostatos → 1 DI / o 13 DI |
+| **Demanda fancoils** | **Zelio Logic de 12 entradas** (externo, ya disponible) | OR de 12 zonas → 1 DI (DI6) |
 | **PWM bombas** | 2 salidas rápidas de la CPU | P-SOL, P-ACS (+ divisor 24V→nivel de la bomba) |
 | **DI** | 14 integradas | ~8 necesarias (1 rápida HSC para el Hall), amplia reserva |
 | **Interposición** | Relés externos por cada DO | Conmutan la potencia |
@@ -124,13 +125,13 @@ En la sala, los 13 contactos de demanda se combinan en **OR** para arrancar/para
 | 1 | **TM241CE24T** | CPU transistor, 14 DI / 10 DO, Ethernet + serie | ~150 € |
 | 2 | **TM3TI8T** | 8 canales temperatura (PT1000) c/u | ~100 € c/u (1 usada posible) |
 | 1 | **TM3DQ16T** | 16 DO transistor | ~86 € |
-| 1 | **Zelio Logic SR3B261BD** (o equiv.) | Relé programable para OR de demandas de fancoils (opción A) | ~120-150 € |
+| — | **Zelio Logic 12 entradas** | OR de demandas de fancoils | **ya disponible (no se compra)** |
 
-Total orientativo autómata: **~440 €** + relé programable (~130 €) si se elige la opción A para la OR de demandas. Precios eBay, a contrastar.
+Total orientativo autómata: **~440 €**. El Zelio para la OR de demandas **ya se tiene** (12 entradas, suficientes para las 12 zonas). Precios eBay, a contrastar.
 
 > **Antes de comprar:** confirmar en el catálogo de EcoStruxure Machine Expert que la CPU es **24T** (transistor source — la 24U es sink, la 24R es relé y NO genera PWM) y los módulos TM3TI8T y TM3DQ16T. Si una TM3TI8T es usada, confirmar referencia y funcionamiento con el vendedor.
 >
-> **Descartado:** lote de 2ª mano con CPU relé (24R no hace PWM), TM3AQ (era para 0-10V) y TM3AI4 (sin sensores analógicos en el diseño). Bombas 0-10V descartadas por precio frente a las PWM.
+> **Descartado:** lote de 2ª mano con CPU relé (24R no hace PWM), TM3AQ (era para 0-10V) y TM3AI4 (sin sensores analógicos en el diseño). Bombas 0-10V descartadas por precio frente a las PWM. Tarjeta TM3DI16 para las demandas (la resuelve el Zelio ya disponible).
 >
 > Margen: el M241 admite añadir módulos TM3 más adelante (p.ej. TM3AI4 para presiones, o TM3DI) sin rehacer nada, si en el futuro hiciera falta.
 
@@ -162,8 +163,8 @@ Controlador compacto con display y RS-485. **Sin Ethernet**: no hay HMI web ni s
 ## Pendientes
 
 - Verificar referencias/canales del hardware Schneider en el catálogo de EcoStruxure antes de comprar.
-- **Decidir OR de demandas de fancoils: Zelio Logic (opción A, recomendada) vs TM3DI16 (opción B).**
 - Seleccionar bombas P-SOL y P-ACS **PWM** (la del solar, apta glicol/alta temperatura).
 - **Confirmar con catálogo Eliwell** las cuentas de canales del FREE Evolution y expansiones.
 - Recuento fino de DO (actuadores de V3V: 1 vs 2 DO según sean SPDT u open/close).
 - Fijar referencia de sonda PT1000 (rama Schneider) y NTC 10K (rama Eliwell).
+- Verificar compatibilidad de la salida del Zelio (contacto seco/tensión) con la DI del M241 / arranque de P2.
