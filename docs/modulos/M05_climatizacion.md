@@ -34,8 +34,8 @@ Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desd
   - **Cuerpo: Frese 53-1615 compacta, DN15 ½" F/F, PN25, rango "alto" 100-575 L/h (carrera 5,0 mm).** El caudal de fancoil (345 L/h) cae **cómodo en el rango**. ~24 €/ud. **Comprada.** DN15 correcta (no necesita DN20). Cuerpo latón DZR, diafragma HNBR, juntas EPDM, -10/+120 °C, admite glicol hasta 50%.
   - **DN15 + multicapa 20 al fancoil:** mismo calibre (Ø interior multicapa 20 ≈ 15-16 mm = paso DN15), sin estrangulamiento. A 345 L/h, velocidad ~0,48 m/s (holgada). Conexión: multicapa 20 → racor ½" → PICV ½". Accesorio de conexión opcional Frese **43-2330** (racores + acoplamientos DN15, G¾"-R½").
   - **Actuador electrotérmico todo/nada NC** (corte por zona): cierra el agua del fancoil cuya estancia está satisfecha. **Requisitos Frese (ineludibles): rosca M30×1,5, fuerza mínima 100N, NC.** Frese declina responsabilidad con actuadores no especificados.
-    - **Confirmado válido: Watts 22CX 230V NC 4 hilos** (M30×1,5, electrotérmico todo/nada NC, 230V, 1,8W, IP54). Cumple rosca y NC; los 4 hilos aportan contacto auxiliar de fin de carrera (opcional, sirve de confirmación abierto/cerrado). Verificar fuerza ≥100N en su ficha (los 22CX estándar lo cumplen). Distribuidor: Polarstock (precio profesional).
-    - **Referencias Frese equivalentes** (si se prefiere original): **48-5527** (24V CA/CC) / **48-5528** (230V CA) — todo/nada, carrera 5,0 mm. *(Las 48-5525/5526 son carrera 2,5 mm, NO aplican aquí.)*
+    - **Referencia (original Frese): 48-5528** (230 V CA) — electrotérmico todo/nada NC, carrera 5,0 mm. Variante 24V: **48-5527** (24 V CA/CC). *(Las 48-5525/5526 son carrera 2,5 mm, NO aplican aquí.)*
+    - **Equivalencia (alternativa compatible): Watts 22CX 230V NC 4 hilos** (M30×1,5, electrotérmico todo/nada NC, 230V, 1,8W, IP54). Cumple rosca y NC; los 4 hilos aportan contacto auxiliar de fin de carrera opcional. Verificar fuerza ≥100N. Distribuidor Polarstock.
     - ⚠️ **NO sirven los actuadores de suelo radiante genéricos**: suelen ser M28×1,5 o clip propietario. La Frese exige **M30×1,5**.
   - **Funciones que cubre la PICV:** equilibrado (limitación de caudal preajustado + independencia de presión, mecánicas) **y** corte por zona (vía actuador). Una sola pieza por fancoil hace ambas; no hacen falta válvulas de zona aparte ni colector de equilibrado.
   - **Corte manual de servicio (gratis):** la Frese OPTIMA Compact (DN10-DN32) admite **tapón roscado** que la convierte en **válvula de corte total hasta 10 bar**. Permite **aislar/anular un fancoil** para mantenimiento sin vaciar el circuito, sin llaves de corte adicionales. Cierre **manual de servicio**, distinto del corte por zona automático (actuador).
@@ -68,7 +68,7 @@ Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desd
 
 ## Pendientes
 
-- **Comprar actuadores electrotérmicos** Watts 22CX 230V NC (o Frese 48-5528), uno por fancoil. Verificar fuerza ≥100N en ficha del 22CX.
+- **Comprar actuadores electrotérmicos** Frese 48-5528 (230V) — equivalente Watts 22CX 230V NC —, uno por fancoil. Verificar fuerza ≥100N si se opta por el equivalente.
 - Definir el gobierno de la OR de demandas y la parada de P2: relé programable independiente vs entradas al PLC (ver M12, decisión de tarjeta).
 - Confirmar que los termostatos de estancia tienen **contacto de demanda** (relé libre) **y** entrada de **change-over**.
 - Reescribir `FB_ClimateReversible.st` (topología 2 V3V + P1 + OR de demandas + change-over).
