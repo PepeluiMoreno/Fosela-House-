@@ -36,8 +36,7 @@ Para que las bombas sean **intercambiables** y un repuesto sirva sin tocar la tu
 - **Conexión común: DN25, rosca G1½" (tuerca loca), racor Rp1".** Cualquier bomba entra en cualquier puesto de su clase.
 - **Dos clases de bomba por exigencia de altura:**
   - **Clase suave (~3-4 m):** P-SOL, P-ACS, P-POOL. Un repuesto de esta clase las cubre.
-  - **Clase fuerte (~7-8 m):** P1, P2. Idealmente **mismo modelo entre sí** → un repuesto común de ese modelo cubre las dos.
-- ⚠️ **La ALPHA 25-40 de repuesto es 130 mm y 4 m** → solo recambio de **clase suave** (y con adaptadores por la longitud). NO sustituye a P1/P2 (necesitan ~8 m). NO cumple el estándar de 180; queda como recambio de emergencia, no de catálogo.
+  - **Clase fuerte (~7-8 m):** P1, P2. **Mismo modelo entre sí** (UPM3 Auto 25-70 180) → un repuesto común cubre las dos.
 
 ## Selección de bombas
 
@@ -47,10 +46,16 @@ Bombas DN25 (rosca 1½" tuerca loca), **180 mm**, que encajan en la línea de 1"
 |---|---|---|---|---|---|---|
 | **P-SOL** | Lazo solar (glicol) | según captadores | ~3-4 m | 180 | PWM modulante (M02) | Grundfos Alpha Solar 25-75 / Wilo iPWM3, **apta glicol** |
 | **P-ACS** | Primario ACS instantáneo | ~1.080 L/h | ~3-4 m | 180 | PWM modulante (M04) | A comprar, **variante PWM** |
-| **P1** | Trasvase D2 → buffer | ~2.400 L/h | **~8 m** (doble serpentín en serie) | 180 | On/off | Grundfos UPS 25-80 180 / Wilo Star-RS 25/8 (verificar curva a 2.400 L/h) |
-| **P2** | Buffer → fancoils | **normal ~1,8 m³/h · pico ~3,5 m³/h** | **~7-8 m** (red + Δp PICV) | **180** | Presión constante | **Grundfos UPM3 Auto/Hybrid 25-70 180** (ver abajo) |
+| **P1** | Trasvase D2 → buffer | ~2.400 L/h | **~7-8 m** (doble serpentín en serie) | 180 | On/off | **Grundfos UPM3 Auto 25-70 180** (igual que P2; verificar curva a 2.400 L/h) |
+| **P2** | Buffer → fancoils | **normal ~1,8 m³/h · pico ~3,5 m³/h** | **~7-8 m** (red + Δp PICV) | **180** | Presión constante | **Grundfos UPM3 Auto 25-70 180** (ver abajo) |
 | **P-POOL** | Primario HX piscina | ~900-1.075 L/h | ~3-4 m | 180 | On/off | **Grundfos ALPHA2 25-40 180** (reubicada aquí) |
-| *spare* | repuesto clase suave | — | — | 130 | — | **Grundfos ALPHA1 25-40 130** (Wallapop; 130 mm → emergencia con adaptadores) |
+
+### P1 y P2 = mismo modelo (UPM3 Auto 25-70 180)
+
+**Intención: P1 y P2 idénticas — Grundfos UPM3 Auto 25-70 180** — para repuesto común de clase fuerte. Ambas DN25, 180 mm, 7 m, presión constante autónoma.
+- **P2 (fancoils):** ~7 m, pico 3,5 m³/h → la 25-70 encaja (justa en pico, holgada en normal).
+- **P1 (trasvase D2→buffer, doble serpentín):** ~2,4 m³/h. ⚠️ **Verificar que la 25-70 (7 m) cubre la pérdida del doble serpentín en serie** a 2.400 L/h. Si P1 necesitara >7 m, decidir entre subir ambas a 25-80 (repuesto común a más altura) o asumir modelos distintos. *Pendiente: pérdida real del doble serpentín.*
+- En modo on/off (P1) la UPM3 Auto se fija a velocidad/curva constante; en P2 trabaja en presión constante.
 
 ### P2 — dimensionado y bomba
 
@@ -62,20 +67,21 @@ Pérdida pesimista a ~3,5 m³/h: Δp mínimo PICV ~2,5 m (ineludible) + batería
 
 P2 debe ser **bomba de distribución DN25, 180 mm, caudal ≥3,5 m³/h, altura ~7-8 m, presión constante** (modula al cerrarse zonas — encaja con el arranque por Zelio contra red parcialmente cerrada, M10).
 
-**P2 candidata: Grundfos UPM3 Auto 25-70 180** (ref. 93370517 / 59C93603) o **UPM3 Hybrid 25-70 180** (ref. 59C93103).
+**P2 = Grundfos UPM3 Auto 25-70 180** (ref. 93370517 / 59C93603). Alt.: **UPM3 Hybrid 25-70 180** (ref. 59C93103, autónoma + PWM).
 - **DN25, 180 mm** (cumple el estándar de intercambiabilidad), **7 m**, **presión constante autónoma** (modos Δp-c/Δp-v seleccionables en la bomba — no necesita señal externa, ideal para el arranque por Zelio).
-- **Auto** = autónoma (presión constante interna). **Hybrid** = autónoma **+** gobierno PWM opcional (5 modos, 18 curvas, AUTOADAPT) → mejor si aparece a precio similar, deja abierta la modulación por el M241.
-- ⚠️ **OJO con la longitud:** existe la misma en **130 mm** (ref. ...602), que **NO cumple el estándar de 180** → comprar **explícitamente la 180**.
-- ⚠️ **Caudal:** la 25-70 da ~3,5-4 m³/h de tope → en el **pico (3,5 m³/h) va justa** (poca altura ahí), en **uso normal (1,8 m³/h) holgada**. Aceptable por la inercia del sistema y lo raro del pico. Si se quiere margen en el pico: **UPM3 25-75** o **MAGNA3 25-80** (180), algo más de caudal.
-- Precio de referencia: ~100 € nueva 2ª mano (la versión 130 vista en Wallapop; buscar la 180).
+- **Auto** = autónoma (presión constante interna). **Hybrid** = autónoma **+** gobierno PWM opcional (5 modos, 18 curvas, AUTOADAPT).
+- ⚠️ **Sufijo de control (CRÍTICO):** **ZZZ = Auto** ✅ · **ACA = Hybrid** ✅ · **AZA = básica solo-PWM** ❌ (no tiene presión constante autónoma; no sirve para el arranque por Zelio salvo gobernarla siempre por PWM). Comprobar el sufijo en la etiqueta.
+- ⚠️ **OJO con la longitud:** existe la misma en **130 mm**, que **NO cumple el estándar de 180** → comprar **explícitamente la 180**.
+- ⚠️ **Caudal:** la 25-70 da ~3,5-4 m³/h de tope → en el **pico (3,5 m³/h) va justa**, en **uso normal (1,8 m³/h) holgada**. Aceptable por la inercia. Si se quiere margen en el pico: **UPM3 25-75** o **MAGNA3 25-80** (180).
+- **Producto localizado:** UPM3 Auto 25-70 180 ZZZ — usada ~100 € (o mejor oferta) en eBay (vendedor Eternitec); también vista **nueva a ~165 €**. Decisión nueva/usada pendiente.
 
-> **Nota sobre la Yonos MAXO 25/0,5-7:** técnicamente ideal (caudal máx 7 m³/h, 180 mm, presión constante), pero **nueva ronda 700 €** (tarifa Wilo alta) — descartada por precio salvo que aparezca de 2ª mano barata.
+> **Nota Yonos MAXO 25/0,5-7:** técnicamente ideal (caudal 7 m³/h, 180 mm), pero **nueva ~700 €** → descartada por precio.
 
-> **Historial de descarte por CAUDAL** (no reconsiderar): DN15 de caldera (UPM3/Viessmann 15-75, Wilo RS 15/7, Yonos PICO STG 15/1-13 = 1,9 m³/h, Yonos PARA 15) y DN25 de poco caudal (UPMGEO 25-85 ~2,8; Yonos PICO 1.0 25/1-8 ~3,3). Además, **descarte por longitud 130 mm** las versiones cortas de cualquier modelo (estándar = 180).
+> **Historial de descarte por CAUDAL** (no reconsiderar): DN15 de caldera (UPM3/Viessmann 15-75, Wilo RS 15/7, Yonos PICO STG 15/1-13 = 1,9 m³/h, Yonos PARA 15) y DN25 de poco caudal (UPMGEO 25-85 ~2,8; Yonos PICO 1.0 25/1-8 ~3,3). Además, **descarte por longitud 130 mm** (estándar = 180) y por **sufijo AZA** (solo-PWM, sin presión constante autónoma).
 
-**Alternativas equivalentes** (gama distribución, 180 mm, presión constante): Grundfos **MAGNA3 25-80**, **UPM3 25-75 180**, Wilo **Stratos 25/1-8**, **Yonos MAXO 25/0,5-7** (cara nueva).
+**Alternativas equivalentes** (gama distribución, 180 mm, presión constante): Grundfos **MAGNA3 25-80**, **UPM3 25-75 180**, Wilo **Stratos 25/1-8**.
 
-**Reasignación de las ALPHA 25-40:** la ALPHA2 25-40 180 → **P-POOL** (cumple 180); la ALPHA1 25-40 130 → **repuesto de emergencia** (130 mm).
+**ALPHA2 25-40 180 → P-POOL** (cumple 180).
 
 ## Vasos de expansión
 
@@ -122,8 +128,7 @@ Los valores que dependen del componente comercial elegido (caudal nominal de cap
 - Verificar litraje del vaso integrado de la BC (para su circuito en verano).
 - Reajustar precarga del Ibaiondo 50 SMR P (tándem) a ~0,5-1 bar antes de montar.
 - Comprar vaso solar 25 L y vaso clima 18 L nuevo (~30 €). El del tándem ya resuelto (Ibaiondo); el buffer viene con la BC.
-- **Comprar P1** (~8 m a 2.400 L/h, **180 mm**): Grundfos UPS 25-80 180 / Wilo Star-RS 25/8.
-- **Comprar P2: Grundfos UPM3 Auto/Hybrid 25-70 180** (¡versión 180, no 130!). Ajustar presión constante ~7-8 m. Alternativas: MAGNA3 25-80, UPM3 25-75 180, Stratos 25/1-8.
+- **P1 = P2 = Grundfos UPM3 Auto 25-70 180** (repuesto común). Verificar que la 25-70 (7 m) cubre la pérdida del doble serpentín de P1 a 2.400 L/h; si no, subir ambas a 25-80.
+- **Comprar P2: Grundfos UPM3 Auto 25-70 180** (sufijo ZZZ/Auto o ACA/Hybrid; ¡180, no 130; no AZA!). Ajustar presión constante ~7-8 m. Decisión nueva (~165 €) vs usada (~100 €) pendiente.
 - Comprar P-SOL (PWM, glicol, 180) y P-ACS (PWM, 180).
-- **Todas las bombas en 180 mm** (estándar de intercambiabilidad). ALPHA2 25-40 180 → P-POOL; ALPHA1 25-40 130 → repuesto de emergencia (130).
-- Idealmente, P1 y P2 mismo modelo (~8 m, 180) para repuesto común de clase fuerte.
+- **Todas las bombas en 180 mm** (estándar de intercambiabilidad). ALPHA2 25-40 180 → P-POOL.
