@@ -40,11 +40,13 @@
 | ID | Marca y modelo | Plataforma | Precio s/portes | Estado |
 |---|---|---|---|---|
 | **P-SOL** | Grundfos Alpha Solar 25-75 130 | Wallapop | 85 € | en compra |
-| **P-ACS** | Grundfos UPM3 Hybrid 25-70 130 (ACA) | eBay | (nueva) | compra propuesta |
+| **P-ACS** | Grundfos UPM3 Hybrid 25-70 130 (ACA) | — | — | por buscar en 130 |
 | **P1** | Stiebel Eltron UP 25/7.5 PCV (8,4 m, 180) | eBay | 135 € (oferta pdte. de aceptar; PVP 159) | compra propuesta |
-| **P2** | Grundfos UPM3 Hybrid 25-70 130 (ACA) | eBay | (nueva) | compra propuesta |
+| **P2** | Grundfos UPM3 Hybrid 25-70 130 (ACA) | — | — | por buscar en 130 |
 | **P-POOL** | Grundfos ALPHA1 25-40 130 | Wallapop | 59 € | ✅ comprada |
 | **Repuesto** | Grundfos ALPHA 25-40 130 | Wallapop | 60 € | ✅ comprada |
+
+> **P-ACS y P2 = misma búsqueda:** dos unidades de UPM3 Hybrid 25-70 130 (ACA). La candidata de 180 que se había visto en eBay **ya no aplica** (al pasar a 130). Buscar dos en 130.
 
 Funciones, caudales y alturas: P-SOL lazo solar (1,85 m³/h, 7,5 m, PWM perfil C, glicol); P-ACS primario ACS (~1.080 L/h, ~3-4 m, PWM); P1 trasvase D2→buffer (~2.400 L/h, ~5-8 m, on/off); P2 buffer→fancoils (normal ~1,8 / pico ~3,5 m³/h, ~7 m, presión constante); P-POOL primario piscina (~900-1.075 L/h, ~3-4 m, on/off). Modulantes (P-SOL, P-ACS) por PWM desde la CPU (M12); on/off por relé de interposición.
 
@@ -52,8 +54,9 @@ Funciones, caudales y alturas: P-SOL lazo solar (1,85 m³/h, 7,5 m, PWM perfil C
 
 - **Ya comprado** (en posesión): P-POOL 59 € + Repuesto 60 € = **119 €**.
 - **En compra:** P-SOL 85 €.
-- **Compra propuesta** (decide el cliente): P1 135 € + P2 (UPM3 Hybrid 25-70 130 nueva) + P-ACS (ídem) ≈ **350-450 €** según precio de las UPM3.
-- **Total previsto del aprovisionamiento de bombas:** **~550-650 €**.
+- **Compra propuesta:** P1 135 €.
+- **Por buscar/cifrar:** P-ACS + P2 (dos UPM3 Hybrid 25-70 130 nuevas).
+- **Total previsto del aprovisionamiento de bombas:** **~550-650 €** (a falta de cerrar precio de las dos UPM3).
 
 ### P-SOL — Grundfos Alpha Solar 25-75 130
 
@@ -61,7 +64,7 @@ Lazo solar primario (con glicol). En el retorno frío (boca inferior del serpent
 
 ### P-ACS y P2 — Grundfos UPM3 Hybrid 25-70 130 (pareja, repuesto común)
 
-Mismo modelo en ambas (un repuesto cubre las dos). DN25, 130 mm, **Hybrid (ACA)**: PWM externo + autocontrol interno (5 modos, 18 curvas, AUTOADAPT presión constante/proporcional).
+Mismo modelo en ambas (un repuesto cubre las dos). DN25, 130 mm, **Hybrid (ACA)**: PWM externo + autocontrol interno (5 modos, 18 curvas, AUTOADAPT presión constante/proporcional). **Por buscar: dos unidades en 130.**
 - **P-ACS:** primario del HX de ACS instantánea (~1.080 L/h, ~3-4 m). Modula por **PWM desde el M241** (M04) para temperatura de ACS estable al paso. La curva de 7 m sobra; modula a la baja.
 - **P2:** buffer → fancoils (pico ~3,5 m³/h, ~7 m). Presión constante autónoma (arranque por Zelio, M10); la 25-70 encaja (holgada en normal ~1,8 m³/h, justa en el pico de 12 zonas).
 - Sufijo **ACA (Hybrid)** ✅ o **ZZZ (Auto)** ✅; **AZA (solo-PWM) NO**. Longitud **130 mm**. Ref. Hybrid 130: 59C93102.
@@ -117,7 +120,7 @@ Los valores que dependen del componente comercial (caudal nominal de captadores,
 - Reajustar precarga del Ibaiondo 50 SMR P a ~0,5-1 bar.
 - Comprar vaso solar 25 L y vaso clima 18 L. Tándem ya resuelto; buffer viene con la BC.
 - **P-SOL: Grundfos Alpha Solar 25-75 130** — en compra (85 €, Wallapop).
-- **P-ACS y P2: Grundfos UPM3 Hybrid 25-70 130** (pareja, repuesto común; ACA, no AZA). Comprar las dos juntas.
+- **P-ACS y P2: Grundfos UPM3 Hybrid 25-70 130** — **buscar dos unidades en 130** (pareja, repuesto común; ACA, no AZA). La candidata de 180 ya no aplica.
 - **P1: Stiebel Eltron UP 25/7.5 PCV** (180, única de 180) — compra propuesta (eBay, oferta 135 € pendiente). Verificar modo PCV autónomo y curva a 2,4 m³/h.
 - **P-POOL: Grundfos ALPHA1 25-40 130** — comprada (59 €, Wallapop).
 - **Repuesto: Grundfos ALPHA 25-40 130** — comprado (60 €, Wallapop).
