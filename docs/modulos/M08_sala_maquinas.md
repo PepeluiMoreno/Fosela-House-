@@ -36,7 +36,7 @@ Para que las bombas sean **intercambiables** y un repuesto sirva sin tocar la tu
 - **Conexión común: DN25, rosca G1½" (tuerca loca), racor Rp1".** Cualquier bomba entra en cualquier puesto de su clase.
 - **Dos clases de bomba por exigencia de altura:**
   - **Clase suave (~3-4 m):** P-SOL, P-ACS, P-POOL. Un repuesto de esta clase las cubre.
-  - **Clase fuerte (~7-8 m):** P1, P2. **Mismo modelo entre sí** (UPM3 Auto 25-70 180) → un repuesto común cubre las dos.
+  - **Clase media-fuerte (~6-7 m):** P1, P2. **Mismo modelo entre sí** (UPM3 Auto 25-70 180) → un repuesto común cubre las dos.
 
 ## Selección de bombas
 
@@ -46,26 +46,27 @@ Bombas DN25 (rosca 1½" tuerca loca), **180 mm**, que encajan en la línea de 1"
 |---|---|---|---|---|---|---|
 | **P-SOL** | Lazo solar (glicol) | según captadores | ~3-4 m | 180 | PWM modulante (M02) | Grundfos Alpha Solar 25-75 / Wilo iPWM3, **apta glicol** |
 | **P-ACS** | Primario ACS instantáneo | ~1.080 L/h | ~3-4 m | 180 | PWM modulante (M04) | A comprar, **variante PWM** |
-| **P1** | Trasvase D2 → buffer | ~2.400 L/h | **~7-8 m** (doble serpentín en serie) | 180 | On/off | **Grundfos UPM3 Auto 25-70 180** (igual que P2; verificar curva a 2.400 L/h) |
-| **P2** | Buffer → fancoils | **normal ~1,8 m³/h · pico ~3,5 m³/h** | **~7-8 m** (red + Δp PICV) | **180** | Presión constante | **Grundfos UPM3 Auto 25-70 180** (ver abajo) |
+| **P1** | Trasvase D2 → buffer | ~2.400 L/h | **~5-6 m** (doble serpentín en serie) | 180 | On/off | **Grundfos UPM3 Auto 25-70 180** (igual que P2) |
+| **P2** | Buffer → fancoils | **normal ~1,8 m³/h · pico ~3,5 m³/h** | **~7 m** (red + Δp PICV) | **180** | Presión constante | **Grundfos UPM3 Auto 25-70 180** (ver abajo) |
 | **P-POOL** | Primario HX piscina | ~900-1.075 L/h | ~3-4 m | 180 | On/off | **Grundfos ALPHA2 25-40 180** (reubicada aquí) |
 
 ### P1 y P2 = mismo modelo (UPM3 Auto 25-70 180)
 
-**Intención: P1 y P2 idénticas — Grundfos UPM3 Auto 25-70 180** — para repuesto común de clase fuerte. Ambas DN25, 180 mm, 7 m, presión constante autónoma.
+**P1 y P2 idénticas — Grundfos UPM3 Auto 25-70 180** — para repuesto común de clase media-fuerte. Ambas DN25, 180 mm, 7 m, presión constante autónoma.
 - **P2 (fancoils):** ~7 m, pico 3,5 m³/h → la 25-70 encaja (justa en pico, holgada en normal).
-- **P1 (trasvase D2→buffer, doble serpentín):** ~2,4 m³/h. ⚠️ **Verificar que la 25-70 (7 m) cubre la pérdida del doble serpentín en serie** a 2.400 L/h. Si P1 necesitara >7 m, decidir entre subir ambas a 25-80 (repuesto común a más altura) o asumir modelos distintos. *Pendiente: pérdida real del doble serpentín.*
+- **P1 (trasvase D2→buffer, doble serpentín):** ~2,4 m³/h, **~5-6 m**. La 25-70 (7 m) la cubre **con holgura** a ese caudal (a 2,4 m³/h da ~6-7 m disponibles).
+  - **Sobre la pérdida del doble serpentín:** los dos serpentines en serie son el grueso (~2-4 m entre ambos a 2.400 L/h), + tubería de sala ~1 m + accesorios ~1 m + buffer ~0,5 m = **~5-6 m realista**. *(La estimación previa de "8 m" era conservadora, sin el dato del serpentín; descartada.)* La pérdida del serpentín crece con el cuadrado del caudal, pero a 2,4 m³/h es moderada. Dato fino pendiente: **pérdida de carga del serpentín a 2.400 L/h** (parámetro `Pxx`, del fabricante del depósito). Si resultara mucho mayor de lo estimado, reconsiderar; improbable.
 - En modo on/off (P1) la UPM3 Auto se fija a velocidad/curva constante; en P2 trabaja en presión constante.
 
 ### P2 — dimensionado y bomba
 
 **Fancoils mayoritariamente de 1,5 kW** (259 L/h c/u; ver M05), con 1-2 excepciones de 2 kW a lo sumo. Con corte por zona (actuador en cada PICV), P2 mueve el caudal de las zonas que pidan:
-- **Escenario normal (~7 zonas):** ~7 × 259 ≈ **1,8 m³/h** (pérdida ~7 m).
-- **Pico (12 zonas, todas):** ≈ **~3,4-3,5 m³/h** (pérdida pesimista ~7,5-8 m; real ~6-7 m).
+- **Escenario normal (~7 zonas):** ~7 × 259 ≈ **1,8 m³/h** (pérdida ~6-7 m).
+- **Pico (12 zonas, todas):** ≈ **~3,4-3,5 m³/h** (pérdida pesimista ~7,5 m; real ~6-7 m).
 
 Pérdida pesimista a ~3,5 m³/h: Δp mínimo PICV ~2,5 m (ineludible) + batería fancoil ~2 m + tubería ~2 m + sala ~1 m = **~7,5 m**.
 
-P2 debe ser **bomba de distribución DN25, 180 mm, caudal ≥3,5 m³/h, altura ~7-8 m, presión constante** (modula al cerrarse zonas — encaja con el arranque por Zelio contra red parcialmente cerrada, M10).
+P2 debe ser **bomba de distribución DN25, 180 mm, caudal ≥3,5 m³/h, altura ~7 m, presión constante** (modula al cerrarse zonas — encaja con el arranque por Zelio contra red parcialmente cerrada, M10).
 
 **P2 = Grundfos UPM3 Auto 25-70 180** (ref. 93370517 / 59C93603). Alt.: **UPM3 Hybrid 25-70 180** (ref. 59C93103, autónoma + PWM).
 - **DN25, 180 mm** (cumple el estándar de intercambiabilidad), **7 m**, **presión constante autónoma** (modos Δp-c/Δp-v seleccionables en la bomba — no necesita señal externa, ideal para el arranque por Zelio).
@@ -128,7 +129,7 @@ Los valores que dependen del componente comercial elegido (caudal nominal de cap
 - Verificar litraje del vaso integrado de la BC (para su circuito en verano).
 - Reajustar precarga del Ibaiondo 50 SMR P (tándem) a ~0,5-1 bar antes de montar.
 - Comprar vaso solar 25 L y vaso clima 18 L nuevo (~30 €). El del tándem ya resuelto (Ibaiondo); el buffer viene con la BC.
-- **P1 = P2 = Grundfos UPM3 Auto 25-70 180** (repuesto común). Verificar que la 25-70 (7 m) cubre la pérdida del doble serpentín de P1 a 2.400 L/h; si no, subir ambas a 25-80.
-- **Comprar P2: Grundfos UPM3 Auto 25-70 180** (sufijo ZZZ/Auto o ACA/Hybrid; ¡180, no 130; no AZA!). Ajustar presión constante ~7-8 m. Decisión nueva (~165 €) vs usada (~100 €) pendiente.
+- **P1 = P2 = Grundfos UPM3 Auto 25-70 180** (repuesto común). P1 ~5-6 m (la 25-70 la cubre); dato fino pendiente: pérdida del serpentín a 2.400 L/h.
+- **Comprar P2: Grundfos UPM3 Auto 25-70 180** (sufijo ZZZ/Auto o ACA/Hybrid; ¡180, no 130; no AZA!). Ajustar presión constante ~7 m. Decisión nueva (~165 €) vs usada (~100 €) pendiente.
 - Comprar P-SOL (PWM, glicol, 180) y P-ACS (PWM, 180).
 - **Todas las bombas en 180 mm** (estándar de intercambiabilidad). ALPHA2 25-40 180 → P-POOL.
