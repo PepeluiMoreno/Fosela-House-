@@ -7,9 +7,9 @@
 
 - **Punto alto común de extracción:** ACS, clima (trasvase P1) y piscina toman de zona alta común del tándem; la prioridad la ejerce el control (M09), no la hidráulica. Retornos al fondo de D1.
 - Reparte **agua técnica del tándem** a los consumidores grandes. (Los fancoils NO cuelgan de aquí: van por arborescencia desde el buffer, ver M05.)
-- **Colector de latón roscado (sin soldar).** Candidato Wallapop: cuerpo **1" (DN25)**, salidas **3/4"**, encadenable (macho-hembra), 12 €. Es un colector **ajustado, no holgado**: con el cuerpo de 1" y clima+ACS simultáneos (~3.480 L/h) la velocidad interna sube (~1,9 m/s); aceptable porque el clima sale por el extremo y el arbitraje suaviza, pero sin margen. Para holgura: encadenar dos cuerpos o buscar cuerpo de 2".
-- Tapón roscado en extremos, **purgador** en alto y **vaciado** en bajo. Sellado cuidadoso de roscas.
-- Sin separador hidráulico de marca (Caleffi SEP4/SEPCOLL): innecesario y caro.
+- **Colector de latón roscado (sin soldar):** cuerpo **1" (DN25)**, salidas **3/4"**, encadenable. Con clima+ACS simultáneos (~3.480 L/h) la velocidad interna sube (~1,9 m/s): aceptable, sin margen. Para holgura, encadenar dos cuerpos.
+- Tapón roscado en extremos, **purgador** en alto y **vaciado** en bajo.
+- Sin separador hidráulico de marca: innecesario.
 
 ### Reparto de bocas
 
@@ -24,112 +24,85 @@
 
 ## Posición de las bombas
 
-- Prevalece la **aspiración con presión positiva** (evitar cavitación), con el vaso del lado de aspiración. La "parte fría" es criterio menor.
-- Cada bomba en la **impulsión de su ramal** + **válvula de retención aguas abajo** (evita reflujo por el colector con la bomba parada).
-- P-ACS en impulsión (por control).
+- **Aspiración con presión positiva** (evitar cavitación), con el vaso del lado de aspiración.
+- Cada bomba en la **impulsión de su ramal** + **válvula de retención aguas abajo**.
+- P-ACS en impulsión.
 
-## Criterio de intercambiabilidad de bombas (ESTÁNDAR)
+## Bombas — estándar de intercambiabilidad
 
-Para que las bombas sean **intercambiables** y un repuesto sirva sin tocar la tubería:
+- **Longitud entre roscas: 180 mm en TODAS las circuladoras.** Conexión común **DN25, rosca G1½" (tuerca loca), racor Rp1".** Cualquier bomba entra en cualquier puesto de su clase.
+- **Dos clases:**
+  - **Suave (~3-4 m):** P-SOL, P-ACS, P-POOL.
+  - **Media-fuerte (~6-7 m):** P1, P2 — **mismo modelo** (UPM3 Auto 25-70 180) para repuesto común.
 
-- **Longitud entre roscas: 180 mm en TODAS las circuladoras** (estándar del proyecto). Las de 130 mm (típicas de caldera) **quedan descartadas** aunque cumplan prestaciones — romperían la intercambiabilidad. Montar todos los huecos a 180 mm.
-- **Conexión común: DN25, rosca G1½" (tuerca loca), racor Rp1".** Cualquier bomba entra en cualquier puesto de su clase.
-- **Dos clases de bomba por exigencia de altura:**
-  - **Clase suave (~3-4 m):** P-SOL, P-ACS, P-POOL. Un repuesto de esta clase las cubre.
-  - **Clase media-fuerte (~6-7 m):** P1, P2. **Mismo modelo entre sí** (UPM3 Auto 25-70 180) → un repuesto común cubre las dos.
+| Bomba | Función | Caudal | Altura | Control | Modelo |
+|---|---|---|---|---|---|
+| **P-SOL** | Lazo solar (glicol) | según captadores | ~3-4 m | PWM (M02) | Grundfos Alpha Solar 25-75 / Wilo iPWM3, **apta glicol** |
+| **P-ACS** | Primario ACS instantáneo | ~1.080 L/h | ~3-4 m | PWM (M04) | A comprar, variante PWM |
+| **P1** | Trasvase D2 → buffer | ~2.400 L/h | ~5-6 m | On/off | **Grundfos UPM3 Auto 25-70 180** |
+| **P2** | Buffer → fancoils | normal ~1,8 · pico ~3,5 m³/h | ~7 m | Presión constante | **Grundfos UPM3 Auto 25-70 180** |
+| **P-POOL** | Primario HX piscina | ~900-1.075 L/h | ~3-4 m | On/off | **Grundfos ALPHA2 25-40 180** |
 
-## Selección de bombas
+Todas DN25, **180 mm**. Modulantes (P-SOL, P-ACS) por PWM desde la CPU (M12); on/off por relé de interposición.
 
-Bombas DN25 (rosca 1½" tuerca loca), **180 mm**, que encajan en la línea de 1" de la sala. Las modulantes (P-SOL, P-ACS) por **PWM** desde la CPU (M12); las on/off por **relé de interposición**.
+### P1 y P2 — Grundfos UPM3 Auto 25-70 180
 
-| Bomba | Función | Caudal | Altura req. | Long. | Control | Modelo |
-|---|---|---|---|---|---|---|
-| **P-SOL** | Lazo solar (glicol) | según captadores | ~3-4 m | 180 | PWM modulante (M02) | Grundfos Alpha Solar 25-75 / Wilo iPWM3, **apta glicol** |
-| **P-ACS** | Primario ACS instantáneo | ~1.080 L/h | ~3-4 m | 180 | PWM modulante (M04) | A comprar, **variante PWM** |
-| **P1** | Trasvase D2 → buffer | ~2.400 L/h | **~5-6 m** (doble serpentín en serie) | 180 | On/off | **Grundfos UPM3 Auto 25-70 180** (igual que P2) |
-| **P2** | Buffer → fancoils | **normal ~1,8 m³/h · pico ~3,5 m³/h** | **~7 m** (red + Δp PICV) | **180** | Presión constante | **Grundfos UPM3 Auto 25-70 180** (ver abajo) |
-| **P-POOL** | Primario HX piscina | ~900-1.075 L/h | ~3-4 m | 180 | On/off | **Grundfos ALPHA2 25-40 180** (reubicada aquí) |
+Mismo modelo en ambas (repuesto común). DN25, 180 mm, 7 m, **presión constante autónoma** (modos Δp-c/Δp-v en la bomba, sin señal externa — idóneo para el arranque por Zelio, M10).
 
-### P1 y P2 = mismo modelo (UPM3 Auto 25-70 180)
-
-**P1 y P2 idénticas — Grundfos UPM3 Auto 25-70 180** — para repuesto común de clase media-fuerte. Ambas DN25, 180 mm, 7 m, presión constante autónoma.
-- **P2 (fancoils):** ~7 m, pico 3,5 m³/h → la 25-70 encaja (justa en pico, holgada en normal).
-- **P1 (trasvase D2→buffer, doble serpentín):** ~2,4 m³/h, **~5-6 m**. La 25-70 (7 m) la cubre **con holgura** a ese caudal (a 2,4 m³/h da ~6-7 m disponibles).
-  - **Sobre la pérdida del doble serpentín:** los dos serpentines en serie son el grueso (~2-4 m entre ambos a 2.400 L/h), + tubería de sala ~1 m + accesorios ~1 m + buffer ~0,5 m = **~5-6 m realista**. *(La estimación previa de "8 m" era conservadora, sin el dato del serpentín; descartada.)* La pérdida del serpentín crece con el cuadrado del caudal, pero a 2,4 m³/h es moderada. Dato fino pendiente: **pérdida de carga del serpentín a 2.400 L/h** (parámetro `Pxx`, del fabricante del depósito). Si resultara mucho mayor de lo estimado, reconsiderar; improbable.
-- En modo on/off (P1) la UPM3 Auto se fija a velocidad/curva constante; en P2 trabaja en presión constante.
-
-### P2 — dimensionado y bomba
-
-**Fancoils mayoritariamente de 1,5 kW** (259 L/h c/u; ver M05), con 1-2 excepciones de 2 kW a lo sumo. Con corte por zona (actuador en cada PICV), P2 mueve el caudal de las zonas que pidan:
-- **Escenario normal (~7 zonas):** ~7 × 259 ≈ **1,8 m³/h** (pérdida ~6-7 m).
-- **Pico (12 zonas, todas):** ≈ **~3,4-3,5 m³/h** (pérdida pesimista ~7,5 m; real ~6-7 m).
-
-Pérdida pesimista a ~3,5 m³/h: Δp mínimo PICV ~2,5 m (ineludible) + batería fancoil ~2 m + tubería ~2 m + sala ~1 m = **~7,5 m**.
-
-P2 debe ser **bomba de distribución DN25, 180 mm, caudal ≥3,5 m³/h, altura ~7 m, presión constante** (modula al cerrarse zonas — encaja con el arranque por Zelio contra red parcialmente cerrada, M10).
-
-**P2 = Grundfos UPM3 Auto 25-70 180** (ref. 93370517 / 59C93603). Alt.: **UPM3 Hybrid 25-70 180** (ref. 59C93103, autónoma + PWM).
-- **DN25, 180 mm** (cumple el estándar de intercambiabilidad), **7 m**, **presión constante autónoma** (modos Δp-c/Δp-v seleccionables en la bomba — no necesita señal externa, ideal para el arranque por Zelio).
-- **Auto** = autónoma (presión constante interna). **Hybrid** = autónoma **+** gobierno PWM opcional (5 modos, 18 curvas, AUTOADAPT).
-- ⚠️ **Sufijo de control (CRÍTICO):** **ZZZ = Auto** ✅ · **ACA = Hybrid** ✅ · **AZA = básica solo-PWM** ❌ (no tiene presión constante autónoma; no sirve para el arranque por Zelio salvo gobernarla siempre por PWM). Comprobar el sufijo en la etiqueta.
-- ⚠️ **OJO con la longitud:** existe la misma en **130 mm**, que **NO cumple el estándar de 180** → comprar **explícitamente la 180**.
-- ⚠️ **Caudal:** la 25-70 da ~3,5-4 m³/h de tope → en el **pico (3,5 m³/h) va justa**, en **uso normal (1,8 m³/h) holgada**. Aceptable por la inercia. Si se quiere margen en el pico: **UPM3 25-75** o **MAGNA3 25-80** (180).
-- **Producto localizado:** UPM3 Auto 25-70 180 ZZZ — usada ~100 € (o mejor oferta) en eBay (vendedor Eternitec); también vista **nueva a ~165 €**. Decisión nueva/usada pendiente.
-
-> **Nota Yonos MAXO 25/0,5-7:** técnicamente ideal (caudal 7 m³/h, 180 mm), pero **nueva ~700 €** → descartada por precio.
-
-> **Historial de descarte por CAUDAL** (no reconsiderar): DN15 de caldera (UPM3/Viessmann 15-75, Wilo RS 15/7, Yonos PICO STG 15/1-13 = 1,9 m³/h, Yonos PARA 15) y DN25 de poco caudal (UPMGEO 25-85 ~2,8; Yonos PICO 1.0 25/1-8 ~3,3). Además, **descarte por longitud 130 mm** (estándar = 180) y por **sufijo AZA** (solo-PWM, sin presión constante autónoma).
-
-**Alternativas equivalentes** (gama distribución, 180 mm, presión constante): Grundfos **MAGNA3 25-80**, **UPM3 25-75 180**, Wilo **Stratos 25/1-8**.
-
-**ALPHA2 25-40 180 → P-POOL** (cumple 180).
+- **P2 (fancoils):** caudal pico ~3,5 m³/h, altura ~7 m. La 25-70 encaja (holgada en uso normal ~1,8 m³/h, justa en el pico de 12 zonas).
+- **P1 (trasvase D2→buffer por doble serpentín):** ~2,4 m³/h, ~5-6 m. La 25-70 la cubre. En P1 trabaja a curva fija (on/off); en P2 en presión constante.
+- **Al comprar:**
+  - **Sufijo de control:** **ZZZ (Auto)** o **ACA (Hybrid)** válidos. **AZA (solo-PWM) NO** sirve (sin presión constante autónoma).
+  - **Longitud 180 mm** (no la versión 130).
+  - Ref. Auto: 93370517 / 59C93603. Ref. Hybrid: 59C93103.
+  - Ajustar a presión constante ~7 m al montar.
+- Si se quisiera más margen de caudal en el pico de P2: UPM3 25-75 o MAGNA3 25-80 (180).
 
 ## Vasos de expansión
 
-Regla: cada **masa de agua cerrada e independiente**, su vaso, en el lado frío/aspiración. Litrajes con asunciones de volumen conservadoras (a afinar con volúmenes reales).
+Cada masa de agua cerrada e independiente, su vaso, en el lado frío/aspiración.
 
-| Vaso | Circuito (volumen est.) | Tipo | Litraje | Precarga | Ubicación | Producto |
+| Vaso | Circuito | Tipo | Litraje | Precarga | Ubicación | Producto |
 |---|---|---|---|---|---|---|
-| **Solar** | Glicol (~25 L) | **Solar específico** (membrana alta temp. HNBR, apto glicol, 10 bar) | **25 L** | ~1,2 bar | Retorno frío, junto a P-SOL (boca inferior serpentín D1) | pendiente |
-| **Clima** | Fancoils + buffer ~50 L | Calefacción (membrana EPDM) | **18 L** | ~1,0 bar | Aspiración de P2 | a comprar nuevo (~30 €) |
-| **Agua técnica tándem** | Tándem (812 L) | Calefacción (vale uno solar reaprovechado) | **50 L** | ~0,5-1 bar | Lado frío del agua técnica (fondo D1) | **Ibaiondo 50 SMR P** (50 L, solar, -10/+130 °C; 70 € Wallapop). Reajustar precarga de fábrica (~2,5 bar) a ~0,5-1 bar |
-| Buffer clima | ~50 L | — | **incluido con la BC** | — | — | viene con la bomba de calor (M05) |
-| BC (integrado) | Circuito BC | — | no se compra | — | Verificar que cubre su propio circuito en verano | — |
+| **Solar** | Glicol (~25 L) | Solar específico (HNBR, glicol, 10 bar) | 25 L | ~1,2 bar | Retorno frío, junto a P-SOL | pendiente |
+| **Clima** | Fancoils + buffer ~50 L | Calefacción (EPDM) | 18 L | ~1,0 bar | Aspiración de P2 | a comprar nuevo |
+| **Agua técnica tándem** | Tándem (812 L) | Calefacción (vale solar) | 50 L | ~0,5-1 bar | Lado frío (fondo D1) | **Ibaiondo 50 SMR P** (reajustar precarga a ~0,5-1 bar) |
+| Buffer clima | ~50 L | — | incluido con la BC | — | — | viene con la bomba de calor (M05) |
+| BC (integrado) | Circuito BC | — | no se compra | — | verificar cobertura en verano | — |
 
-**Notas de dimensionado:**
-- **Tándem 50 L (Ibaiondo 50 SMR P):** el integrado de la BC (~8-10 L) **NO cubre** los 812 L del tándem. El tándem necesita vaso propio: 812 L que se calientan a 60 °C (y hasta ~90 °C antes de Z1/Z2) dilatan ~14-28 L → con factor de presión, ~35 L a temperatura de servicio, **50 L con margen** por el escenario de 90 °C. El **Ibaiondo 50 SMR P** es vaso solar (membrana 130 °C / glicol), pero un vaso solar sirve de sobra para agua técnica de calefacción (al revés no). **Reajustar la precarga** de fábrica (~2,5 bar) a la del tándem (~0,5-1 bar) antes de montar.
-- **Solar 25 L:** lo dominante es el vapor de estancamiento, no la dilatación. Al ir en el retorno frío, la membrana no recibe el fluido a máxima temperatura. Si el punto del vaso superara ~70 °C en estancamiento, añadir **vaso intermedio (pre-vaso)** — a verificar; al estar en retorno frío, probablemente innecesario.
-- **Clima 18 L:** circuito dominado por el buffer; válvula de seguridad 3 bar. Comprar nuevo (~30 €, no compensa usado).
+**Notas:**
+- **Tándem (50 L):** el integrado de la BC no cubre los 812 L del tándem. 812 L hasta ~90 °C (antes de Z1/Z2) requieren ~50 L con margen. El **Ibaiondo 50 SMR P** (solar) sirve para agua técnica; reajustar precarga de fábrica (~2,5 bar) a ~0,5-1 bar antes de montar.
+- **Solar (25 L):** dominante el vapor de estancamiento. Al ir en retorno frío, la membrana no recibe el fluido a máxima temperatura; pre-vaso solo si el punto superara ~70 °C (improbable).
+- **Clima (18 L):** dominado por el buffer; válvula de seguridad 3 bar.
 
-**Sin vaso propio:** primarios de HX (ramas del agua técnica, los cubre el vaso del tándem); secundarios separados por barrera (ACS → red; piscina → vaso de la piscina).
+**Sin vaso propio:** primarios de HX (los cubre el vaso del tándem); secundarios separados por barrera (ACS → red; piscina → su vaso).
 
 ## Diámetros y racordería
 
-- **Sala de máquinas: todo multicapa 32 mm = rosca 1" (DN25).** Fittings de 32 (rematan en 1", **no** 1¼"). Bombas y válvulas en 1".
-- **Primario de ACS en cobre 22 mm** (~0,95 m/s).
+- **Sala: todo multicapa 32 mm = rosca 1" (DN25).** Bombas y válvulas en 1".
+- **Primario de ACS en cobre 22 mm.**
 - **Distribución fancoils (fuera de sala):** arborescente 32 → 25 → 20 con PICV (M05).
-- **Manguito dieléctrico** pegado a cada boca de depósito, luego llave de bola.
+- **Manguito dieléctrico** en cada boca de depósito, luego llave de bola.
 
 ## Retención antitermosifón del tándem
 
-- En el enlace serie **tapa de D1 → fondo de D2**, una retención orientada a dejar pasar solo D1→D2; impide que D2 caliente retroceda a D1 y deshaga la estratificación (ver M01).
+- En el enlace serie **tapa de D1 → fondo de D2**, retención que deja pasar solo D1→D2; impide que D2 caliente retroceda a D1 (M01).
 
 ## Manómetros
 
-- En cada grupo de seguridad (solar, agua técnica), en el circuito de fancoils, y en impulsión/retorno de la BC. Opcional en primario de ACS.
+- En cada grupo de seguridad (solar, agua técnica), en el circuito de fancoils, y en impulsión/retorno de la BC.
 
 ## Parámetros constructivos
 
-Los valores que dependen del componente comercial elegido (caudal nominal de captadores, U y área/placa del HX, potencia pico del campo, volumen del vaso de la BC, Kv de válvulas...) son **parámetros `Pxx`** con valor conocido el día de la instalación. El diseño se expresa en función de ellos; no bloquean el diseño.
+Los valores que dependen del componente comercial (caudal nominal de captadores, U y área/placa del HX, potencia pico del campo, volumen del vaso de la BC, Kv de válvulas, **pérdida del serpentín a caudal nominal**...) son **parámetros `Pxx`** con valor conocido el día de la instalación. El diseño se expresa en función de ellos.
 
 ## Pendientes
 
-- Confirmar medidas del colector candidato (1" cuerpo / 3/4" salidas) y aptitud para agua caliente de sus llaves.
-- Afinar litraje de vasos con volúmenes reales (circuito solar ~25 L es el más estimado).
-- Verificar litraje del vaso integrado de la BC (para su circuito en verano).
-- Reajustar precarga del Ibaiondo 50 SMR P (tándem) a ~0,5-1 bar antes de montar.
-- Comprar vaso solar 25 L y vaso clima 18 L nuevo (~30 €). El del tándem ya resuelto (Ibaiondo); el buffer viene con la BC.
-- **P1 = P2 = Grundfos UPM3 Auto 25-70 180** (repuesto común). P1 ~5-6 m (la 25-70 la cubre); dato fino pendiente: pérdida del serpentín a 2.400 L/h.
-- **Comprar P2: Grundfos UPM3 Auto 25-70 180** (sufijo ZZZ/Auto o ACA/Hybrid; ¡180, no 130; no AZA!). Ajustar presión constante ~7 m. Decisión nueva (~165 €) vs usada (~100 €) pendiente.
-- Comprar P-SOL (PWM, glicol, 180) y P-ACS (PWM, 180).
-- **Todas las bombas en 180 mm** (estándar de intercambiabilidad). ALPHA2 25-40 180 → P-POOL.
+- Confirmar medidas del colector (1" cuerpo / 3/4" salidas) y aptitud de sus llaves para agua caliente.
+- Afinar litraje de vasos con volúmenes reales.
+- Verificar litraje del vaso integrado de la BC (circuito en verano).
+- Reajustar precarga del Ibaiondo 50 SMR P a ~0,5-1 bar.
+- Comprar vaso solar 25 L y vaso clima 18 L. Tándem ya resuelto; buffer viene con la BC.
+- **Comprar P1 y P2: Grundfos UPM3 Auto 25-70 180** (sufijo ZZZ/Auto o ACA/Hybrid; 180 mm; no AZA). Ajustar presión constante ~7 m.
+- Comprar P-SOL (PWM, glicol) y P-ACS (PWM).
+- ALPHA2 25-40 180 → P-POOL.
