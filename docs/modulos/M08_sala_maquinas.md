@@ -40,13 +40,13 @@
 | ID | Marca y modelo | Plataforma | Precio s/portes | Estado |
 |---|---|---|---|---|
 | **P-SOL** | Grundfos Alpha Solar 25-75 130 | Wallapop (Paco) | 85 € (oferta; PVP 95) | en compra |
-| **P-ACS** | Grundfos UPM3 Hybrid 25-70 130 (ACA) | Wallapop (Daniel m. Calahorra) | 150 € (nueva) | compra propuesta (pdte. confirmar cables) |
+| **P-ACS** | Grundfos UPM3 Hybrid 25-70 130 (ACA) | Wallapop (Daniel) | 150 € (nueva) | compra propuesta (pdte. confirmar cables) |
 | **P1** | Stiebel Eltron UP 25/7.5 PCV (8,4 m, 180) | eBay | 135 € (oferta pdte. de aceptar; PVP 159) | compra propuesta |
 | **P2** | Grundfos UPM3 Auto 25-70 130 (ZZZ) | Wallapop (Daniel m. Calahorra) | 100 € (nueva) | compra propuesta |
 | **P-POOL** | Grundfos ALPHA1 25-40 130 | Wallapop | 59 € | ✅ comprada |
 | **Repuesto** | Grundfos ALPHA 25-40 130 | Wallapop | 60 € | ✅ comprada |
 
-> **P-ACS y P2 = mismo cuerpo** (UPM3 25-70 130): P-ACS Hybrid (ACA), P2 Auto (ZZZ). Distinto sufijo de control pero idéntico cuerpo → intercambiables y repuesto común. Ambas del mismo vendedor (Daniel m., Calahorra) → cerrar en una gestión.
+> **P-ACS y P2 = mismo cuerpo** (UPM3 25-70 130): P-ACS Hybrid (ACA), P2 Auto (ZZZ). Distinto sufijo de control pero idéntico cuerpo → intercambiables y repuesto común. (Vendedores distintos: P-ACS de "Daniel", P2 de "Daniel m." de Calahorra.)
 
 Funciones, caudales y alturas: P-SOL lazo solar (1,85 m³/h, 7,5 m, PWM perfil C, glicol); P-ACS primario ACS (~1.080 L/h, ~3-4 m, PWM); P1 trasvase D2→buffer (~2.400 L/h, ~5-8 m, on/off); P2 buffer→fancoils (normal ~1,8 / pico ~3,5 m³/h, ~7 m, presión constante); P-POOL primario piscina (~900-1.075 L/h, ~3-4 m, on/off). Modulantes (P-SOL, P-ACS) por PWM desde la CPU (M12); on/off por relé de interposición.
 
@@ -63,9 +63,9 @@ Lazo solar primario (con glicol). En el retorno frío (boca inferior del serpent
 
 ### P-ACS y P2 — Grundfos UPM3 25-70 130 (mismo cuerpo, repuesto común)
 
-Mismo cuerpo UPM3 25-70 130 (DN25, 130 mm). Distinto sufijo de control según puesto. Ambas en Wallapop, vendedor **Daniel m. (Calahorra)**.
-- **P-ACS — Hybrid (ACA):** primario del HX de ACS instantánea (~1.080 L/h, ~3-4 m). Modula por **PWM desde el M241** (M04) para temperatura de ACS estable al paso — por eso Hybrid, que tiene entrada PWM. La curva de 7 m sobra; modula a la baja. 150 € nueva — confirmar que incluye los cables (alimentación + señal PWM) y hacer oferta.
-- **P2 — Auto (ZZZ):** buffer → fancoils (pico ~3,5 m³/h, ~7 m). Presión constante autónoma (arranque por Zelio, M10); no necesita PWM, por eso vale la Auto. La 25-70 encaja (holgada en normal ~1,8 m³/h, justa en el pico de 12 zonas). UPM3 Auto L 25-70 130 ZZZ, 100 € nueva.
+Mismo cuerpo UPM3 25-70 130 (DN25, 130 mm). Distinto sufijo de control según puesto. (Vendedores Wallapop distintos.)
+- **P-ACS — Hybrid (ACA):** primario del HX de ACS instantánea (~1.080 L/h, ~3-4 m). Modula por **PWM desde el M241** (M04) para temperatura de ACS estable al paso — por eso Hybrid, que tiene entrada PWM. La curva de 7 m sobra; modula a la baja. Wallapop (Daniel), 150 € nueva — confirmar que incluye los cables (alimentación + señal PWM) y hacer oferta.
+- **P2 — Auto (ZZZ):** buffer → fancoils (pico ~3,5 m³/h, ~7 m). Presión constante autónoma (arranque por Zelio, M10); no necesita PWM, por eso vale la Auto. La 25-70 encaja (holgada en normal ~1,8 m³/h, justa en el pico de 12 zonas). Wallapop (Daniel m., Calahorra), UPM3 Auto L 25-70 130 ZZZ, 100 € nueva.
 - Sufijos válidos: **ACA (Hybrid)** y **ZZZ (Auto)**; **AZA (solo-PWM) NO**. Longitud **130 mm**. Ref. Hybrid 130: 59C93102; Auto 130: 59C93602.
 
 ### P1 — Stiebel Eltron UP 25/7.5 PCV (8,4 m, 180 mm)
@@ -119,8 +119,8 @@ Los valores que dependen del componente comercial (caudal nominal de captadores,
 - Reajustar precarga del Ibaiondo 50 SMR P a ~0,5-1 bar.
 - Comprar vaso solar 25 L y vaso clima 18 L. Tándem ya resuelto; buffer viene con la BC.
 - **P-SOL: Grundfos Alpha Solar 25-75 130** — en compra (Wallapop Paco, 85 €).
-- **P-ACS: Grundfos UPM3 Hybrid 25-70 130** — localizada (Wallapop Daniel m. Calahorra, 150 € nueva); confirmar cables y hacer oferta.
-- **P2: Grundfos UPM3 Auto 25-70 130 ZZZ** — localizada (Wallapop Daniel m. Calahorra, 100 € nueva); hacer oferta. Mismo vendedor que P-ACS → cerrar juntas.
+- **P-ACS: Grundfos UPM3 Hybrid 25-70 130** — localizada (Wallapop Daniel, 150 € nueva); confirmar cables y hacer oferta.
+- **P2: Grundfos UPM3 Auto 25-70 130 ZZZ** — localizada (Wallapop Daniel m. Calahorra, 100 € nueva); hacer oferta.
 - **P1: Stiebel Eltron UP 25/7.5 PCV** (180, única de 180) — compra propuesta (eBay, oferta 135 € pendiente). Verificar modo PCV autónomo y curva a 2,4 m³/h.
 - **P-POOL: Grundfos ALPHA1 25-40 130** — comprada (59 €, Wallapop).
 - **Repuesto: Grundfos ALPHA 25-40 130** — comprado (60 €, Wallapop).
