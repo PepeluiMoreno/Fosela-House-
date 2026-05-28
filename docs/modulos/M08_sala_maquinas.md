@@ -30,22 +30,32 @@
 
 ## Selección de bombas
 
-Todas las bombas de la sala son **circuladoras domésticas DN25 (rosca exterior 1½" con tuerca loca)**, que encajan en la línea de **1" de la sala** mediante racorería estándar. Las dos modulantes (P-SOL, P-ACS) se gobiernan por **PWM** desde las salidas rápidas de la CPU (M12); las tres on/off (P1, P2, P-POOL) se arrancan/paran por **relé de interposición**. La modulación interna (ALPHA2 autoadaptativa por presión) es compatible con el on/off del PLC: el relé le da tensión y la bomba regula sola.
+Bombas DN25 (rosca 1½" tuerca loca) que encajan en la línea de 1" de la sala. Las modulantes (P-SOL, P-ACS) por **PWM** desde la CPU (M12); las on/off por **relé de interposición**.
 
-| Bomba | Función | Caudal nom. | Altura req. | Tipo control | Modelo |
+| Bomba | Función | Caudal | Altura req. | Control | Modelo |
 |---|---|---|---|---|---|
-| **P-SOL** | Lazo solar (glicol) | según captadores | ~3-4 m | PWM modulante (M02) | Wilo iPWM3 o equivalente, **apta glicol/alta temp.** |
-| **P-ACS** | Primario ACS instantáneo | ~1.080 L/h | ~3-4 m | PWM modulante (M04) | Wilo iPWM3 o equivalente |
-| **P1** | Trasvase D2 → buffer clima | ~2.400 L/h | **6-8 m** (doble serpentín en serie) | On/off velocidad fija | **Grundfos UPS 25-80** (8 m, candidata principal). Equivalentes Wilo: **Star-RS 25/8** (3 vel. fijas), **TOP-S 25/7** (industrial), **Yonos PICO 25/1-8** (electrónica modulante). Alternativa Grundfos: **ALPHA1/2 25-60** (6 m, si la curva confirma) |
-| **P2** | Buffer → fancoils | ~2.400 L/h | ~4 m (arborescencia PICV) | On/off + modulación interna por presión | **Grundfos ALPHA2 25-40 180** (autoadaptativa, ideal para demanda variable de fancoils con PICV) |
-| **P-POOL** | Primario HX piscina | ~900-1.075 L/h | ~3-4 m | On/off velocidad fija | **Grundfos ALPHA1 25-40 130** (la de Wallapop, 3 velocidades por botón) |
+| **P-SOL** | Lazo solar (glicol) | según captadores | ~3-4 m | PWM modulante (M02) | Grundfos Alpha Solar 25-75 / Wilo iPWM3, **apta glicol** |
+| **P-ACS** | Primario ACS instantáneo | ~1.080 L/h | ~3-4 m | PWM modulante (M04) | A comprar, **variante PWM** |
+| **P1** | Trasvase D2 → buffer | ~2.400 L/h | **~8 m** (doble serpentín en serie) | On/off | Grundfos UPS 25-80 / Wilo Star-RS 25/8 (verificar curva a 2.400 L/h) |
+| **P2** | Buffer → fancoils | **~4,5 m³/h** | **~8-9 m** (red completa + Δp PICV) | On/off | **A comprar — ~8 m a 4,5 m³/h** (MAGNA3/Stratos 25-80 o 32-80; DN32 si la DN25 no llega) |
+| **P-POOL** | Primario HX piscina | ~900-1.075 L/h | ~3-4 m | On/off | **Grundfos ALPHA2 25-40 180** (reubicada aquí) |
+| *spare* | repuesto | — | — | — | **Grundfos ALPHA1 25-40 130** (Wallapop, queda de repuesto) |
 
-**Notas:**
-- **P1 es la más exigente:** mueve el agua técnica en circuito cerrado a través de **dos serpentines en serie** (D2 + buffer), con pérdida de carga sumada. Por eso 6-8 m de altura; la **UPS 25-80** (Grundfos) y la **Star-RS 25/8** (Wilo) dan holgura sin electrónica que falle. Verificar curva a 2.400 L/h.
-- **P2 (ALPHA2 25-40 180):** modulante autoadaptativa por presión proporcional/constante; encaja con la demanda variable del circuito de fancoils (las PICV abren/cierran según zona, la bomba reduce velocidad sola cuando hay menos demanda). El PLC solo le da tensión por relé; la modulación es interna.
-- **P-POOL (ALPHA1 25-40 130):** caudal constante y demanda invariable, no necesita modulación. La de 3 velocidades por botón sobra y aprovecha la bomba ya adquirida.
-- **P-SOL en glicol:** elegir variante apta para glicol y temperatura de circuito solar. NO sirve la ALPHA1/2 (no aptas para glicol).
-- **P-ACS:** circulación de agua técnica (no agua sanitaria), por lo que valen circuladoras de calefacción estándar en variante PWM.
+### ⚠️ P2 recalculada — la 25-40 NO sirve
+
+Con las PICV sin actuador, **el agua circula por todos los fancoils siempre** (M05), así que P2 mueve la red casi completa: **~4.485 L/h ≈ 4,5 m³/h**. Pérdida de carga pesimista a ese caudal:
+
+| Componente | Δp pesimista |
+|---|---|
+| **Δp mínimo de trabajo de la PICV** (ineludible, su regulador lo exige) | ~2,5 m (25 kPa) |
+| Batería del fancoil + conexiones | ~2 m |
+| Tubería (tronco 32 + ramas 25 + bajadas 20, recorrido desfavorable) | ~3 m |
+| Buffer/aguja + accesorios de sala | ~1 m |
+| **TOTAL** | **~8,5 m a 4,5 m³/h** |
+
+La **ALPHA2 25-40 da solo 4 m** → **insuficiente para P2**. P2 necesita **~8-9 m a 4,5 m³/h**, que ya no es circuladora doméstica pequeña: MAGNA3/Stratos de 8 m, verificando que a 4,5 m³/h aún den ~8 m (a caudal alto la altura cae en la curva); posiblemente **cuerpo DN32** si las DN25 no llegan.
+
+**Reasignación resultante:** la ALPHA2 25-40 180 (que estaba mal puesta en P2) pasa a **P-POOL**; la ALPHA1 25-40 130 que estaba en P-POOL queda como **repuesto** (ambas equivalentes en piscina — usar cualquiera y guardar la otra). **P1 y P2 son ambas bombas de ~8 m** (no las 25-40).
 
 ## Vasos de expansión
 
@@ -91,5 +101,7 @@ Los valores que dependen del componente comercial elegido (caudal nominal de cap
 - Verificar litraje del vaso integrado de la BC (para su circuito en verano).
 - Reajustar precarga del Ibaiondo 50 SMR P (tándem) a ~0,5-1 bar antes de montar.
 - Comprar vaso solar 25 L y vaso clima 18 L (el del tándem ya resuelto con el Ibaiondo).
-- **Comprar P1**: candidatas Grundfos UPS 25-80 o Wilo Star-RS 25/8 (verificar curva a 2.400 L/h con doble serpentín).
-- Seleccionar P-SOL (PWM, apta glicol) y P-ACS (PWM).
+- **Comprar P1** (~8 m a 2.400 L/h): Grundfos UPS 25-80 / Wilo Star-RS 25/8.
+- **Comprar P2** (~8-9 m a 4,5 m³/h): MAGNA3/Stratos 25-80 o 32-80; verificar curva a 4,5 m³/h, posible DN32.
+- Comprar P-SOL (PWM, glicol) y P-ACS (PWM).
+- ALPHA2 25-40 180 → P-POOL; ALPHA1 25-40 130 → repuesto.
