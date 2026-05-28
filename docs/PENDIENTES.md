@@ -17,13 +17,13 @@ Lista viva. Actualizar al cierre de cada sesión.
 
 **Orden propuesto (de menos a más dependencias):**
 
-1. **`FB_Pump` refactorizado con `PumpProfile`** (M09 §FB_Pump parametrizado). Trabaja con velocidad lógica 0-100% y traduce a duty cycle físico aplicando el perfil. Dos perfiles iniciales: `PROFILE_GRUNDFOS_ALPHA_SOLAR` y `PROFILE_WILO_IPWM3_SOLAR`. Base de las dos bombas modulantes (P-SOL, P-ACS).
+1. **`FB_Pump` refactorizado con `PumpProfile`** (M09 §FB_Pump parametrizado). Trabaja con velocidad lógica 0-100% y traduce a duty cycle físico aplicando el perfil. Dos perfiles iniciales: `PROFILE_GRUNDFOS_ALPHA_SOLAR` (P-SOL) y `PROFILE_GRUNDFOS_UPM3_HYBRID` (P-ACS). Base de las dos bombas modulantes (P-SOL, P-ACS).
 
 2. **`FB_Solar`** (M02). Ya escrito en versión antigua — revisar y adaptar al nuevo `FB_Pump`. Estados SLEEP/SAMPLING/RUNNING/DISSIPATING/OVERHEAT. Cuidado con la **lógica invertida PWM** (encapsular en `PWMSolarInvert()`).
 
-3. **`FB_DHW_Station`** (M04). Ya escrito — revisar y adaptar al nuevo `FB_Pump`.
+3. **`FB_DHW_Station`** (M04). Ya escrito — revisar y adaptar al nuevo `FB_Pump`. P-ACS modulada por PWM (UPM3 Hybrid) para temperatura de ACS estable al paso.
 
-4. **`FB_ClimateReversible`** (M05). **Reescribir** a la topología actual: 2 V3V (V3V1 impulsión, V3V2 retorno) + P1 trasvase + buffer 150 L. Modo invierno/verano por V3V estacional.
+4. **`FB_ClimateReversible`** (M05). **Reescribir** a la topología actual: 2 V3V (V3V1 impulsión, V3V2 retorno) + P1 trasvase + buffer ~50 L (incluido con la BC). Modo invierno/verano por V3V estacional. P2 (UPM3 Auto, sin PWM) gobernada por presión constante + arranque por Zelio (M10).
 
 5. **`FB_PoolReversible`** (M06). Selección de fuente (SOL/BC), P-POOL, límite `P62_PoolMaxTemp`, integración con la disipación solar.
 
@@ -31,7 +31,7 @@ Lista viva. Actualizar al cierre de cada sesión.
 
 7. **`FB_BDC_Arbiter`** (M09). **Reescribir**: simultaneidad ACS+clima condicionada por T del tándem (HY intrínseca, no margen artificial). Clima nunca sacrificado por ACS; único sacrificable: piscina.
 
-8. **Integración** de todos los FBs en `PLC_PRG_Evolution` con wiring de I/O reales (mapeo señal↔borne, ver M12).
+8. **Integración** de todos los FBs en `PLC_PRG` con wiring de I/O reales (mapeo señal↔borne, ver M12).
 
 ---
 
@@ -48,6 +48,7 @@ Funciones a cubrir (cada una con esquema cableado pendiente):
 - [ ] **Disipación solar sin PLC:** Z1/Z2/TK1 cortan P-SOL y cierran persianas por hardware.
 - [ ] **Persianas:** klixon NC rearme manual en serie con la alimentación (Opción A, M10). Pendiente elegir actuador fail-safe muelle vs motor reversible.
 - [ ] **Corte térmico ACS:** klixon NC en serie con P-ACS.
+- [ ] **Climatización (P2):** demanda agregada del Zelio arranca P2 por hardware aunque el M241 esté caído (M10). P2 sin PWM (presión constante autónoma) precisamente para esto.
 - [ ] **Conmutadores manual/0/auto por actuador.**
 - [ ] **Tabla de posiciones de fallo** por actuador (V3V apartamentos → red; cortes D2 → cerrados; persianas → cerradas; etc.).
 
@@ -59,37 +60,47 @@ Funciones a cubrir (cada una con esquema cableado pendiente):
 
 **Hardware Schneider:** TM241CE24T + 2× TM3TI8T (PT1000) + TM3DQ16T (~440 €).
 
-**Bombas asignadas:**
-- **P2** (fancoils): Grundfos ALPHA2 25-40 180 (modulante autoadaptativa por presión).
-- **P-POOL** (primario HX piscina): Grundfos ALPHA1 25-40 130 (la de Wallapop, 3 velocidades fijas).
-- **P1** (trasvase D2→buffer): **pendiente** — Grundfos UPS 25-80 / Wilo Star-RS 25/8 (6-8 m por doble serpentín en serie, ~2.400 L/h).
-- **P-SOL** (lazo solar): **pendiente** — Grundfos Alpha Solar 25-75 130 (95 € Wallapop) o Wilo iPWM3. Ambas PWM perfil solar invertido (failsafe).
-- **P-ACS** (primario ACS): **pendiente** — variante PWM, agua técnica.
+**Bombas asignadas (cuadro cerrado, ver M08):** todas DN25 (G1½", racor Rp1"), longitud 130 mm salvo P1 (180).
+
+| ID | Modelo | Control | Long. | Estado |
+|---|---|---|---|---|
+| **P-SOL** | Grundfos Alpha Solar 25-75 130 | PWM (perfil solar, M02) | 130 | en compra (Wallapop Paco, 85 €) |
+| **P-ACS** | Grundfos UPM3 Hybrid 25-70 130 (ACA) | PWM (M04) | 130 | compra propuesta (Wallapop Daniel, 150 €; confirmar cables) |
+| **P1** | Stiebel Eltron UP 25/7.5 PCV (8,4 m) | on/off | 180 | compra propuesta (eBay, oferta 135 €) |
+| **P2** | Grundfos UPM3 Auto 25-70 130 (ZZZ) | presión constante, sin PWM (arranque Zelio) | 130 | compra propuesta (Wallapop Daniel m. Calahorra, 100 €) |
+| **P-POOL** | Grundfos ALPHA1 25-40 130 | on/off | 130 | ✅ comprada (59 €) |
+| **Repuesto** | Grundfos ALPHA 25-40 130 | on/off | 130 | ✅ comprada (60 €) |
+
+- **P-ACS y P2** comparten cuerpo (UPM3 25-70 130) → repuesto común; distinto sufijo (ACA Hybrid con PWM para ACS / ZZZ Auto sin PWM para que el Zelio arranque P2).
+- **Gasto total bombas:** ~589 € sin portes (119 € ya comprado + 470 € por comprar).
+
+**Buffer de inercia clima:** **~50 L, incluido con la BC** (no se aprovisiona aparte).
 
 **Depuradora piscina:** DepuraPool Indoor, filtro 600 + selectora Star manual + bomba 0,75 kW + bypass, **sin cuadro** (~1.180 €). Gobernada por PLC vía contactor + DI confirmación de marcha.
 
 **Colector PVC HX piscina:** dos HX de titanio en paralelo entre sí (cada rama con llave + tuercas de enlace), el conjunto en serie con la filtración vía bypass.
 
-**Vasos de expansión:** tres a montar — solar 25 L (específico HNBR para glicol), clima 18 L (calefacción EPDM), tándem 50 L (calefacción). + integrado BC para su propio circuito en verano.
+**Vasos de expansión:** tres a montar — solar 25 L (específico HNBR para glicol), clima 18 L (calefacción EPDM), tándem 50 L (Ibaiondo 50 SMR P, reajustar precarga). + integrado BC para su propio circuito en verano. Buffer clima ~50 L viene con la BC.
 
 **Instrumentación local (M14):** manómetros y termómetros en puntos clave + protocolo de chequeo periódico. Frontera clara con el PLC (al PLC solo lo imprescindible para el control).
 
-**Cadenas de seguridad (M10):** principio rector "nada de electrónica" fijado. Dispositivo autónomo de persianas por klixon bimetálico mecánico diseñado (Opción A muelle / Opción B motor reversible con klixon SPDT). Pendiente bajar a esquema el resto.
+**Cadenas de seguridad (M10):** principio rector "nada de electrónica" fijado. Dispositivo autónomo de persianas por klixon bimetálico mecánico diseñado (Opción A muelle / Opción B motor reversible con klixon SPDT). Resiliencia clima→P2 vía Zelio cerrada. Pendiente bajar a esquema el resto.
 
 ---
 
 ## 🛒 Pendientes de compra
 
-- [ ] **Bomba P1** (Grundfos UPS 25-80 o Wilo Star-RS 25/8).
-- [ ] **Bomba P-SOL** (decidir Grundfos Alpha Solar 25-75 130 a 95 € o Wilo iPWM3).
-- [ ] **Bomba P-ACS** (variante PWM).
-- [ ] **Cables Grundfos** (si Alpha Solar): Superseal (potencia) + Mini Superseal 3 vías (señal PWM).
+- [ ] **P-SOL** (Grundfos Alpha Solar 25-75 130) — en compra, Wallapop Paco 85 €.
+- [ ] **P-ACS** (Grundfos UPM3 Hybrid 25-70 130 ACA) — Wallapop Daniel 150 €; **confirmar que incluye cables** (alimentación + señal PWM) y hacer oferta.
+- [ ] **P1** (Stiebel Eltron UP 25/7.5 PCV 180) — eBay, oferta 135 € pendiente de aceptar.
+- [ ] **P2** (Grundfos UPM3 Auto 25-70 130 ZZZ) — Wallapop Daniel m. Calahorra 100 €; hacer oferta.
+- [ ] **Cables Grundfos PWM** (si no vienen con P-ACS): Superseal (potencia) + Mini Superseal 3 vías (señal PWM).
 - [ ] **CPU TM241CE24T** + **TM3DQ16T** (nuevos).
 - [ ] **Confirmar 2ª TM3TI8T usada** (oferta eBay alemán enviada).
 - [ ] **DepuraPool Indoor sin cuadro:** confirmar a fabricante el bypass para DOS HX.
 - [ ] **Sondas PT1000** (~9 imprescindibles + spare) con vainas inox: cortas ~50 mm tubería / largas ~200 mm depósito (M14).
 - [ ] **Klixon bimetálico** rearme manual para persianas y corte térmico ACS.
-- [ ] **Tres vasos de expansión** (litrajes en M08).
+- [ ] **Vasos de expansión:** solar 25 L + clima 18 L (nuevos). Tándem ya resuelto (Ibaiondo 50 SMR P); buffer viene con la BC.
 - [ ] **Colector latón** Wallapop (cuerpo 1" / salidas 3/4") — confirmar y comprar.
 - [ ] **Caudalímetro YF-B6** (factor K en pendiente).
 
@@ -103,12 +114,13 @@ Funciones a cubrir (cada una con esquema cableado pendiente):
 - [ ] **Diámetros y roscas concretos** por tramo en cada módulo.
 - [ ] **Antirretornos** por rama (criterio documentado, ubicación exacta pendiente).
 - [ ] **Plano dimensional del DB2 450**: confirmar bocas reales para asignar a cada función.
+- [ ] **Longitud de bombas en el montaje:** todas a 130 salvo P1 (180). No intercambiar a ciegas P1 con las demás sin adaptador.
 
 ---
 
 ## 🧠 Decisiones de software pendientes
 
-- [ ] **Verificar nivel de tensión PWM Grundfos** (probablemente 5V) con multímetro al recibir la bomba, para ajustar el divisor (vs 9,6V Wilo).
+- [ ] **Verificar nivel de tensión PWM Grundfos** (probablemente 5V) con multímetro al recibir la bomba, para ajustar el divisor. Ambas modulantes son Grundfos (Alpha Solar y UPM3 Hybrid) → mismo orden de tensión PWM, un solo divisor de referencia.
 - [ ] **Migración de nomenclatura** a SP/P/HY/OF/ST: ¿completa o incremental?
 - [ ] Crear tabla **HYxx** (histéresis por transición del tándem).
 - [ ] Crear tabla **OFxx** (offsets de calibración por sonda).
@@ -126,6 +138,7 @@ Funciones a cubrir (cada una con esquema cableado pendiente):
 - [ ] **Modbus RTU** con la BC desde el PLC (estado, consignas) — DI10 alarma BC se libera si va por bus.
 - [ ] Verificar **potencia BC** para ACS medio + clima sostenidos en hora punta.
 - [ ] **Vaso integrado BC**: verificar litraje para su circuito en verano.
+- [ ] **Buffer ~50 L incluido con la BC:** confirmar volumen real al elegir modelo (valida el dimensionado del circuito de clima).
 
 ---
 
@@ -133,6 +146,7 @@ Funciones a cubrir (cada una con esquema cableado pendiente):
 
 - [ ] Arquitectura: M241 cliente MQTT/HTTP → servidor externo. Solo conexiones salientes.
 - [ ] Plataforma: IoT gestionada vs VPS + broker MQTT propio.
+- [ ] HMI gráfico = web server del M241 (M09/M11), sin pantallas físicas; en el cuadro solo panel de mando manual (M13).
 
 ---
 
@@ -143,3 +157,9 @@ Funciones a cubrir (cada una con esquema cableado pendiente):
 - [ ] **Cuadro eléctrico M13:** esquema y calibres — **al final**, cuando todos los elementos estén definidos.
 - [ ] **Hoja de ronda M14:** rangos esperados (a rellenar tras puesta en marcha).
 - [ ] **Esquema eléctrico de las cadenas de seguridad** (M10) con klixones, conmutadores y posiciones de fallo.
+
+---
+
+## 📜 Código legacy
+
+- El código ST de la arquitectura antigua (dos controladores Eliwell, FREE Studio: maestro `Evolution` + esclavo solar `Smart`, Modbus) queda archivado en la rama **`legacy-eliwell`** (carpetas `control/free_evolution` y `control/free_smart`). **No es el objetivo**; sirve como referencia de lógica (estados solar, disipación, arbitraje). El desarrollo actual es para **un único M241** en `control/{types,globals,lib,fb,pou}`.
