@@ -51,15 +51,15 @@ Todas las bombas de la sala son **circuladoras domésticas DN25 (rosca exterior 
 
 Regla: cada **masa de agua cerrada e independiente**, su vaso, en el lado frío/aspiración. **Tres vasos a montar** + el integrado de la BC. Litrajes con asunciones de volumen conservadoras (a afinar con volúmenes reales).
 
-| Vaso | Circuito (volumen est.) | Tipo | Litraje | Precarga | Ubicación |
-|---|---|---|---|---|---|
-| **Solar** | Glicol (~25 L) | **Solar específico** (membrana alta temp. HNBR, apto glicol, 10 bar) | **25 L** | ~1,2 bar | Retorno frío, junto a P-SOL (boca inferior serpentín D1) |
-| **Clima** | Fancoils + buffer 150 L (~230 L) | Calefacción (membrana EPDM) | **18 L** (24 si se quiere holgura) | ~1,0 bar | Aspiración de P2 |
-| **Agua técnica tándem** | Tándem (812 L) | Calefacción | **50 L** | ~0,5-1 bar | Lado frío del agua técnica (fondo D1) |
-| BC (integrado) | Circuito BC | — | no se compra | — | Verificar que cubre su propio circuito en verano |
+| Vaso | Circuito (volumen est.) | Tipo | Litraje | Precarga | Ubicación | Producto |
+|---|---|---|---|---|---|---|
+| **Solar** | Glicol (~25 L) | **Solar específico** (membrana alta temp. HNBR, apto glicol, 10 bar) | **25 L** | ~1,2 bar | Retorno frío, junto a P-SOL (boca inferior serpentín D1) | pendiente |
+| **Clima** | Fancoils + buffer 150 L (~230 L) | Calefacción (membrana EPDM) | **18 L** (24 si se quiere holgura) | ~1,0 bar | Aspiración de P2 | pendiente |
+| **Agua técnica tándem** | Tándem (812 L) | Calefacción (vale uno solar reaprovechado) | **50 L** | ~0,5-1 bar | Lado frío del agua técnica (fondo D1) | **Ibaiondo 50 SMR P** (50 L, solar, -10/+130 °C; 70 € Wallapop). Reajustar precarga de fábrica (~2,5 bar) a ~0,5-1 bar |
+| BC (integrado) | Circuito BC | — | no se compra | — | Verificar que cubre su propio circuito en verano | — |
 
 **Notas de dimensionado:**
-- **Tándem 50 L:** el integrado de la BC (~8-10 L) **NO cubre** los 812 L del tándem. El tándem necesita vaso propio: 812 L que se calientan a 60 °C (y hasta ~90 °C antes de Z1/Z2) dilatan ~14-28 L → con factor de presión, ~35 L a temperatura de servicio, **50 L con margen** por el escenario de 90 °C. Este vaso cubre el tándem en invierno y en verano; el integrado de la BC queda solo para el circuito de la BC cuando va independiente (verano).
+- **Tándem 50 L (Ibaiondo 50 SMR P):** el integrado de la BC (~8-10 L) **NO cubre** los 812 L del tándem. El tándem necesita vaso propio: 812 L que se calientan a 60 °C (y hasta ~90 °C antes de Z1/Z2) dilatan ~14-28 L → con factor de presión, ~35 L a temperatura de servicio, **50 L con margen** por el escenario de 90 °C. Este vaso cubre el tándem en invierno y en verano; el integrado de la BC queda solo para el circuito de la BC cuando va independiente (verano). El **Ibaiondo 50 SMR P** es vaso solar (membrana 130 °C / glicol), pero un vaso solar sirve de sobra para agua técnica de calefacción (al revés no). Capacidad clavada en 50 L. **Reajustar la precarga** de fábrica (~2,5 bar, alta porque los solares asumen desnivel) a la del tándem (~0,5-1 bar) antes de montar.
 - **Solar 25 L:** lo dominante es el vapor de estancamiento, no la dilatación. Al ir en el retorno frío, la membrana no recibe el fluido a máxima temperatura. Si el punto del vaso superara ~70 °C en estancamiento, añadir **vaso intermedio (pre-vaso)** — a verificar; al estar en retorno frío, probablemente innecesario.
 - **Clima 18 L:** circuito dominado por el buffer de 150 L; válvula de seguridad 3 bar.
 
@@ -89,5 +89,7 @@ Los valores que dependen del componente comercial elegido (caudal nominal de cap
 - Confirmar medidas del colector candidato (1" cuerpo / 3/4" salidas) y aptitud para agua caliente de sus llaves.
 - Afinar litraje de vasos con volúmenes reales (tubería de clima ~60 L y circuito solar ~25 L son los más estimados).
 - Verificar litraje del vaso integrado de la BC (para su circuito en verano).
+- Reajustar precarga del Ibaiondo 50 SMR P (tándem) a ~0,5-1 bar antes de montar.
+- Comprar vaso solar 25 L y vaso clima 18 L (el del tándem ya resuelto con el Ibaiondo).
 - **Comprar P1**: candidatas Grundfos UPS 25-80 o Wilo Star-RS 25/8 (verificar curva a 2.400 L/h con doble serpentín).
 - Seleccionar P-SOL (PWM, apta glicol) y P-ACS (PWM).
