@@ -57,9 +57,9 @@ Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desd
 - **Simultaneidad estimada: al menos 8 zonas a la vez** en uso normal; el **pico** puede ser las 12 (vivienda entera pidiendo en día extremo). P2 se dimensiona **holgada** para cubrir el pico y trabajar cómoda en el caso normal.
 - **Escenario normal (8 zonas):** 8 × 345 ≈ **2,76 m³/h**. Con corte por zona, las 4 zonas satisfechas tienen su PICV cerrada → P2 mueve menos caudal pero contra red más cerrada. Pérdida pesimista ≈ Δp PICV ~2,5 m + fancoil ~2 m + tubería ~2 m + sala ~1 m = **~7,5 m a 2,76 m³/h**.
 - **Pico (12 zonas):** 12 × 345 ≈ **4,5 m³/h**, pérdida pesimista **~8,5 m** (ver M08).
-- → **P2 holgada de ~8 m cubre ambos** (normal 2,76 m³/h@7,5 m, pico 4,5 m³/h@8,5 m). NO es circuladora doméstica pequeña: MAGNA3/Stratos 25-80 o 32-80, posible DN32 (ver M08). **A comprar.**
+- → **P2 = Wilo Yonos MAXO 25/0,5-12** (gama de distribución, caudal máx ~10 m³/h, DN25, altura 0,5-12 m holgada, presión constante). Cubre normal (2,76 m³/h@~9-10 m disponibles) y pico (4,5 m³/h@~7-8 m disponibles). **Ajustar a presión constante ~8 m al montar.** Ver M08 para el historial de descartes y alternativas (Stratos 25/1-8, MAGNA3 25-80/32-80).
 - El corte por zona aporta **ahorro energético** (no bombea por fancoils satisfechos). Con P2 de **presión constante** (electrónica), al cerrarse zonas la bomba reduce velocidad y evita sobrepresión; encaja con que arranque por el Zelio aun con el circuito no del todo dispuesto (M10).
-- **Vaso de expansión** del conjunto buffer+fancoils: en la aspiración de P2 (ver M08).
+- **Vaso de expansión** del conjunto buffer+fancoils (18 L): en la aspiración de P2 (ver M08).
 
 ## Control (FB)
 
@@ -68,11 +68,33 @@ Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desd
 - Enclavamiento: válvulas en posición antes de arrancar P1 / cambiar modo BC.
 - Posición de fallo: cortes cierran la vía al tándem por muelle (ver M10). Los actuadores de PICV son **NC** → sin tensión cierran (fancoil aislado).
 
+## BOM — Distribución de fancoils
+
+> Lista de materiales de la red de fancoils (no incluye la BC, el buffer ni los depósitos, que van en sus módulos). Precios orientativos may-2026 a contrastar.
+
+| # | Componente | Especificación | Cant. | Estado | Precio ud. | Notas |
+|---|---|---|---|---|---|---|
+| 1 | Fancoil 2 kW | ventilador 0-10V, termostato de estancia | 13 | — | — | 345 L/h c/u a ΔT 5 °C |
+| 2 | PICV cuerpo | **Frese 53-1615** OPTIMA Compact DN15 ½" F/F, rango alto 100-575 L/h | 13 | ✅ comprada | ~24 € | preajuste ~3,0-3,2 → 345 L/h |
+| 3 | Actuador PICV | **Frese 48-5528** electrotérmico todo/nada NC 230V (≡ Watts 22CX 230V NC) | 13 | a comprar | ~25-30 € | M30×1,5, ≥100N; montar tras preseleccionar |
+| 4 | Accesorio conexión PICV | Frese **43-2330** (racores+acoplamientos DN15 G¾"-R½") | 13 | opcional | ~6 € | si no se usa racor multicapa estándar |
+| 5 | **P2** bomba fancoils | **Wilo Yonos MAXO 25/0,5-12** DN25, presión constante | 1 | a comprar | ~250-350 € | ajustar a ~8 m al montar |
+| 6 | Vaso expansión clima | 18 L, calefacción (EPDM), precarga ~1,0 bar | 1 | a comprar | ~30 € (nuevo) | en aspiración de P2; no compensa usado |
+| 7 | Termostato de estancia | con **contacto de demanda** (relé libre) + entrada **change-over**, salida 0-10V al ventilador | 12 | a comprar | — | 12 zonas (salón comparte); confirmar que existe contacto + change-over |
+| 8 | **Zelio Logic** 12 entradas | OR de las 12 demandas → 1 señal a P2/PLC | 1 | ✅ disponible | — | ya en posesión (M12) |
+| 9 | Manguera 4 hilos | termostato↔sala: 2 demanda + 2 change-over | 12 tiradas | a comprar | — | sección según distancia |
+| 10 | Tubería multicapa | tronco 32 → ramas 25 → bajadas 20 (tronco 40 opcional por ruido) | s/medición | a medir | — | + racores, codos, tes |
+| 11 | Buffer inercia | 150 L, aguja 4 bocas | 1 | — | — | ver topología buffer |
+
+> Pendiente de cuantificar metros de multicapa y accesorios (#10) tras el trazado en plano; #4 solo si no se resuelve con racor multicapa estándar.
+
 ## Pendientes
 
 - **Comprar actuadores electrotérmicos** Frese 48-5528 (230V) — equivalente Watts 22CX 230V NC —, uno por fancoil (13). Verificar fuerza ≥100N si se opta por el equivalente.
 - Reescribir `FB_ClimateReversible.st` (topología 2 V3V + P1 + OR de demandas + change-over).
 - Confirmar que los termostatos de estancia tienen **contacto de demanda** (relé libre) **y** entrada de **change-over**.
-- **Comprar P2** (~8 m; normal 2,76 m³/h, pico 4,5 m³/h; ver M08).
+- **Comprar P2: Wilo Yonos MAXO 25/0,5-12** (ver M08); ajustar presión constante ~8 m al montar.
+- Comprar vaso de clima 18 L **nuevo** (~30 €, no compensa usado) + actuadores + termostatos + manguera.
 - Valorar tronco inicial de 40 mm si la velocidad genera ruido.
+- Cuantificar metros de multicapa y accesorios tras el trazado en plano.
 - Dimensionar la BdC por **demanda térmica de la vivienda** (~12 kW, ver M03), no por suma de fancoils.
