@@ -30,11 +30,12 @@ Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desd
 
 - **13 fancoils de 2 kW (solo vivienda).** Caudal por fancoil a ΔT 5 °C: 2000 / (1,16 × 5) ≈ **345 L/h** (~5,75 L/min).
 - **Distribución arborescente:** tronco **32 mm** → ramas **25 mm** → bajadas a cada FCU **20 mm** (multicapa). Primario del buffer (P1) también 32. **Sin colector de fancoils** (la independencia de presión de las PICV lo hace innecesario).
-- **PICV Frese 53-1615 + actuador on/off** (una por fancoil):
+- **PICV Frese 53-1615 (OPTIMA Compact) + actuador on/off** (una por fancoil):
   - **Cuerpo: Frese 53-1615 compacta, DN15 ½" F/F, PN25, rango 0,44-2,53 GPM (≈100-575 L/h).** El caudal de fancoil (345 L/h) cae **cómodo en el rango**. ~24 €/ud. **Comprada.** DN15 correcta (no necesita DN20).
   - **DN15 + multicapa 20 al fancoil:** mismo calibre (Ø interior multicapa 20 ≈ 15-16 mm = paso DN15), sin estrangulamiento. A 345 L/h, velocidad ~0,48 m/s (holgada). Conexión: multicapa 20 → racor ½" → PICV ½".
   - **Actuador on/off** sobre cada PICV (a comprar), **siempre que no afecte al cuerpo de la PICV ya adquirido** (verificar compatibilidad del actuador con el modelo 53-1615). Da el **corte por zona**: cierra el agua del fancoil cuya estancia está satisfecha.
   - **Funciones que cubre la PICV:** equilibrado (limitación de caudal preajustado + independencia de presión, mecánicas) **y** corte por zona (vía actuador on/off). Una sola pieza por fancoil hace ambas; no hacen falta válvulas de zona aparte ni colector de equilibrado.
+  - **Corte manual de servicio (gratis):** la Frese OPTIMA Compact (DN10-DN32) admite **tapón roscado** que la convierte en **válvula de corte total hasta 10 bar**. Permite **aislar/anular un fancoil** para mantenimiento o sustitución sin vaciar el circuito, sin necesidad de llaves de corte adicionales. Es un cierre **manual de servicio**, distinto e independiente del corte por zona automático (que lo hace el actuador on/off según el termostato).
 - **Preselección de caudal:** girar el anillo de preajuste de cada PICV a la posición que da **345 L/h**. Igual en las 13 (fancoils idénticos). Respetar la flecha de sentido de flujo al montar. No hay equilibrado de red ni medición.
 
 ## Control de los fancoils y gobierno del actuador
