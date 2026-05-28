@@ -5,7 +5,7 @@
 
 ## Propósito
 
-Climatizar la vivienda (13 fancoils) en calor y frío, desde un **buffer de inercia de 150 L** (aguja hidráulica de 4 bocas), aprovechando en invierno el calor híbrido solar+aerotérmico acumulado en el tándem.
+Climatizar la vivienda (13 fancoils de 2 kW) en calor y frío, desde un **buffer de inercia de 150 L** (aguja hidráulica de 4 bocas), aprovechando en invierno el calor híbrido solar+aerotérmico acumulado en el tándem.
 
 ## Decisiones clave
 
@@ -26,10 +26,13 @@ Climatizar la vivienda (13 fancoils) en calor y frío, desde un **buffer de iner
 
 ## Distribución a fancoils — arborescente con PICV
 
+- **13 fancoils de 2 kW.** Caudal por fancoil a ΔT 5 °C: 2000 / (1,16 × 5) ≈ **345 L/h** (~5,75 L/min).
 - **Distribución arborescente:** tronco **32 mm** → ramas **25 mm** → bajadas a cada FCU **20 mm** (multicapa). Primario del buffer (P1) también 32.
-- **Una PICV por fancoil** (válvula de control independiente de la presión): regula + mantiene caudal constante ante variaciones de presión + controla. 
+- **Una PICV por fancoil** (válvula de control independiente de la presión): regula + mantiene caudal constante ante variaciones de presión + controla.
+  - **Candidata: Frese 53-1615 compacta, DN15 ½" F/F, PN25, rango 0,44-2,53 GPM (≈100-575 L/h).** El caudal de fancoil (345 L/h) cae **cómodo en el rango**, con margen a ambos lados. DN15 es la talla correcta (no necesita DN20). ~24 €/ud (verificar si incluye actuador o es solo cuerpo). Frese es fabricante de referencia en PICV.
+  - **Actuador:** cada PICV necesita su actuador (térmico on/off o motorizado) gobernado por la demanda de zona. Probablemente va aparte del cuerpo a ese precio — sumar al presupuesto.
 - **Sin colector de fancoils:** la independencia de presión de las PICV anula la desventaja de la arborescente (los fancoils del final del ramal reciben menos presión, pero su PICV lo compensa). PICV y colector resuelven el mismo problema → poner ambos es redundante. Se elige arborescente + PICV (menos tubería, control superior).
-- Caudal clima ~2.400 L/h (14 kW, ΔT 5).
+- **Caudal de clima (diseño):** ~2.400 L/h asume **factor de simultaneidad** (no todos los fancoils a tope a la vez). Suma de los 13 a pleno caudal = ~4.485 L/h; el caudal de diseño es menor por simultaneidad. **Verificar la simultaneidad real esperada** al dimensionar P2 y el tronco de 32 (si fuera alta, P2 podría quedarse corta).
 - **Vaso de expansión** del conjunto buffer+fancoils (misma masa de agua, una aguja): en la aspiración de P2 (ver M08).
 
 ## Control
@@ -42,4 +45,5 @@ Climatizar la vivienda (13 fancoils) en calor y frío, desde un **buffer de iner
 
 - Reescribir `FB_ClimateReversible.st` (topología 2 V3V + P1 trasvase).
 - Verificar potencia BC para ACS + clima simultáneos sostenidos.
-- Selección de PICV (rango de caudal por fancoil).
+- Confirmar PICV Frese 53-1615 (rango OK para 345 L/h) y si el precio incluye actuador.
+- Verificar factor de simultaneidad real de fancoils → dimensionado de P2 y tronco.
