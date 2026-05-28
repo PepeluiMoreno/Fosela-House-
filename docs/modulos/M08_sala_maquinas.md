@@ -37,13 +37,13 @@ Bombas DN25 (rosca 1½" tuerca loca) que encajan en la línea de 1" de la sala. 
 | **P-SOL** | Lazo solar (glicol) | según captadores | ~3-4 m | PWM modulante (M02) | Grundfos Alpha Solar 25-75 / Wilo iPWM3, **apta glicol** |
 | **P-ACS** | Primario ACS instantáneo | ~1.080 L/h | ~3-4 m | PWM modulante (M04) | A comprar, **variante PWM** |
 | **P1** | Trasvase D2 → buffer | ~2.400 L/h | **~8 m** (doble serpentín en serie) | On/off | Grundfos UPS 25-80 / Wilo Star-RS 25/8 (verificar curva a 2.400 L/h) |
-| **P2** | Buffer → fancoils | **~4,5 m³/h** | **~8-9 m** (red completa + Δp PICV) | On/off | **A comprar — ~8 m a 4,5 m³/h** (MAGNA3/Stratos 25-80 o 32-80; DN32 si la DN25 no llega) |
+| **P2** | Buffer → fancoils | **normal 2,76 m³/h · pico 4,5 m³/h** | **~8-8,5 m** (red + Δp PICV) | Presión constante | **Grundfos UPMGEO 25-85** (candidata principal, ver abajo). Alt.: MAGNA3 25-80 / Wilo Stratos 25/1-8 |
 | **P-POOL** | Primario HX piscina | ~900-1.075 L/h | ~3-4 m | On/off | **Grundfos ALPHA2 25-40 180** (reubicada aquí) |
 | *spare* | repuesto | — | — | — | **Grundfos ALPHA1 25-40 130** (Wallapop, queda de repuesto) |
 
-### ⚠️ P2 recalculada — la 25-40 NO sirve
+### ⚠️ P2 — dimensionado y candidata
 
-Con las PICV sin actuador, **el agua circula por todos los fancoils siempre** (M05), así que P2 mueve la red casi completa: **~4.485 L/h ≈ 4,5 m³/h**. Pérdida de carga pesimista a ese caudal:
+Con corte por zona (actuador en cada PICV, M05), P2 mueve el caudal de las zonas que pidan: **normal ≥8 zonas ≈ 2,76 m³/h** (pérdida ~7,5 m), **pico 12 zonas ≈ 4,5 m³/h** (pérdida ~8,5 m). Pérdida pesimista a 4,5 m³/h:
 
 | Componente | Δp pesimista |
 |---|---|
@@ -53,9 +53,19 @@ Con las PICV sin actuador, **el agua circula por todos los fancoils siempre** (M
 | Buffer/aguja + accesorios de sala | ~1 m |
 | **TOTAL** | **~8,5 m a 4,5 m³/h** |
 
-La **ALPHA2 25-40 da solo 4 m** → **insuficiente para P2**. P2 necesita **~8-9 m a 4,5 m³/h**, que ya no es circuladora doméstica pequeña: MAGNA3/Stratos de 8 m, verificando que a 4,5 m³/h aún den ~8 m (a caudal alto la altura cae en la curva); posiblemente **cuerpo DN32** si las DN25 no llegan.
+P2 debe ser **bomba grande de ~8-8,5 m, DN25, electrónica de presión constante** (que reduzca velocidad al cerrarse zonas — encaja con el arranque por Zelio contra red parcialmente cerrada, M10). NO es circuladora doméstica pequeña; las 25-40 (4 m) NO sirven.
 
-**Reasignación resultante:** la ALPHA2 25-40 180 (que estaba mal puesta en P2) pasa a **P-POOL**; la ALPHA1 25-40 130 que estaba en P-POOL queda como **repuesto** (ambas equivalentes en piscina — usar cualquiera y guardar la otra). **P1 y P2 son ambas bombas de ~8 m** (no las 25-40).
+**Candidata principal: Grundfos UPMGEO 25-85.**
+- **DN25** (calibre correcto de la sala) · **8,5 m** de altura máxima (½ m más que una 25-80 → mejor margen en el pico).
+- Familia UPM **diseñada para bombas de calor geo/aerotérmicas** → optimizada para caudal alto con buena altura, perfil exacto de P2.
+- Electrónica, PWM-controlable / modos de presión.
+- ⚠️ **Verificar en su curva el punto 4,5 m³/h:** que ahí dé ≥7,5-8 m. Partiendo de 8,5 m máx., probable que llegue; si no, ir a 25-100 (10 m) o cuerpo DN32.
+- ⚠️ **Verificar modo de control:** ideal **presión constante** seleccionable (modula sola al cerrarse zonas). Si es solo PWM, la gobierna el M241 (en modo degradado por Zelio iría a velocidad fija, aceptable).
+- ⚠️ **Verificar conexión/longitud de cuerpo:** DN25 rosca G1½"; confirmar longitud (130/180 mm) para que encaje en el hueco de sala.
+
+**Alternativas equivalentes** (gama alta, presión constante): Grundfos **MAGNA3 25-80** ↔ Wilo **Stratos 25/1-8**. Económicas: Grundfos **UPM3 25-80** ↔ Wilo **Yonos PICO 25/1-8**.
+
+**Reasignación de las ALPHA 25-40:** la ALPHA2 25-40 180 → **P-POOL**; la ALPHA1 25-40 130 → **repuesto** (ambas equivalentes en piscina).
 
 ## Vasos de expansión
 
@@ -102,6 +112,6 @@ Los valores que dependen del componente comercial elegido (caudal nominal de cap
 - Reajustar precarga del Ibaiondo 50 SMR P (tándem) a ~0,5-1 bar antes de montar.
 - Comprar vaso solar 25 L y vaso clima 18 L (el del tándem ya resuelto con el Ibaiondo).
 - **Comprar P1** (~8 m a 2.400 L/h): Grundfos UPS 25-80 / Wilo Star-RS 25/8.
-- **Comprar P2** (~8-9 m a 4,5 m³/h): MAGNA3/Stratos 25-80 o 32-80; verificar curva a 4,5 m³/h, posible DN32.
+- **Comprar P2: Grundfos UPMGEO 25-85** (candidata principal). Verificar curva a 4,5 m³/h (≥7,5-8 m), modo de control (presión constante ideal) y longitud de cuerpo. Alt.: MAGNA3 25-80 / Stratos 25/1-8.
 - Comprar P-SOL (PWM, glicol) y P-ACS (PWM).
 - ALPHA2 25-40 180 → P-POOL; ALPHA1 25-40 130 → repuesto.
