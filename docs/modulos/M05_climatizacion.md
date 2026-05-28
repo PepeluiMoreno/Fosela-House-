@@ -5,15 +5,16 @@
 
 ## Propósito
 
-Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desde un **buffer de inercia de 50 L** (aguja hidráulica), aprovechando en invierno el calor híbrido solar+aerotérmico acumulado en el tándem.
+Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desde un **buffer de inercia de ~50 L** (aguja hidráulica), aprovechando en invierno el calor híbrido solar+aerotérmico acumulado en el tándem.
 
 > **Los apartamentos turísticos NO se climatizan** — solo reciben ACS (M07). La climatización es exclusiva de la vivienda.
 
 ## Decisiones clave
 
-- **Buffer 50 L como aguja.** Secundario fijo: **P2 → fancoils** (conexión cruzada: aspira arriba, retorna abajo).
-  - **Por qué 50 L (y no 150):** el buffer cumple dos funciones — desacople hidráulico (aguja, basta poco volumen) e inercia anti-ciclado. La inercia en **invierno** la da de sobra el **tándem (812 L)**; el buffer solo necesita aportar inercia en **verano** (BC → buffer frío directo), y la **BC es inverter** (modula, cicla poco), por lo que requiere poca inercia. 50 L es suficiente y ajustado para este caso; 150 L sería sobredimensionar. *(Confirmar contra el "volumen mínimo de instalación" que especifique el manual de la BC elegida; si pidiera más, revisar.)*
-  - **Producto: EKOKAI Inercia Slim 50 R Basic** (50 L, acero al carbono, 6 bar, vertical/horizontal). Depósito de inercia puro (no vitrificado, no ACS). 80 € Wallapop. Verificar al recoger: nº de bocas (ideal 4 para aguja; con 2 se resuelve con tes) y si trae vaina para la sonda del buffer (TT clima, AI7 en M12).
+- **Buffer ~50 L como aguja.** Secundario fijo: **P2 → fancoils** (conexión cruzada: aspira arriba, retorna abajo).
+  - **El buffer viene INCLUIDO con la bomba de calor** — no se aprovisiona aparte. El depósito que traiga la BC es el que el fabricante considera correcto para su equipo (valida también el volumen). Quedan descartadas las compras externas que se barajaron (EKOKAI Inercia Slim 50 R / Johnson JINERCIA50RV, ambos 50 L acero al carbono 6 bar) — ya no necesarias.
+  - **Por qué ~50 L es lo correcto (referencia):** el buffer cumple dos funciones — desacople hidráulico (aguja, basta poco volumen) e inercia anti-ciclado. La inercia en **invierno** la da de sobra el **tándem (812 L)**; el buffer solo aporta inercia en **verano** (BC → buffer frío directo), y la **BC es inverter** (modula, cicla poco), por lo que requiere poca inercia. 50 L es suficiente; 150 L sería sobredimensionar. El buffer incluido con la BC encaja en este orden de magnitud.
+  - **Verificar del buffer de la BC:** nº de bocas (ideal 4 para aguja; con 2 se resuelve con tes) y si trae vaina para la sonda del buffer (TT clima, AI7 en M12).
 - **Origen híbrido en invierno:** el agua técnica de la BC se funde con el tándem; el clima se nutre indistintamente de solar (vía D1) y aerotermia (BC).
 - **Verano independiente:** la BC alimenta el buffer en frío, aislado del tándem (no mezclar 10 °C con 50 °C).
 - **P1 = bomba de trasvase D2 → buffer**, solo cuando D2 está bien cargado y la **ACS al paso queda garantizada**. Sale de un colector de D2 y vuelve al otro.
@@ -82,7 +83,7 @@ Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desd
 | 4 | Accesorio conexión PICV | Frese **43-2330** (racores+acoplamientos DN15 G¾"-R½") | 13 | opcional | ~6 € | si no se usa racor multicapa estándar |
 | 5 | **P2** bomba fancoils | **Wilo Yonos MAXO 25/0,5-7…12** DN25, presión constante | 1 | a comprar | ~250-350 € | ajustar a ~8 m al montar |
 | 6 | Vaso expansión clima | 18 L, calefacción (EPDM), precarga ~1,0 bar | 1 | a comprar | ~30 € (nuevo) | en aspiración de P2; no compensa usado |
-| 7 | **Buffer inercia** | **EKOKAI Inercia Slim 50 R Basic** (50 L, acero carbono, 6 bar) | 1 | ✅ localizado (80 € Wallapop) | 80 € | aguja; verificar bocas y vaina de sonda |
+| 7 | Buffer inercia ~50 L | aguja | 1 | ✅ **incluido con la BC** | — | no se aprovisiona aparte; verificar bocas/vaina |
 | 8 | Termostato de estancia | con **contacto de demanda** (relé libre) + entrada **change-over**, salida 0-10V al ventilador | 12 | a comprar | — | 12 zonas (salón comparte); confirmar contacto + change-over |
 | 9 | **Zelio Logic** 12 entradas | OR de las 12 demandas → 1 señal a P2/PLC | 1 | ✅ disponible | — | ya en posesión (M12) |
 | 10 | Manguera 4 hilos | termostato↔sala: 2 demanda + 2 change-over | 12 tiradas | a comprar | — | sección según distancia |
@@ -95,10 +96,9 @@ Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desd
 - **Comprar actuadores electrotérmicos** Frese 48-5528 (230V) — equivalente Watts 22CX 230V NC —, uno por fancoil (13). Verificar fuerza ≥100N si se opta por el equivalente.
 - Reescribir `FB_ClimateReversible.st` (topología 2 V3V + P1 + OR de demandas + change-over).
 - Confirmar que los termostatos de estancia tienen **contacto de demanda** (relé libre) **y** entrada de **change-over**.
-- **Comprar P2: Wilo Yonos MAXO 25** (altura 7-12 según se encuentre; ver M08); ajustar presión constante ~8 m al montar.
-- **Buffer: EKOKAI Inercia Slim 50 R Basic** (80 €) — verificar bocas/vaina al recoger.
+- **Comprar P2: Wilo Yonos MAXO 25** (altura 7-12 según se encuentre; ver M08) — punto crítico de aprovisionamiento (difícil de encontrar a precio asequible); ajustar presión constante ~8 m al montar.
+- **Buffer: incluido con la BC** — verificar bocas/vaina al recibir el equipo.
 - Comprar vaso de clima 18 L **nuevo** (~30 €) + actuadores + termostatos + manguera.
-- Confirmar el volumen mínimo de instalación que pida el manual de la BC (valida los 50 L del buffer).
 - Valorar tronco inicial de 40 mm si la velocidad genera ruido.
 - Cuantificar metros de multicapa y accesorios tras el trazado en plano.
 - Confirmar si habrá fancoils de 1,5 kW en habitaciones pequeñas (recalcular caudal pico).
