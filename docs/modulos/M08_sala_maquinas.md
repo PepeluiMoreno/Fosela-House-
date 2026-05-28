@@ -37,13 +37,18 @@
 
 | Bomba | Función | Caudal | Altura | Control | Modelo |
 |---|---|---|---|---|---|
-| **P-SOL** | Lazo solar (glicol) | según captadores | ~3-4 m | PWM (M02) | Grundfos Alpha Solar 25-75 / Wilo iPWM3, **apta glicol** |
+| **P-SOL** | Lazo solar (glicol) | según captadores | ~3-4 m | PWM (M02) | **Grundfos Alpha Solar 25-75** ✅ adquirida (apta glicol) |
 | **P-ACS** | Primario ACS instantáneo | ~1.080 L/h | ~3-4 m | PWM (M04) | A comprar, variante PWM |
 | **P1** | Trasvase D2 → buffer | ~2.400 L/h | ~5-8 m | On/off | **Stiebel Eltron UP 25/7.5 PCV** (8,4 m, 180) |
 | **P2** | Buffer → fancoils | normal ~1,8 · pico ~3,5 m³/h | ~7 m | Presión constante | **Grundfos UPM3 Auto/Hybrid 25-70 180** |
 | **P-POOL** | Primario HX piscina | ~900-1.075 L/h | ~3-4 m | On/off | **Grundfos ALPHA2 25-40 180** |
 
 Todas DN25, **180 mm**. Modulantes (P-SOL, P-ACS) por PWM desde la CPU (M12); on/off por relé de interposición.
+
+### P-SOL — Grundfos Alpha Solar 25-75 (adquirida)
+
+Lazo solar primario (con glicol). DN25, 180 mm, PWM (perfil solar, M02). La gama "Solar" está concebida para primario solar térmico (materiales/membrana para glicol y altas temperaturas). Va en el retorno frío (boca inferior del serpentín D1).
+- Verificar en ficha: **% máximo de glicol** admitido (típico hasta 50% propilenglicol) vs la concentración prevista, y **temperatura máxima del fluido** (picos del primario solar).
 
 ### P1 — Stiebel Eltron UP 25/7.5 PCV (8,4 m, 180 mm)
 
@@ -107,7 +112,8 @@ Los valores que dependen del componente comercial (caudal nominal de captadores,
 - Verificar litraje del vaso integrado de la BC (circuito en verano).
 - Reajustar precarga del Ibaiondo 50 SMR P a ~0,5-1 bar.
 - Comprar vaso solar 25 L y vaso clima 18 L. Tándem ya resuelto; buffer viene con la BC.
+- **P-SOL: Grundfos Alpha Solar 25-75** ✅ adquirida. Verificar % glicol admitido y T máx del fluido en ficha.
 - **P1: Stiebel Eltron UP 25/7.5 PCV** (8,4 m, 180) — comprada/en compra. Verificar modo PCV autónomo y curva a 2,4 m³/h.
 - **Comprar P2: Grundfos UPM3 Auto/Hybrid 25-70 180** (sufijo ZZZ/Auto o ACA/Hybrid; 180 mm; no AZA). Ajustar presión constante ~7 m.
-- Comprar P-SOL (PWM, glicol) y P-ACS (PWM).
+- Comprar P-ACS (PWM).
 - ALPHA2 25-40 180 → P-POOL.
