@@ -30,45 +30,49 @@
 
 ## Bombas — estándar de intercambiabilidad
 
-- **Longitud entre roscas: 180 mm en TODAS las circuladoras.** Conexión común **DN25, rosca G1½" (tuerca loca), racor Rp1".** Cualquier bomba entra en cualquier puesto de su clase.
+- **Longitud entre roscas: 180 mm** como estándar para las bombas de circuito (P-SOL, P1, P2). Conexión común **DN25, rosca G1½" (tuerca loca), racor Rp1".**
 - **Dos clases:**
   - **Suave (~3-4 m):** P-SOL, P-ACS, P-POOL.
-  - **Media-fuerte (~6-8 m):** P1, P2. DN25, 180 mm, presión constante. Intercambiables en emergencia (misma conexión); el repuesto UPM3 25-70 cubre P2 y P1 si el serpentín ≤7 m.
+  - **Media-fuerte (~6-8 m):** P1, P2. Presión constante. Intercambiables en emergencia (misma conexión); el repuesto UPM3 25-70 cubriría P2 y P1 si el serpentín ≤7 m.
+- **Excepción de longitud:** P-POOL y el repuesto son **ALPHA 25-40 de 130 mm** (ya en posesión). Al ser clase suave (piscina, ~3-4 m) es admisible con adaptadores; no rompe nada crítico, pero no son 180.
 
-| Bomba | Función | Caudal | Altura | Control | Modelo | Estado |
-|---|---|---|---|---|---|---|
-| **P-SOL** | Lazo solar (glicol) | 1,85 m³/h nom. | 7,5 m máx | PWM perfil C (M02) | **Grundfos Alpha Solar 25-75 180** | ✅ adquirida |
-| **P-ACS** | Primario ACS instantáneo | ~1.080 L/h | ~3-4 m | PWM (M04) | variante PWM | a comprar |
-| **P1** | Trasvase D2 → buffer | ~2.400 L/h | ~5-8 m | On/off | **Stiebel Eltron UP 25/7.5 PCV** (8,4 m, 180) | ✅ en compra |
-| **P2** | Buffer → fancoils | normal ~1,8 · pico ~3,5 m³/h | ~7 m | Presión constante | **Grundfos UPM3 Auto/Hybrid 25-70 180** | especificada |
-| **P-POOL** | Primario HX piscina | ~900-1.075 L/h | ~3-4 m | On/off | **Grundfos ALPHA2 25-40 180** | ✅ en posesión |
+### Cuadro de bombas
 
-Todas DN25, **180 mm**. Modulantes (P-SOL, P-ACS) por PWM desde la CPU (M12); on/off por relé de interposición.
+| ID | Marca y modelo | Plataforma | Precio s/portes | Estado |
+|---|---|---|---|---|
+| **P-SOL** | Grundfos Alpha Solar 25-75 180 | Wallapop | 85 € | en compra |
+| **P-ACS** | (por definir, variante PWM) | — | — | en estudio |
+| **P1** | Stiebel Eltron UP 25/7.5 PCV (8,4 m, 180) | eBay | 135 € (oferta pdte. de aceptar; PVP 159) | compra propuesta |
+| **P2** | Grundfos UPM3 Auto 25-70 180 ZZZ | eBay | usada 99,99 / nueva 149,90 (+ portes 14,90) | compra propuesta |
+| **P-POOL** | Grundfos ALPHA1 25-40 130 | Wallapop | 59 € | ✅ comprada |
+| **Repuesto** | Grundfos ALPHA 25-40 130 | Wallapop | 60 € | ✅ comprada |
 
-### P-SOL — Grundfos Alpha Solar 25-75 180 (adquirida)
+Funciones, caudales y alturas: P-SOL lazo solar (1,85 m³/h, 7,5 m, PWM perfil C, glicol); P-ACS primario ACS (~1.080 L/h, ~3-4 m, PWM); P1 trasvase D2→buffer (~2.400 L/h, ~5-8 m, on/off); P2 buffer→fancoils (normal ~1,8 / pico ~3,5 m³/h, ~7 m, presión constante); P-POOL primario piscina (~900-1.075 L/h, ~3-4 m, on/off). Modulantes (P-SOL, P-ACS) por PWM desde la CPU (M12); on/off por relé de interposición.
 
-Lazo solar primario (con glicol). En el retorno frío (boca inferior del serpentín D1). Especificaciones confirmadas en ficha:
-- **Glicol:** compatible con mezclas hasta **50%**. ✅
-- **Temperatura del fluido:** servicio 2-110 °C, soporta hasta **130 °C** con ambiente 60 °C. ✅
-- **Control:** **PWM perfil C** (el solar, desde el controlador/CPU, M02) o curvas constantes en modo autónomo.
-- **Prestaciones:** caudal nom. 1,85 m³/h, altura máx 7,5 m, motor ECM, EEI ≤0,20, 230 V, 10 bar. DN25, G1½", 180 mm.
+### Resumen de gasto en bombas
+
+- **Ya comprado** (en posesión): P-POOL 59 € + Repuesto 60 € = **119 €**.
+- **En compra:** P-SOL 85 €.
+- **Compra propuesta** (decide el cliente): P1 135 € + P2 ~100-150 € (+ portes 14,90) ≈ **250-300 €**.
+- **P-ACS:** en estudio, sin cifrar.
+- **Total previsto del aprovisionamiento de bombas** (sin P-ACS): **~450-500 €**.
+
+### P-SOL — Grundfos Alpha Solar 25-75 180
+
+Lazo solar primario (con glicol). En el retorno frío (boca inferior del serpentín D1). Confirmado en ficha: glicol hasta **50%**, fluido 2-110 °C (hasta 130 °C con ambiente 60 °C), **PWM perfil C** o curvas constantes autónomas, caudal nom. 1,85 m³/h, altura máx 7,5 m, motor ECM, EEI ≤0,20, 230 V, 10 bar, DN25 G1½" 180 mm.
 
 ### P1 — Stiebel Eltron UP 25/7.5 PCV (8,4 m, 180 mm)
 
-Trasvase D2 → buffer a través del **doble serpentín de D2** (~2,4 m³/h). La pérdida del doble serpentín es incierta hasta tener el dato del fabricante (puede llegar a ~8 m); la Stiebel de **8,4 m** la cubre con margen sin depender de ese dato. PCV = presión constante variable. DN25, 180 mm, 230 V.
+Trasvase D2 → buffer a través del **doble serpentín de D2** (~2,4 m³/h). La pérdida del doble serpentín es incierta hasta tener el dato del fabricante (puede llegar a ~8 m); la Stiebel de **8,4 m** la cubre con margen. PCV = presión constante variable. DN25, 180 mm, 230 V.
 - Verificar al montar: que el modo PCV mantenga presión de forma autónoma y la curva a 2,4 m³/h.
 
 ### P2 — Grundfos UPM3 Auto/Hybrid 25-70 180
 
-Buffer → fancoils. Caudal pico ~3,5 m³/h, altura ~7 m. DN25, 180 mm, **presión constante autónoma** (modos Δp-c/Δp-v en la bomba, sin señal externa — idóneo para el arranque por Zelio, M10). La 25-70 encaja (holgada en uso normal ~1,8 m³/h, justa en el pico de 12 zonas).
-- **Al comprar:**
-  - **Sufijo de control:** **ZZZ (Auto)** o **ACA (Hybrid)** válidos. **AZA (solo-PWM) NO** sirve.
-  - **Longitud 180 mm** (no la versión 130).
-  - Ref. Auto: 93370517 / 59C93603. Ref. Hybrid: 59C93103.
-  - Ajustar a presión constante ~7 m al montar.
+Buffer → fancoils. Caudal pico ~3,5 m³/h, altura ~7 m. DN25, 180 mm, **presión constante autónoma** (idóneo para el arranque por Zelio, M10). La 25-70 encaja (holgada en uso normal ~1,8 m³/h, justa en el pico de 12 zonas).
+- **Al comprar:** sufijo **ZZZ (Auto)** o **ACA (Hybrid)** válidos; **AZA (solo-PWM) NO**. Longitud **180 mm** (no 130). Ref. Auto: 93370517 / 59C93603. Ref. Hybrid: 59C93103. Ajustar a presión constante ~7 m.
 - Más margen de caudal en el pico, si se quisiera: UPM3 25-75 o MAGNA3 25-80 (180).
 
-> **Intercambiabilidad P1↔P2:** distinta marca pero mismo estándar (DN25, 180 mm, presión constante) → intercambiables en emergencia. Un repuesto **UPM3 25-70** en stock cubre P2 al 100% y P1 mientras el doble serpentín no pida >7 m.
+> **Intercambiabilidad P1↔P2:** distinta marca, mismo estándar (DN25, 180 mm, presión constante) → intercambiables en emergencia. Un repuesto UPM3 25-70 cubriría P2 al 100% y P1 si el serpentín ≤7 m.
 
 ## Vasos de expansión
 
@@ -115,8 +119,9 @@ Los valores que dependen del componente comercial (caudal nominal de captadores,
 - Verificar litraje del vaso integrado de la BC (circuito en verano).
 - Reajustar precarga del Ibaiondo 50 SMR P a ~0,5-1 bar.
 - Comprar vaso solar 25 L y vaso clima 18 L. Tándem ya resuelto; buffer viene con la BC.
-- **P-SOL: Grundfos Alpha Solar 25-75 180** ✅ adquirida (glicol 50%, 110-130 °C, PWM perfil C — confirmado).
-- **P1: Stiebel Eltron UP 25/7.5 PCV** (8,4 m, 180) — en compra. Verificar modo PCV autónomo y curva a 2,4 m³/h.
-- **P2: Grundfos UPM3 Auto/Hybrid 25-70 180** — especificada; la compra la decide el cliente (sufijo ZZZ/Auto o ACA/Hybrid; 180 mm; no AZA). Ajustar presión constante ~7 m.
-- **P-POOL: Grundfos ALPHA2 25-40 180** ✅ en posesión.
-- Comprar P-ACS (PWM).
+- **P-SOL: Grundfos Alpha Solar 25-75 180** — en compra (85 €, Wallapop).
+- **P1: Stiebel Eltron UP 25/7.5 PCV** — compra propuesta (eBay, oferta 135 € pendiente). Verificar modo PCV autónomo y curva a 2,4 m³/h.
+- **P2: Grundfos UPM3 Auto/Hybrid 25-70 180** — compra propuesta, decide el cliente (eBay; sufijo ZZZ/ACA, no AZA; 180 mm).
+- **P-POOL: Grundfos ALPHA1 25-40 130** — comprada (59 €, Wallapop).
+- **Repuesto: Grundfos ALPHA 25-40 130** — comprado (60 €, Wallapop).
+- Definir y comprar P-ACS (variante PWM).
