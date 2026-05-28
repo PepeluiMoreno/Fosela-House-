@@ -33,30 +33,34 @@
 - **Longitud entre roscas: 180 mm en TODAS las circuladoras.** Conexión común **DN25, rosca G1½" (tuerca loca), racor Rp1".** Cualquier bomba entra en cualquier puesto de su clase.
 - **Dos clases:**
   - **Suave (~3-4 m):** P-SOL, P-ACS, P-POOL.
-  - **Media-fuerte (~6-7 m):** P1, P2 — **mismo modelo** (UPM3 Auto 25-70 180) para repuesto común.
+  - **Media-fuerte (~6-8 m):** P1, P2. DN25, 180 mm, presión constante. Intercambiables en emergencia (misma conexión); el repuesto UPM3 25-70 cubre P2 y P1 si el serpentín ≤7 m.
 
 | Bomba | Función | Caudal | Altura | Control | Modelo |
 |---|---|---|---|---|---|
 | **P-SOL** | Lazo solar (glicol) | según captadores | ~3-4 m | PWM (M02) | Grundfos Alpha Solar 25-75 / Wilo iPWM3, **apta glicol** |
 | **P-ACS** | Primario ACS instantáneo | ~1.080 L/h | ~3-4 m | PWM (M04) | A comprar, variante PWM |
-| **P1** | Trasvase D2 → buffer | ~2.400 L/h | ~5-6 m | On/off | **Grundfos UPM3 Auto 25-70 180** |
-| **P2** | Buffer → fancoils | normal ~1,8 · pico ~3,5 m³/h | ~7 m | Presión constante | **Grundfos UPM3 Auto 25-70 180** |
+| **P1** | Trasvase D2 → buffer | ~2.400 L/h | ~5-8 m | On/off | **Stiebel Eltron UP 25/7.5 PCV** (8,4 m, 180) |
+| **P2** | Buffer → fancoils | normal ~1,8 · pico ~3,5 m³/h | ~7 m | Presión constante | **Grundfos UPM3 Auto/Hybrid 25-70 180** |
 | **P-POOL** | Primario HX piscina | ~900-1.075 L/h | ~3-4 m | On/off | **Grundfos ALPHA2 25-40 180** |
 
 Todas DN25, **180 mm**. Modulantes (P-SOL, P-ACS) por PWM desde la CPU (M12); on/off por relé de interposición.
 
-### P1 y P2 — Grundfos UPM3 Auto 25-70 180
+### P1 — Stiebel Eltron UP 25/7.5 PCV (8,4 m, 180 mm)
 
-Mismo modelo en ambas (repuesto común). DN25, 180 mm, 7 m, **presión constante autónoma** (modos Δp-c/Δp-v en la bomba, sin señal externa — idóneo para el arranque por Zelio, M10).
+Trasvase D2 → buffer a través del **doble serpentín de D2** (~2,4 m³/h). La pérdida del doble serpentín es incierta hasta tener el dato del fabricante (puede llegar a ~8 m); la Stiebel de **8,4 m** la cubre con margen sin depender de ese dato. PCV = presión constante variable. DN25, 180 mm, 230 V.
+- Verificar al montar: que el modo PCV mantenga presión de forma autónoma y la curva a 2,4 m³/h.
 
-- **P2 (fancoils):** caudal pico ~3,5 m³/h, altura ~7 m. La 25-70 encaja (holgada en uso normal ~1,8 m³/h, justa en el pico de 12 zonas).
-- **P1 (trasvase D2→buffer por doble serpentín):** ~2,4 m³/h, ~5-6 m. La 25-70 la cubre. En P1 trabaja a curva fija (on/off); en P2 en presión constante.
+### P2 — Grundfos UPM3 Auto/Hybrid 25-70 180
+
+Buffer → fancoils. Caudal pico ~3,5 m³/h, altura ~7 m. DN25, 180 mm, **presión constante autónoma** (modos Δp-c/Δp-v en la bomba, sin señal externa — idóneo para el arranque por Zelio, M10). La 25-70 encaja (holgada en uso normal ~1,8 m³/h, justa en el pico de 12 zonas).
 - **Al comprar:**
-  - **Sufijo de control:** **ZZZ (Auto)** o **ACA (Hybrid)** válidos. **AZA (solo-PWM) NO** sirve (sin presión constante autónoma).
+  - **Sufijo de control:** **ZZZ (Auto)** o **ACA (Hybrid)** válidos. **AZA (solo-PWM) NO** sirve.
   - **Longitud 180 mm** (no la versión 130).
   - Ref. Auto: 93370517 / 59C93603. Ref. Hybrid: 59C93103.
   - Ajustar a presión constante ~7 m al montar.
-- Si se quisiera más margen de caudal en el pico de P2: UPM3 25-75 o MAGNA3 25-80 (180).
+- Más margen de caudal en el pico, si se quisiera: UPM3 25-75 o MAGNA3 25-80 (180).
+
+> **Intercambiabilidad P1↔P2:** distinta marca pero mismo estándar (DN25, 180 mm, presión constante) → intercambiables en emergencia. Un repuesto **UPM3 25-70** en stock cubre P2 al 100% y P1 mientras el doble serpentín no pida >7 m.
 
 ## Vasos de expansión
 
@@ -103,6 +107,7 @@ Los valores que dependen del componente comercial (caudal nominal de captadores,
 - Verificar litraje del vaso integrado de la BC (circuito en verano).
 - Reajustar precarga del Ibaiondo 50 SMR P a ~0,5-1 bar.
 - Comprar vaso solar 25 L y vaso clima 18 L. Tándem ya resuelto; buffer viene con la BC.
-- **Comprar P1 y P2: Grundfos UPM3 Auto 25-70 180** (sufijo ZZZ/Auto o ACA/Hybrid; 180 mm; no AZA). Ajustar presión constante ~7 m.
+- **P1: Stiebel Eltron UP 25/7.5 PCV** (8,4 m, 180) — comprada/en compra. Verificar modo PCV autónomo y curva a 2,4 m³/h.
+- **Comprar P2: Grundfos UPM3 Auto/Hybrid 25-70 180** (sufijo ZZZ/Auto o ACA/Hybrid; 180 mm; no AZA). Ajustar presión constante ~7 m.
 - Comprar P-SOL (PWM, glicol) y P-ACS (PWM).
 - ALPHA2 25-40 180 → P-POOL.
