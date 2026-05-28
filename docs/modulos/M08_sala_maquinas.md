@@ -28,6 +28,14 @@
 - Cada bomba en la **impulsión de su ramal** + **válvula de retención aguas abajo**.
 - P-ACS en impulsión.
 
+## Bombas — resumen
+
+**Seis bombas, todas DN25 (G1½", racor Rp1"). Longitud 130 mm salvo P1 (180).** Criterio de control por puesto:
+- **P-SOL** (Alpha Solar) y **P-ACS** (UPM3 Hybrid): **con PWM**, las modula la CPU M241 (P-SOL perfil solar M02; P-ACS para temperatura de ACS estable al paso M04).
+- **P2** (UPM3 Auto, **sin PWM**): presión constante autónoma, para que el **Zelio la arranque sin problema** en modo degradado (cadena de resiliencia de clima, M10).
+- **P1** (Stiebel, on/off): única de 180, por sus 8,4 m para el doble serpentín.
+- **P-POOL** y **repuesto** (ALPHA 25-40, on/off): clase suave, ya en posesión.
+
 ## Bombas — criterio de longitud e intercambiabilidad
 
 - **Conexión común:** DN25, rosca G1½" (tuerca loca), racor Rp1" en todas.
@@ -39,10 +47,10 @@
 
 | ID | Marca y modelo | Plataforma | Precio s/portes | Estado |
 |---|---|---|---|---|
-| **P-SOL** | Grundfos Alpha Solar 25-75 130 | Wallapop (Paco) | 85 € (oferta; PVP 95) | en compra |
-| **P-ACS** | Grundfos UPM3 Hybrid 25-70 130 (ACA) | Wallapop (Daniel) | 150 € (nueva) | compra propuesta (pdte. confirmar cables) |
+| **P-SOL** | Grundfos Alpha Solar 25-75 130 (PWM) | Wallapop (Paco) | 85 € (oferta; PVP 95) | en compra |
+| **P-ACS** | Grundfos UPM3 Hybrid 25-70 130 (ACA, PWM) | Wallapop (Daniel) | 150 € (nueva) | compra propuesta (pdte. confirmar cables) |
 | **P1** | Stiebel Eltron UP 25/7.5 PCV (8,4 m, 180) | eBay | 135 € (oferta pdte. de aceptar; PVP 159) | compra propuesta |
-| **P2** | Grundfos UPM3 Auto 25-70 130 (ZZZ) | Wallapop (Daniel m. Calahorra) | 100 € (nueva) | compra propuesta |
+| **P2** | Grundfos UPM3 Auto 25-70 130 (ZZZ, sin PWM) | Wallapop (Daniel m. Calahorra) | 100 € (nueva) | compra propuesta |
 | **P-POOL** | Grundfos ALPHA1 25-40 130 | Wallapop | 59 € | ✅ comprada |
 | **Repuesto** | Grundfos ALPHA 25-40 130 | Wallapop | 60 € | ✅ comprada |
 
@@ -65,7 +73,7 @@ Lazo solar primario (con glicol). En el retorno frío (boca inferior del serpent
 
 Mismo cuerpo UPM3 25-70 130 (DN25, 130 mm). Distinto sufijo de control según puesto. (Vendedores Wallapop distintos.)
 - **P-ACS — Hybrid (ACA):** primario del HX de ACS instantánea (~1.080 L/h, ~3-4 m). Modula por **PWM desde el M241** (M04) para temperatura de ACS estable al paso — por eso Hybrid, que tiene entrada PWM. La curva de 7 m sobra; modula a la baja. Wallapop (Daniel), 150 € nueva — confirmar que incluye los cables (alimentación + señal PWM) y hacer oferta.
-- **P2 — Auto (ZZZ):** buffer → fancoils (pico ~3,5 m³/h, ~7 m). Presión constante autónoma (arranque por Zelio, M10); no necesita PWM, por eso vale la Auto. La 25-70 encaja (holgada en normal ~1,8 m³/h, justa en el pico de 12 zonas). Wallapop (Daniel m., Calahorra), UPM3 Auto L 25-70 130 ZZZ, 100 € nueva.
+- **P2 — Auto (ZZZ):** buffer → fancoils (pico ~3,5 m³/h, ~7 m). Presión constante autónoma; **sin PWM, para que el Zelio la arranque sin problema** en modo degradado (arranque por Zelio, M10). La 25-70 encaja (holgada en normal ~1,8 m³/h, justa en el pico de 12 zonas). Wallapop (Daniel m., Calahorra), UPM3 Auto L 25-70 130 ZZZ, 100 € nueva.
 - Sufijos válidos: **ACA (Hybrid)** y **ZZZ (Auto)**; **AZA (solo-PWM) NO**. Longitud **130 mm**. Ref. Hybrid 130: 59C93102; Auto 130: 59C93602.
 
 ### P1 — Stiebel Eltron UP 25/7.5 PCV (8,4 m, 180 mm)
