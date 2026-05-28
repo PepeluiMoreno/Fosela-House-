@@ -37,13 +37,13 @@ Bombas DN25 (rosca 1½" tuerca loca) que encajan en la línea de 1" de la sala. 
 | **P-SOL** | Lazo solar (glicol) | según captadores | ~3-4 m | PWM modulante (M02) | Grundfos Alpha Solar 25-75 / Wilo iPWM3, **apta glicol** |
 | **P-ACS** | Primario ACS instantáneo | ~1.080 L/h | ~3-4 m | PWM modulante (M04) | A comprar, **variante PWM** |
 | **P1** | Trasvase D2 → buffer | ~2.400 L/h | **~8 m** (doble serpentín en serie) | On/off | Grundfos UPS 25-80 / Wilo Star-RS 25/8 (verificar curva a 2.400 L/h) |
-| **P2** | Buffer → fancoils | **normal 2,76 m³/h · pico 4,5 m³/h** | **~8-8,5 m** (red + Δp PICV) | Presión constante | **Grundfos UPMGEO 25-85** (candidata principal, ver abajo). Alt.: MAGNA3 25-80 / Wilo Stratos 25/1-8 |
+| **P2** | Buffer → fancoils | **normal 2,76 m³/h · pico 4,5 m³/h** | **~8-8,5 m** (red + Δp PICV) | Presión constante | **Wilo Yonos MAXO 25/0,5-12 (CONFIRMADA)** |
 | **P-POOL** | Primario HX piscina | ~900-1.075 L/h | ~3-4 m | On/off | **Grundfos ALPHA2 25-40 180** (reubicada aquí) |
 | *spare* | repuesto | — | — | — | **Grundfos ALPHA1 25-40 130** (Wallapop, queda de repuesto) |
 
-### ⚠️ P2 — dimensionado y candidata
+### P2 — dimensionado y bomba elegida
 
-Con corte por zona (actuador en cada PICV, M05), P2 mueve el caudal de las zonas que pidan: **normal ≥8 zonas ≈ 2,76 m³/h** (pérdida ~7,5 m), **pico 12 zonas ≈ 4,5 m³/h** (pérdida ~8,5 m). Pérdida pesimista a 4,5 m³/h:
+Con corte por zona (actuador en cada PICV, M05), P2 mueve el caudal de las zonas que pidan: **normal ≥8 zonas ≈ 2,76 m³/h** (pérdida ~7,5 m), **pico 12 zonas ≈ 4,5 m³/h** (pérdida pesimista ~8,5 m). Pérdida pesimista a 4,5 m³/h:
 
 | Componente | Δp pesimista |
 |---|---|
@@ -53,17 +53,18 @@ Con corte por zona (actuador en cada PICV, M05), P2 mueve el caudal de las zonas
 | Buffer/aguja + accesorios de sala | ~1 m |
 | **TOTAL** | **~8,5 m a 4,5 m³/h** |
 
-P2 debe ser **bomba grande de ~8-8,5 m, DN25, electrónica de presión constante** (que reduzca velocidad al cerrarse zonas — encaja con el arranque por Zelio contra red parcialmente cerrada, M10). NO es circuladora doméstica pequeña; las 25-40 (4 m) NO sirven.
+P2 debe ser **bomba de distribución DN25, caudal alto (≥4,5 m³/h), altura holgada ~8 m, presión constante** (modula al cerrarse zonas — encaja con el arranque por Zelio contra red parcialmente cerrada, M10). Las circuladoras pequeñas (DN15 de caldera, o DN25 de poco caudal tipo UPMGEO/UPM3/Yonos PICO) **NO sirven**: topan en ~2-3,3 m³/h, por debajo del pico.
 
-**Candidata principal: Grundfos UPMGEO 25-85.**
-- **DN25** (calibre correcto de la sala) · **8,5 m** de altura máxima (½ m más que una 25-80 → mejor margen en el pico).
-- Familia UPM **diseñada para bombas de calor geo/aerotérmicas** → optimizada para caudal alto con buena altura, perfil exacto de P2.
-- Electrónica, PWM-controlable / modos de presión.
-- ⚠️ **Verificar en su curva el punto 4,5 m³/h:** que ahí dé ≥7,5-8 m. Partiendo de 8,5 m máx., probable que llegue; si no, ir a 25-100 (10 m) o cuerpo DN32.
-- ⚠️ **Verificar modo de control:** ideal **presión constante** seleccionable (modula sola al cerrarse zonas). Si es solo PWM, la gobierna el M241 (en modo degradado por Zelio iría a velocidad fija, aceptable).
-- ⚠️ **Verificar conexión/longitud de cuerpo:** DN25 rosca G1½"; confirmar longitud (130/180 mm) para que encaje en el hueco de sala.
+**P2 ELEGIDA: Wilo Yonos MAXO 25/0,5-12.**
+- **Gama MAXO** = circuladora de distribución (caudal máx ~10 m³/h) → mueve los 4,5 m³/h sin problema.
+- **DN25** (rosca G1½"), calibre correcto de la sala.
+- **Altura 0,5–12 m**: holgada. A 2,76 m³/h da ~9-10 m (sobra); a 4,5 m³/h da ~7-8 m (cubre el pico, sobre todo siendo los 8,5 m una estimación pesimista — la pérdida real ronda 6-7 m).
+- **Presión constante/proporcional** (gama MAXO), idónea para el arranque por Zelio.
+- **Ajuste:** configurar en **presión constante a ~8 m** (no a tope de 12) para no meter presión de más en la red. El techo de 12 m da margen de ajuste del punto de trabajo.
 
-**Alternativas equivalentes** (gama alta, presión constante): Grundfos **MAGNA3 25-80** ↔ Wilo **Stratos 25/1-8**. Económicas: Grundfos **UPM3 25-80** ↔ Wilo **Yonos PICO 25/1-8**.
+> **Historial de descarte** (para no reconsiderarlas): las DN15 de caldera (UPM3/Viessmann 15-75, Wilo RS 15/7, Yonos PICO STG 15/1-13 → caudal máx 1,9 m³/h, Yonos PARA 15/6/15A) y las DN25 de poco caudal (UPMGEO 25-85 → ~2,8 m³/h; Yonos PICO 1.0 25/1-8 → ~3,3 m³/h) **se quedan cortas de CAUDAL** para el pico de 4,5 m³/h. La barrera de P2 es el caudal, no la altura → solo valen las de gama de distribución (MAXO/Stratos/MAGNA3). La idea de **partir en dos zonas** con dos bombas medianas (dos Yonos PICO 25/1-8) queda **descartada**: con la Yonos MAXO 25/0,5-12 como bomba única no hace falta (un solo tronco, un solo arranque).
+
+**Alternativas equivalentes** (si hubiera que sustituir): Wilo **Stratos 25/1-8**, Grundfos **MAGNA3 25-80 / 32-80**.
 
 **Reasignación de las ALPHA 25-40:** la ALPHA2 25-40 180 → **P-POOL**; la ALPHA1 25-40 130 → **repuesto** (ambas equivalentes en piscina).
 
@@ -112,6 +113,6 @@ Los valores que dependen del componente comercial elegido (caudal nominal de cap
 - Reajustar precarga del Ibaiondo 50 SMR P (tándem) a ~0,5-1 bar antes de montar.
 - Comprar vaso solar 25 L y vaso clima 18 L (el del tándem ya resuelto con el Ibaiondo).
 - **Comprar P1** (~8 m a 2.400 L/h): Grundfos UPS 25-80 / Wilo Star-RS 25/8.
-- **Comprar P2: Grundfos UPMGEO 25-85** (candidata principal). Verificar curva a 4,5 m³/h (≥7,5-8 m), modo de control (presión constante ideal) y longitud de cuerpo. Alt.: MAGNA3 25-80 / Stratos 25/1-8.
+- **P2 elegida: Wilo Yonos MAXO 25/0,5-12.** Al montarla, configurar presión constante a ~8 m.
 - Comprar P-SOL (PWM, glicol) y P-ACS (PWM).
 - ALPHA2 25-40 180 → P-POOL; ALPHA1 25-40 130 → repuesto.
