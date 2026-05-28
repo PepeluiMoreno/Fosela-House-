@@ -30,13 +30,16 @@ Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desd
 
 - **13 fancoils de 2 kW (solo vivienda).** Caudal por fancoil a ΔT 5 °C: 2000 / (1,16 × 5) ≈ **345 L/h** (~5,75 L/min).
 - **Distribución arborescente:** tronco **32 mm** → ramas **25 mm** → bajadas a cada FCU **20 mm** (multicapa). Primario del buffer (P1) también 32. **Sin colector de fancoils** (la independencia de presión de las PICV lo hace innecesario).
-- **PICV Frese 53-1615 (OPTIMA Compact) + actuador on/off** (una por fancoil):
-  - **Cuerpo: Frese 53-1615 compacta, DN15 ½" F/F, PN25, rango 0,44-2,53 GPM (≈100-575 L/h).** El caudal de fancoil (345 L/h) cae **cómodo en el rango**. ~24 €/ud. **Comprada.** DN15 correcta (no necesita DN20).
-  - **DN15 + multicapa 20 al fancoil:** mismo calibre (Ø interior multicapa 20 ≈ 15-16 mm = paso DN15), sin estrangulamiento. A 345 L/h, velocidad ~0,48 m/s (holgada). Conexión: multicapa 20 → racor ½" → PICV ½".
-  - **Actuador on/off** sobre cada PICV (a comprar), **siempre que no afecte al cuerpo de la PICV ya adquirido** (verificar compatibilidad del actuador con el modelo 53-1615). Da el **corte por zona**: cierra el agua del fancoil cuya estancia está satisfecha.
-  - **Funciones que cubre la PICV:** equilibrado (limitación de caudal preajustado + independencia de presión, mecánicas) **y** corte por zona (vía actuador on/off). Una sola pieza por fancoil hace ambas; no hacen falta válvulas de zona aparte ni colector de equilibrado.
-  - **Corte manual de servicio (gratis):** la Frese OPTIMA Compact (DN10-DN32) admite **tapón roscado** que la convierte en **válvula de corte total hasta 10 bar**. Permite **aislar/anular un fancoil** para mantenimiento o sustitución sin vaciar el circuito, sin necesidad de llaves de corte adicionales. Es un cierre **manual de servicio**, distinto e independiente del corte por zona automático (que lo hace el actuador on/off según el termostato).
-- **Preselección de caudal:** girar el anillo de preajuste de cada PICV a la posición que da **345 L/h**. Igual en las 13 (fancoils idénticos). Respetar la flecha de sentido de flujo al montar. No hay equilibrado de red ni medición.
+- **PICV Frese 53-1615 (OPTIMA Compact) + actuador electrotérmico** (una por fancoil):
+  - **Cuerpo: Frese 53-1615 compacta, DN15 ½" F/F, PN25, rango "alto" 100-575 L/h (carrera 5,0 mm).** El caudal de fancoil (345 L/h) cae **cómodo en el rango**. ~24 €/ud. **Comprada.** DN15 correcta (no necesita DN20). Cuerpo latón DZR, diafragma HNBR, juntas EPDM, -10/+120 °C, admite glicol hasta 50%.
+  - **DN15 + multicapa 20 al fancoil:** mismo calibre (Ø interior multicapa 20 ≈ 15-16 mm = paso DN15), sin estrangulamiento. A 345 L/h, velocidad ~0,48 m/s (holgada). Conexión: multicapa 20 → racor ½" → PICV ½". Accesorio de conexión opcional Frese **43-2330** (racores + acoplamientos DN15, G¾"-R½").
+  - **Actuador electrotérmico todo/nada NC** (corte por zona): cierra el agua del fancoil cuya estancia está satisfecha. **Requisitos Frese (ineludibles): rosca M30×1,5, fuerza mínima 100N, NC.** Frese declina responsabilidad con actuadores no especificados.
+    - **Confirmado válido: Watts 22CX 230V NC 4 hilos** (M30×1,5, electrotérmico todo/nada NC, 230V, 1,8W, IP54). Cumple rosca y NC; los 4 hilos aportan contacto auxiliar de fin de carrera (opcional, sirve de confirmación abierto/cerrado). Verificar fuerza ≥100N en su ficha (los 22CX estándar lo cumplen). Distribuidor: Polarstock (precio profesional).
+    - **Referencias Frese equivalentes** (si se prefiere original): **48-5527** (24V CA/CC) / **48-5528** (230V CA) — todo/nada, carrera 5,0 mm. *(Las 48-5525/5526 son carrera 2,5 mm, NO aplican aquí.)*
+    - ⚠️ **NO sirven los actuadores de suelo radiante genéricos**: suelen ser M28×1,5 o clip propietario. La Frese exige **M30×1,5**.
+  - **Funciones que cubre la PICV:** equilibrado (limitación de caudal preajustado + independencia de presión, mecánicas) **y** corte por zona (vía actuador). Una sola pieza por fancoil hace ambas; no hacen falta válvulas de zona aparte ni colector de equilibrado.
+  - **Corte manual de servicio (gratis):** la Frese OPTIMA Compact (DN10-DN32) admite **tapón roscado** que la convierte en **válvula de corte total hasta 10 bar**. Permite **aislar/anular un fancoil** para mantenimiento sin vaciar el circuito, sin llaves de corte adicionales. Cierre **manual de servicio**, distinto del corte por zona automático (actuador).
+- **Preselección de caudal:** girar el anillo de preajuste de cada PICV a la posición que da **345 L/h** → en rango alto carrera 5,0 mm, preajuste **~3,0** (334 L/h) o **3,2** (352 L/h). Igual en las 13 (fancoils idénticos). ⚠️ **La escala de preselección NO es accesible una vez montado el actuador** → **preseleccionar el caudal primero, montar el actuador después.** Respetar la flecha de sentido de flujo.
 
 ## Control de los fancoils y gobierno del actuador
 
@@ -61,11 +64,11 @@ Climatizar **la vivienda** (220 m², 13 fancoils de 2 kW) en calor y frío, desd
 - `FB_ClimateReversible.st` (a reescribir): gestión de V3V1/V3V2 + cortes antitermosifón + P1 supeditada a garantía de ACS + arranque/paro de P2 según la **OR de demandas** de los termostatos + modo calor/frío (change-over).
 - **Los fancoils NO se gobiernan individualmente desde el PLC** en cuanto a temperatura (eso lo hace el termostato local sobre su ventilador y su actuador de PICV). El PLC/relé gobierna el lazo del buffer (P2, temperatura del agua, modo) y recibe la demanda agregada.
 - Enclavamiento: válvulas en posición antes de arrancar P1 / cambiar modo BC.
-- Posición de fallo: cortes cierran la vía al tándem por muelle (ver M10).
+- Posición de fallo: cortes cierran la vía al tándem por muelle (ver M10). Los actuadores de PICV son **NC** → sin tensión cierran (fancoil aislado).
 
 ## Pendientes
 
-- **Comprar actuadores on/off** para las PICV Frese 53-1615 (verificar que el actuador es compatible con ese cuerpo y no requiere otro modelo de válvula).
+- **Comprar actuadores electrotérmicos** Watts 22CX 230V NC (o Frese 48-5528), uno por fancoil. Verificar fuerza ≥100N en ficha del 22CX.
 - Definir el gobierno de la OR de demandas y la parada de P2: relé programable independiente vs entradas al PLC (ver M12, decisión de tarjeta).
 - Confirmar que los termostatos de estancia tienen **contacto de demanda** (relé libre) **y** entrada de **change-over**.
 - Reescribir `FB_ClimateReversible.st` (topología 2 V3V + P1 + OR de demandas + change-over).
